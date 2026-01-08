@@ -93,7 +93,7 @@ export default function CategoryPage() {
                     ) : (
                         <div className="plant-grid">
                             {filteredPlants.map((plant, index) => (
-                                <PlantCard key={plant.unique_id || `${plant.category}-${plant.id}-${index}`} plant={plant} />
+                                <PlantCard key={`${plant.category}-${plant.id}-${index}`} plant={plant} />
                             ))}
                         </div>
                     )}

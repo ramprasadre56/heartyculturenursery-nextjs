@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useCart } from '@/context/CartContext';
 import { PLANT_CATEGORIES } from '@/lib/categories';
+import { SEED_CATEGORIES } from '@/lib/seedCategories';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
@@ -13,6 +14,7 @@ export default function Navbar() {
     const { data: session, status } = useSession();
     const [menuOpen, setMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [seedsDropdownOpen, setSeedsDropdownOpen] = useState(false);
 
     return (
         <header className={styles.header}>
@@ -139,9 +141,35 @@ export default function Navbar() {
                     )}
                 </div>
 
-                <div className={styles.navLink}>
-                    <span className={styles.navIcon}>🌱</span>
-                    <span>Seeds</span>
+                {/* Seeds Dropdown */}
+                <div
+                    className={styles.dropdown}
+                    onMouseEnter={() => setSeedsDropdownOpen(true)}
+                    onMouseLeave={() => setSeedsDropdownOpen(false)}
+                >
+                    <button className={styles.navLink}>
+                        <span className={styles.navIcon}>🌱</span>
+                        <span>Seeds</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="m6 9 6 6 6-6"></path>
+                        </svg>
+                    </button>
+
+                    {seedsDropdownOpen && (
+                        <div className={styles.dropdownMenu}>
+                            {SEED_CATEGORIES.map((cat) => (
+                                <Link
+                                    key={cat.slug}
+                                    href={`/seeds/${cat.slug}`}
+                                    className={styles.dropdownItem}
+                                    onClick={() => setSeedsDropdownOpen(false)}
+                                >
+                                    <span className={styles.dropdownIcon}>{cat.icon}</span>
+                                    <span>{cat.name}</span>
+                                </Link>
+                            ))}
+                        </div>
+                    )}
                 </div>
 
                 <div className={styles.navLink}>

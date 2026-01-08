@@ -239,7 +239,17 @@
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
   padding: 8px;
   z-index: 1000;
-  margin-top: 4px;
+  padding-top: 12px;
+}
+
+.dropdownMenu::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background: transparent;
 }
 
 .dropdownItem {
