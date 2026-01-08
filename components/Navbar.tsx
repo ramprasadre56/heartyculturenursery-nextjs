@@ -3,12 +3,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 import { useCart } from '@/context/CartContext';
 import { PLANT_CATEGORIES } from '@/lib/categories';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
     const { totalItems, toggleCart } = useCart();
+    const { data: session, status } = useSession();
     const [menuOpen, setMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -43,11 +45,30 @@ export default function Navbar() {
                     </button>
                 </div>
 
-                {/* Account */}
-                <div className={styles.accountLink}>
-                    <span className={styles.accountLabel}>Hello, sign in</span>
-                    <span className={styles.accountText}>Account</span>
-                </div>
+                {/* Account - Google Sign In */}
+                {status === "loading" ? (
+                    <div className={styles.accountLink}>
+                        <span className={styles.accountLabel}>Loading...</span>
+                    </div>
+                ) : session ? (
+                    <div
+                        className={styles.accountLink}
+                        onClick={() => signOut()}
+                        style={{ cursor: 'pointer' }}
+                    >
+                        <span className={styles.accountLabel}>Hello, {session.user?.name?.split(' ')[0] || 'User'}</span>
+                        <span className={styles.accountText}>Sign Out</span>
+                    </div>
+                ) : (
+                    <div
+                        className={styles.accountLink}
+                        onClick={() => signIn('google')}
+                        style={{ cursor: 'pointer' }}
+                    >
+                        <span className={styles.accountLabel}>Hello, sign in</span>
+                        <span className={styles.accountText}>Account</span>
+                    </div>
+                )}
 
                 {/* Cart */}
                 <button className={styles.cartButton} onClick={toggleCart}>
@@ -117,8 +138,6 @@ export default function Navbar() {
                         </div>
                     )}
                 </div>
-
-
 
                 <div className={styles.navLink}>
                     <span className={styles.navIcon}>🌱</span>

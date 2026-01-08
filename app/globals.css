@@ -94,7 +94,7 @@ button {
 /* Page Header */
 .page-header {
   background: linear-gradient(180deg, #f8faf8, #ffffff);
-  padding: 1.5rem 2rem;
+  padding: 0.75rem 2rem;
   width: 100%;
 }
 
@@ -104,7 +104,7 @@ button {
   gap: 0.5rem;
   font-size: 0.9rem;
   color: #666;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
 }
 
 .breadcrumb a:hover {

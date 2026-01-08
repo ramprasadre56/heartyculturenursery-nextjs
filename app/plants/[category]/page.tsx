@@ -57,10 +57,6 @@ export default function CategoryPage() {
                     <span>{category?.name || categorySlug}</span>
                     <span className="badge">{plants.length}</span>
                 </div>
-                <div className="page-title-row">
-                    <div className="page-icon">{category?.icon || '🌿'}</div>
-                    <h1 className="page-title">{category?.name || categorySlug}</h1>
-                </div>
             </div>
 
             {/* Main Content */}
@@ -96,8 +92,8 @@ export default function CategoryPage() {
                         </div>
                     ) : (
                         <div className="plant-grid">
-                            {filteredPlants.map((plant) => (
-                                <PlantCard key={`${plant.category}-${plant.id}`} plant={plant} />
+                            {filteredPlants.map((plant, index) => (
+                                <PlantCard key={plant.unique_id || `${plant.category}-${plant.id}-${index}`} plant={plant} />
                             ))}
                         </div>
                     )}

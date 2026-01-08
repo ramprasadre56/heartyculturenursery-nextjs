@@ -222,6 +222,27 @@
     line-height: 1.5;
 }
 
+.checkoutBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 1rem;
+    background: #1a472a;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background 0.2s;
+    margin-bottom: 0.75rem;
+}
+
+.checkoutBtn:hover {
+    background: #143821;
+}
+
 .whatsappBtn {
     display: flex;
     align-items: center;
