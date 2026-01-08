@@ -1,0 +1,80 @@
+.container {
+    min-height: 100vh;
+    background: #fafafa;
+}
+
+.mainContent {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.5rem 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Loading Skeleton */
+.loading {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.skeleton {
+    height: 320px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: 12px;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Empty State */
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+    color: #666;
+}
+
+.empty span {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.empty p {
+    font-size: 1.1rem;
+}
+
+/* Mobile */
+@media (max-width: 1024px) {
+    .mainContent {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .loading {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .skeleton {
+        height: 280px;
+    }
+}
