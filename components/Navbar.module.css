@@ -219,6 +219,15 @@
   position: relative;
 }
 
+.dropdown>.navLink {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 .dropdownMenu {
   position: absolute;
   top: 100%;
