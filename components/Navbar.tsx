@@ -118,9 +118,7 @@ export default function Navbar() {
                     )}
                 </div>
 
-                <Link href="/plants" className={styles.navLink}>
-                    <span>Browse All</span>
-                </Link>
+
 
                 <div className={styles.navLink}>
                     <span className={styles.navIcon}>🌱</span>

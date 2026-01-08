@@ -21,8 +21,9 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 2rem;
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
+  padding: 0 2rem;
 }
 
 .offerCard {
@@ -66,8 +67,9 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1.25rem;
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto 2rem;
+  padding: 0 2rem;
 }
 
 .categoryCard {

@@ -68,8 +68,8 @@ function slugToCategoryName(slug: string): string {
         'tree-species': 'Tree Species',
         'coconut-varieties': 'Coconut Varieties',
         'mango-varieties': 'Mango Varieties',
-        'banana-varieties': 'Banana Varieties',
-        'commercial-timber': 'Commercial Timber',
+        'banana-varieties': 'Banana Plant Varieties',
+        'commercial-timber': 'Commercial Timber Plants',
         'pineapple-varieties': 'Pineapple Varieties',
     };
     return mapping[slug] || slug;

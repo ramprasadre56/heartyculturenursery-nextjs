@@ -40,7 +40,6 @@
 .searchContainer {
   flex: 1;
   display: flex;
-  max-width: 600px;
   margin: 0 1rem;
   border-radius: 4px;
   overflow: hidden;

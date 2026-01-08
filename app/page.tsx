@@ -1,4 +1,3 @@
-import Hero from '@/components/Hero';
 import Link from 'next/link';
 import { PLANT_CATEGORIES } from '@/lib/categories';
 import styles from './page.module.css';
@@ -6,38 +5,8 @@ import styles from './page.module.css';
 export default function Home() {
   return (
     <>
-      <Hero />
 
-      {/* What We Offer Section */}
-      <section className={styles.offers}>
-        <h2 className={styles.sectionTitle}>What We Offer</h2>
-        <p className={styles.sectionSubtitle}>
-          Discover our wide range of plants for every garden and space
-        </p>
 
-        <div className={styles.offerGrid}>
-          <div className={styles.offerCard}>
-            <span className={styles.offerIcon}>🌸</span>
-            <h3>400+ Plant Varieties</h3>
-            <p>From flowering shrubs to fruit trees, we have something for everyone</p>
-          </div>
-          <div className={styles.offerCard}>
-            <span className={styles.offerIcon}>🌿</span>
-            <h3>Expert Care Tips</h3>
-            <p>Each plant comes with care instructions to help it thrive</p>
-          </div>
-          <div className={styles.offerCard}>
-            <span className={styles.offerIcon}>🚚</span>
-            <h3>Safe Delivery</h3>
-            <p>Plants carefully packaged and delivered to your doorstep</p>
-          </div>
-          <div className={styles.offerCard}>
-            <span className={styles.offerIcon}>💬</span>
-            <h3>WhatsApp Support</h3>
-            <p>Order easily via WhatsApp and get personalized assistance</p>
-          </div>
-        </div>
-      </section>
 
       {/* Browse Categories Section */}
       <section className={styles.categories}>
