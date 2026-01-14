@@ -28,7 +28,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden w-64 flex-shrink-0">
       <img
-        src={product.image[0]}
+        src={product.image[0].replace('http://localhost:3000', '')}
         alt={product.name}
         className="w-full h-48 object-cover"
       />
