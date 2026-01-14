@@ -5,7 +5,7 @@ import { CartProvider } from "@/context/CartContext";
 import AuthProvider from "@/context/AuthContext";
 import Navbar from "@/components/Navbar";
 import CartDrawer from "@/components/CartDrawer";
-import Footer from "@/components/Footer";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,7 +30,7 @@ export default function RootLayout({
               <main className="main-content">
                 {children}
               </main>
-              <Footer />
+
               <CartDrawer />
             </div>
           </CartProvider>
