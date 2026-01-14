@@ -77,7 +77,7 @@ export async function getChatMessages(sessionId: string): Promise<StoredMessage[
 
     if (error) throw error;
 
-    return (data || []).map((row) => ({
+    return (data || []).map((row: { id: string; role: string; content: string; products?: unknown; created_at: string }) => ({
       id: row.id,
       role: row.role as 'user' | 'model',
       content: row.content,

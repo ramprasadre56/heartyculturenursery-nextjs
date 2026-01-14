@@ -1,6 +1,8 @@
 
 "use client";
 
+export const dynamic = 'force-dynamic';
+
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSession, signIn } from 'next-auth/react';
 import ChatSidebar from './_components/ChatSidebar';
