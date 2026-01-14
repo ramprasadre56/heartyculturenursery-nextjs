@@ -22,7 +22,7 @@ export interface Product {
   productID: string;
   name: string;
   image: string[];
-  brand: {name: string};
+  brand: { name: string };
   offers: {
     price: string;
     priceCurrency: string;
@@ -63,6 +63,7 @@ export interface ChatMessage {
   paymentMethods?: PaymentMethod[];
   isUserAction?: boolean;
   checkout?: Checkout;
+  paymentInstrument?: PaymentInstrument;
 }
 
 // Type guard to check for a valid text response
@@ -89,8 +90,12 @@ export interface CheckoutItem {
     id: string;
     quantity: number;
     unit_cost: number;
+    title?: string;
+    image_url?: string;
   };
-  total: number;
+  quantity?: number;
+  total?: number;
+  totals?: CheckoutTotal[];
 }
 
 export interface Checkout {
@@ -102,5 +107,8 @@ export interface Checkout {
   totals: CheckoutTotal[];
   order_id?: string;
   order_permalink_url?: string;
-  payment?: any;
+  order?: {
+    id: string;
+    permalink_url?: string;
+  };
 }

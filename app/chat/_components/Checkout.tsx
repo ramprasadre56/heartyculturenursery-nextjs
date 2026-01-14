@@ -15,7 +15,7 @@
  */
 import React, { useState } from 'react';
 
-import { Checkout } from '@/lib/chat/types';
+import { Checkout, CheckoutItem, CheckoutTotal } from '@/lib/chat/types';
 
 interface CheckoutProps {
   checkout: Checkout;
@@ -42,8 +42,8 @@ const CheckoutComponent: React.FC<CheckoutProps> = ({
     return checkout.totals.find((t) => t.type === type);
   };
 
-  const getItemTotal = (lineItem: any) => {
-    return lineItem.totals.find((t) => t.type === 'total');
+  const getItemTotal = (lineItem: CheckoutItem) => {
+    return lineItem.totals?.find((t) => t.type === 'total');
   };
 
   const grandTotal = getTotal('total');
@@ -75,22 +75,22 @@ const CheckoutComponent: React.FC<CheckoutProps> = ({
           </p>
         )}
         <div className="pt-3 space-y-3">
-          {itemsToShow.map((lineItem: any) => (
+          {itemsToShow.map((lineItem) => (
             <div key={lineItem.id} className="flex items-center text-sm">
               <img
-                src={lineItem.item.image_url}
+                src={lineItem.item.image_url || ''}
                 alt={lineItem.item.id}
                 className="w-16 h-16 object-cover rounded-md mr-4"
               />
               <div className="flex-grow">
                 <p className="font-semibold text-gray-700">
-                  {lineItem.item.title}
+                  {lineItem.item.title || lineItem.item.id}
                 </p>
                 <p className="text-gray-500">Qty: {lineItem.quantity}</p>
               </div>
               <p className="text-gray-800 font-medium pl-2">
                 {formatCurrency(
-                  getItemTotal(lineItem).amount,
+                  getItemTotal(lineItem)?.amount || 0,
                   checkout.currency,
                 )}
               </p>
