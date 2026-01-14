@@ -36,44 +36,6 @@
   border-radius: 4px;
 }
 
-/* Search */
-.searchContainer {
-  flex: 1;
-  display: flex;
-  margin: 0 1rem;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.searchInput {
-  flex: 1;
-  padding: 0.6rem 1rem;
-  border: none;
-  font-size: 1rem;
-  outline: none;
-  min-width: 0;
-}
-
-.searchInput:focus {
-  box-shadow: 0 0 0 2px #f90;
-}
-
-.searchButton {
-  padding: 0 1rem;
-  background-color: #febd69;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-  flex-shrink: 0;
-}
-
-.searchButton:hover {
-  background-color: #f3a847;
-}
-
 /* Account */
 .accountLink {
   display: flex;
@@ -83,6 +45,8 @@
   border-radius: 4px;
   transition: border 0.2s;
   flex-shrink: 0;
+  margin-left: auto;
+  /* Push to the right */
 }
 
 .accountLink:hover {
@@ -157,16 +121,16 @@
   flex-shrink: 0;
 }
 
-/* Sub Navigation */
-.subNav {
+/* Nav Items Container */
+.navItems {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.4rem 2rem;
-  background-color: #2d5a3d;
-  min-height: 48px;
-  width: 100%;
-  flex-wrap: wrap;
+}
+
+/* Sub Navigation (Removed but keeping class for backward compatibility/clean up if needed, effectively moved to navItems) */
+.subNav {
+  display: none;
 }
 
 .allButton {
@@ -182,6 +146,7 @@
   cursor: pointer;
   border-radius: 4px;
   transition: background 0.2s;
+  white-space: nowrap;
 }
 
 .allButton:hover {
@@ -280,19 +245,99 @@
   font-size: 1rem;
 }
 
+.accountDropdown {
+  position: relative;
+  margin-left: auto;
+}
+
+.accountDropdownMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 200px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+  padding: 8px;
+  z-index: 1000;
+  padding-top: 12px;
+}
+
+.accountDropdownMenu::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background: transparent;
+}
+
 /* Tablet Styles */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
+
+  /* Hide text labels on tablets or smaller screens if needed, or trigger mobile menu earlier */
+  .navItems {
+    display: none;
+    /* Hide nav items by default on tablet/mobile and use toggle */
+  }
+
+  .navItems.mobileOpen {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #1a472a;
+    /* Match main header color */
+    padding: 1rem;
+    min-height: auto;
+    align-items: stretch;
+    gap: 0.25rem;
+    z-index: 99;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
   .mainNav {
     padding: 0.5rem 1rem;
     gap: 0.75rem;
   }
 
-  .subNav {
-    padding: 0.4rem 1rem;
+  .menuToggle {
+    display: flex;
+    /* Show hamburger on tablet/mobile */
   }
 
   .searchContainer {
     max-width: 400px;
+  }
+
+  .navLink,
+  .allButton {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 0.75rem 1rem;
+  }
+
+  .navLink:hover,
+  .allButton:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .dropdown {
+    width: 100%;
+  }
+
+  .dropdownMenu {
+    position: static;
+    width: 100%;
+    max-height: 250px;
+    margin-top: 8px;
+    border-radius: 8px;
+    box-shadow: none;
+    border: 1px solid #ddd;
   }
 }
 
@@ -350,58 +395,27 @@
     display: flex;
   }
 
-  .subNav {
+  .navItems {
     display: none;
+  }
+
+  .navItems.mobileOpen {
+    display: flex;
     flex-direction: column;
     position: absolute;
     top: 100%;
+    /* Adjust if search bar on mobile impacts top position */
     left: 0;
     right: 0;
-    background: #2d5a3d;
+    background: #1a472a;
     padding: 1rem;
-    min-height: auto;
-    align-items: stretch;
-    gap: 0.25rem;
     z-index: 99;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 
-  .subNav.mobileOpen {
-    display: flex;
-  }
-
-  .navLink {
-    padding: 0.75rem 1rem;
-    justify-content: flex-start;
-    width: 100%;
-    border-radius: 8px;
-  }
-
-  .navLink:hover {
-    background: rgba(255, 255, 255, 0.15);
-  }
-
-  .allButton {
-    display: none;
-  }
-
-  .dropdown {
-    width: 100%;
-  }
-
-  .dropdownMenu {
-    position: static;
-    width: 100%;
-    max-height: 250px;
-    margin-top: 8px;
-    border-radius: 8px;
-    box-shadow: none;
-    border: 1px solid #ddd;
-  }
-
-  .dropdownItem {
-    padding: 12px;
-  }
+  /* If search bar is below, we need to be careful. Sticky header handles top:0 but navItems abs position is relative to mainNav.
+       On mobile, mainNav wraps.
+    */
 }
 
 /* Small Mobile */

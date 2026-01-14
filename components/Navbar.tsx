@@ -15,6 +15,7 @@ export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [seedsDropdownOpen, setSeedsDropdownOpen] = useState(false);
+    const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
 
     return (
         <header className={styles.header}>
@@ -32,20 +33,105 @@ export default function Navbar() {
                     />
                 </Link>
 
-                {/* Search Bar */}
-                <div className={styles.searchContainer}>
-                    <input
-                        type="text"
-                        placeholder="What are you looking for?"
-                        className={styles.searchInput}
-                    />
-                    <button className={styles.searchButton}>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.35-4.35"></path>
+
+
+                {/* Navigation Items (Hidden on Mobile) */}
+                <div className={`${styles.navItems} ${menuOpen ? styles.mobileOpen : ''}`}>
+                    <button
+                        className={styles.allButton}
+                        onClick={() => setMenuOpen(!menuOpen)} // Keep logic for mobile closing
+                    >
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                            <path d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
+                        <span>All</span>
                     </button>
+
+                    {/* Plants Dropdown */}
+                    <div
+                        className={styles.dropdown}
+                        onMouseEnter={() => setDropdownOpen(true)}
+                        onMouseLeave={() => setDropdownOpen(false)}
+                    >
+                        <button className={styles.navLink}>
+                            <span className={styles.navIcon}>🌿</span>
+                            <span>Plants</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </button>
+
+                        {dropdownOpen && (
+                            <div className={styles.dropdownMenu}>
+                                {PLANT_CATEGORIES.map((cat) => (
+                                    <Link
+                                        key={cat.slug}
+                                        href={`/plants/${cat.slug}`}
+                                        className={styles.dropdownItem}
+                                        onClick={() => setDropdownOpen(false)}
+                                    >
+                                        <span className={styles.dropdownIcon}>{cat.icon}</span>
+                                        <span>{cat.name}</span>
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Seeds Dropdown */}
+                    <div
+                        className={styles.dropdown}
+                        onMouseEnter={() => setSeedsDropdownOpen(true)}
+                        onMouseLeave={() => setSeedsDropdownOpen(false)}
+                    >
+                        <button className={styles.navLink}>
+                            <span className={styles.navIcon}>🌱</span>
+                            <span>Seeds</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </button>
+
+                        {seedsDropdownOpen && (
+                            <div className={styles.dropdownMenu}>
+                                {SEED_CATEGORIES.map((cat) => (
+                                    <Link
+                                        key={cat.slug}
+                                        href={`/seeds/${cat.slug}`}
+                                        className={styles.dropdownItem}
+                                        onClick={() => setSeedsDropdownOpen(false)}
+                                    >
+                                        <span className={styles.dropdownIcon}>{cat.icon}</span>
+                                        <span>{cat.name}</span>
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    <div className={styles.navLink}>
+                        <span className={styles.navIcon}>💚</span>
+                        <span>Plant Care</span>
+                    </div>
+
+                    <Link href="#" className={styles.navLink}>
+                        <span className={styles.navIcon}>📝</span>
+                        <span>Blog</span>
+                    </Link>
+
+                    <Link href="#" className={styles.navLink}>
+                        <span className={styles.navIcon}>ℹ️</span>
+                        <span>Our Story</span>
+                    </Link>
+
+
+
+                    <Link href="/chat" className={styles.navLink}>
+                        <span className={styles.navIcon}>💬</span>
+                        <span>Chat</span>
+                    </Link>
                 </div>
+
 
                 {/* Account - Google Sign In */}
                 {status === "loading" ? (
@@ -54,12 +140,49 @@ export default function Navbar() {
                     </div>
                 ) : session ? (
                     <div
-                        className={styles.accountLink}
-                        onClick={() => signOut()}
-                        style={{ cursor: 'pointer' }}
+                        className={styles.accountDropdown}
+                        onMouseEnter={() => setAccountDropdownOpen(true)}
+                        onMouseLeave={() => setAccountDropdownOpen(false)}
                     >
-                        <span className={styles.accountLabel}>Hello, {session.user?.name?.split(' ')[0] || 'User'}</span>
-                        <span className={styles.accountText}>Sign Out</span>
+                        <div
+                            className={styles.accountLink}
+                            style={{ cursor: 'pointer' }}
+                        >
+                            <span className={styles.accountLabel}>Hello, {session.user?.name?.split(' ')[0] || 'User'}</span>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <span className={styles.accountText}>Account & Lists</span>
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" style={{ marginLeft: '4px', transform: 'translateY(2px)' }}>
+                                    <path d="m6 9 6 6 6-6"></path>
+                                </svg>
+                            </div>
+                        </div>
+
+                        {accountDropdownOpen && (
+                            <div className={styles.accountDropdownMenu}>
+                                <div className="px-3 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                    Your Account
+                                </div>
+                                <Link
+                                    href="/orders"
+                                    className={styles.dropdownItem}
+                                    onClick={() => setAccountDropdownOpen(false)}
+                                >
+                                    <span className={styles.dropdownIcon}>📋</span>
+                                    <span>My Orders</span>
+                                </Link>
+                                <button
+                                    className={styles.dropdownItem}
+                                    onClick={() => {
+                                        setAccountDropdownOpen(false);
+                                        signOut();
+                                    }}
+                                    style={{ width: '100%', border: 'none', background: 'none', cursor: 'pointer' }}
+                                >
+                                    <span className={styles.dropdownIcon}>🚪</span>
+                                    <span>Sign Out</span>
+                                </button>
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <div
@@ -97,96 +220,6 @@ export default function Navbar() {
                     </svg>
                 </button>
             </div>
-
-            {/* Sub Navigation */}
-            <nav className={`${styles.subNav} ${menuOpen ? styles.mobileOpen : ''}`}>
-                <button
-                    className={styles.allButton}
-                    onClick={() => setMenuOpen(!menuOpen)}
-                >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-                        <path d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                    <span>All</span>
-                </button>
-
-                {/* Plants Dropdown */}
-                <div
-                    className={styles.dropdown}
-                    onMouseEnter={() => setDropdownOpen(true)}
-                    onMouseLeave={() => setDropdownOpen(false)}
-                >
-                    <button className={styles.navLink}>
-                        <span className={styles.navIcon}>🌿</span>
-                        <span>Plants</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="m6 9 6 6 6-6"></path>
-                        </svg>
-                    </button>
-
-                    {dropdownOpen && (
-                        <div className={styles.dropdownMenu}>
-                            {PLANT_CATEGORIES.map((cat) => (
-                                <Link
-                                    key={cat.slug}
-                                    href={`/plants/${cat.slug}`}
-                                    className={styles.dropdownItem}
-                                    onClick={() => setDropdownOpen(false)}
-                                >
-                                    <span className={styles.dropdownIcon}>{cat.icon}</span>
-                                    <span>{cat.name}</span>
-                                </Link>
-                            ))}
-                        </div>
-                    )}
-                </div>
-
-                {/* Seeds Dropdown */}
-                <div
-                    className={styles.dropdown}
-                    onMouseEnter={() => setSeedsDropdownOpen(true)}
-                    onMouseLeave={() => setSeedsDropdownOpen(false)}
-                >
-                    <button className={styles.navLink}>
-                        <span className={styles.navIcon}>🌱</span>
-                        <span>Seeds</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="m6 9 6 6 6-6"></path>
-                        </svg>
-                    </button>
-
-                    {seedsDropdownOpen && (
-                        <div className={styles.dropdownMenu}>
-                            {SEED_CATEGORIES.map((cat) => (
-                                <Link
-                                    key={cat.slug}
-                                    href={`/seeds/${cat.slug}`}
-                                    className={styles.dropdownItem}
-                                    onClick={() => setSeedsDropdownOpen(false)}
-                                >
-                                    <span className={styles.dropdownIcon}>{cat.icon}</span>
-                                    <span>{cat.name}</span>
-                                </Link>
-                            ))}
-                        </div>
-                    )}
-                </div>
-
-                <div className={styles.navLink}>
-                    <span className={styles.navIcon}>💚</span>
-                    <span>Plant Care</span>
-                </div>
-
-                <Link href="#" className={styles.navLink}>
-                    <span className={styles.navIcon}>📝</span>
-                    <span>Blog</span>
-                </Link>
-
-                <Link href="#" className={styles.navLink}>
-                    <span className={styles.navIcon}>ℹ️</span>
-                    <span>Our Story</span>
-                </Link>
-            </nav>
         </header>
     );
 }

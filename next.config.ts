@@ -12,6 +12,14 @@ const nextConfig: NextConfig = {
   },
   // Enable static export for Vercel
   output: 'standalone',
+  async rewrites() {
+    return [
+      {
+        source: '/api/agent',
+        destination: 'http://localhost:10999/',
+      },
+    ];
+  },
 };
 
 export default nextConfig;
