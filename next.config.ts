@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/api/agent',
-        destination: 'http://localhost:10999/',
+        destination: 'https://business-agent-430410298641.us-central1.run.app/',
       },
     ];
   },

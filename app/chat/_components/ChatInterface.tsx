@@ -293,7 +293,7 @@ export default function ChatInterface({ sessionId, userEmail }: ChatInterfacePro
                     'https://ucp.dev/specification/reference?v=2026-01-11',
                 // Update URL to match current host
                 'UCP-Agent':
-                    'profile="http://localhost:3000/profile/agent_profile.json"',
+                    'profile="https://heartyculturenursery-nextjs.vercel.app/profile/agent_profile.json"',
             };
 
             // Changed /api to /api/agent
