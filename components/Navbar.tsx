@@ -24,7 +24,7 @@ export default function Navbar() {
                 {/* Logo */}
                 <Link href="/" className={styles.logoLink}>
                     <Image
-                        src="/Logo/Logo.png"
+                        src="/logo.png"
                         alt="Horticulture Nursery"
                         width={55}
                         height={55}
