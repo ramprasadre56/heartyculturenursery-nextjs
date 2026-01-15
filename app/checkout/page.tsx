@@ -141,9 +141,9 @@ export default function CheckoutPage() {
         }
     }, [session, fetchAddresses]);
 
-    const getPrice = (item: { id?: string; unique_id?: string; category?: string }) => {
+    const getPrice = (item: { id?: number; unique_id?: string; category?: string }) => {
         if (!item.id && !item.unique_id) return 250;
-        const idStr = (item.id || '') + (item.category || '');
+        const idStr = (item.id?.toString() || '') + (item.category || '');
         let hash = 0;
         for (let i = 0; i < idStr.length; i++) {
             hash = idStr.charCodeAt(i) + ((hash << 5) - hash);
