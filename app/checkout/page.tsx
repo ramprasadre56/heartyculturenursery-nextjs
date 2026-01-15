@@ -112,7 +112,7 @@ export default function CheckoutPage() {
         if (!error && data) {
             setSavedAddresses(data);
             // Auto-select default address and populate formData
-            const defaultAddr = data.find(a => a.is_default);
+            const defaultAddr = data.find((a: SavedAddress) => a.is_default);
             const selectedAddr = defaultAddr || data[0];
             if (selectedAddr) {
                 setSelectedAddressId(selectedAddr.id);
