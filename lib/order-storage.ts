@@ -20,7 +20,7 @@ const getSessionId = (): string => {
     return sessionId;
 };
 
-export const saveOrder = async (orderId: string, items: any[]) => {
+export const saveOrder = async (orderId: string, items: any[], paymentInfo?: { paymentId?: string; status?: string }) => {
     const sessionId = getSessionId();
     if (!sessionId) return;
 
@@ -36,7 +36,9 @@ export const saveOrder = async (orderId: string, items: any[]) => {
             .insert({
                 id: orderId,
                 user_session_id: sessionId,
-                details: newOrder // JSONB column
+                details: newOrder, // JSONB column
+                payment_id: paymentInfo?.paymentId,
+                payment_status: paymentInfo?.status
             });
 
         if (error) {
@@ -46,6 +48,7 @@ export const saveOrder = async (orderId: string, items: any[]) => {
         console.error('Exception saving to Supabase:', e);
     }
 };
+
 
 export const getStoredOrders = async (): Promise<StoredOrder[]> => {
     const sessionId = getSessionId();

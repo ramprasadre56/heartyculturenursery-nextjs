@@ -28,7 +28,7 @@ const products = plants.map(plant => {
         ],
         "brand": {
             "@type": "Brand",
-            "name": "Hearty Culture Nursery"
+            "name": "Horticulture Nursery"
         },
         "offers": {
             "price": getPrice(plant).toString(),

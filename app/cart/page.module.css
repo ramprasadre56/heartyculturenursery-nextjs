@@ -309,3 +309,75 @@
         width: 100%;
     }
 }
+
+/* New styles for pricing */
+.itemPrice {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a472a;
+    margin-top: 8px;
+}
+
+.itemTotal {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a472a;
+}
+
+.summaryItems {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.summaryItem {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.summaryItemName {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 1rem;
+}
+
+.divider {
+    height: 1px;
+    background: #eee;
+    margin: 1rem 0;
+}
+
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.totalAmount {
+    color: #1a472a;
+}
+
+.freeShipping {
+    color: #22c55e;
+    font-weight: 600;
+}
+
+.paymentInfo {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f0fdf4;
+    border-radius: 8px;
+}
+
+.paymentInfo p {
+    font-size: 0.85rem;
+    color: #166534;
+    margin: 0.25rem 0;
+}

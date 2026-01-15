@@ -5,8 +5,12 @@ create table if not exists orders (
   id text primary key,
   user_session_id text not null,
   details jsonb not null,
+  payment_id text,
+  payment_status text default 'pending',
+  fulfillment_status text default 'pending',
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
+
 
 -- For prototype/demo, allow public access
 alter table orders enable row level security;
@@ -36,3 +40,22 @@ create table if not exists chat_messages (
 
 alter table chat_messages enable row level security;
 create policy "Public messages" on chat_messages for all using (true) with check (true);
+
+-- Addresses Schema
+create table if not exists addresses (
+  id uuid default gen_random_uuid() primary key,
+  user_email text not null,
+  full_name text not null,
+  phone text,
+  address_line1 text not null,
+  address_line2 text,
+  city text not null,
+  state text,
+  zip_code text not null,
+  country text default 'India',
+  is_default boolean default false,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+alter table addresses enable row level security;
+create policy "Public addresses" on addresses for all using (true) with check (true);

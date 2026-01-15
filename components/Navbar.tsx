@@ -170,6 +170,14 @@ export default function Navbar() {
                                     <span className={styles.dropdownIcon}>📋</span>
                                     <span>My Orders</span>
                                 </Link>
+                                <Link
+                                    href="/admin"
+                                    className={styles.dropdownItem}
+                                    onClick={() => setAccountDropdownOpen(false)}
+                                >
+                                    <span className={styles.dropdownIcon}>🔧</span>
+                                    <span>Admin Dashboard</span>
+                                </Link>
                                 <button
                                     className={styles.dropdownItem}
                                     onClick={() => {

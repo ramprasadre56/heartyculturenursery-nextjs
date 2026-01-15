@@ -2,9 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getOrderIds } from '@/lib/order-storage';
 import { getCheckout } from '@/lib/ucp-client';
-import { UCPCheckout } from '@/types/ucp';
 
 export default function MyOrdersPage() {
     const router = useRouter();
@@ -23,28 +21,61 @@ export default function MyOrdersPage() {
             }
 
             try {
-                // Fetch backend status/details
+                // Try to fetch backend status/details
                 const promises = storedOrders.map(order => getCheckout(order.id).catch(err => {
-                    console.error(`Failed to load order ${order.id}`, err);
+                    console.warn(`Could not fetch backend status for order ${order.id}`, err);
                     return null;
                 }));
 
                 const backendResults = await Promise.all(promises);
 
-                // Merge backend data with local details
-                const mergedOrders = backendResults
-                    .filter((o): o is UCPCheckout => o !== null)
-                    .map(backendOrder => {
-                        const local = storedOrders.find(s => s.id === backendOrder.id);
+                // Merge backend data with local details, or use local-only
+                const mergedOrders = storedOrders.map(localOrder => {
+                    const backendOrder = backendResults.find(
+                        (b): b is NonNullable<typeof b> => b !== null && b.id === localOrder.id
+                    );
+
+                    if (backendOrder) {
                         return {
                             ...backendOrder,
-                            localDetails: local
+                            localDetails: localOrder
                         };
-                    });
+                    } else {
+                        // Fallback: use local data when backend is unavailable
+                        return {
+                            id: localOrder.id,
+                            status: 'paid',
+                            line_items: (localOrder.items || []).map((item: any) => ({
+                                item: {
+                                    id: item.unique_id || item.id,
+                                    name: item.common_name || item.scientific_name || 'Plant',
+                                    price: item.price || 0,
+                                },
+                                quantity: item.quantity || 1
+                            })),
+                            localDetails: localOrder
+                        };
+                    }
+                });
 
                 setOrders(mergedOrders);
             } catch (err) {
                 console.error("Error fetching orders list:", err);
+                // Still show local orders on total failure
+                const localOnlyOrders = storedOrders.map(localOrder => ({
+                    id: localOrder.id,
+                    status: 'paid',
+                    line_items: (localOrder.items || []).map((item: any) => ({
+                        item: {
+                            id: item.unique_id || item.id,
+                            name: item.common_name || item.scientific_name || 'Plant',
+                            price: item.price || 0,
+                        },
+                        quantity: item.quantity || 1
+                    })),
+                    localDetails: localOrder
+                }));
+                setOrders(localOnlyOrders);
             } finally {
                 setLoading(false);
             }

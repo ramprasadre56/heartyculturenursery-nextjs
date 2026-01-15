@@ -9,6 +9,44 @@
     background: white;
     border-radius: 12px;
     border: 1px solid #eee;
+    transition: all 0.3s ease;
+}
+
+/* Collapsed state */
+.sidebar.collapsed {
+    width: 70px;
+    min-width: 70px;
+}
+
+/* Collapse Toggle Button */
+.collapseBtn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #666;
+    transition: all 0.2s;
+}
+
+.collapseBtn:hover {
+    background: #eee;
+    color: #1a472a;
+}
+
+.collapseIcon {
+    transition: transform 0.3s ease;
+}
+
+.collapseIcon.rotated {
+    transform: rotate(180deg);
 }
 
 .title {
@@ -18,6 +56,7 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 0.75rem;
+    margin-top: 0.5rem;
 }
 
 .backLink {
@@ -53,6 +92,7 @@
     border-radius: 6px;
     border-left: 3px solid transparent;
     transition: all 0.15s;
+    overflow: hidden;
 }
 
 .categoryItem:hover {
@@ -64,6 +104,18 @@
     border-left-color: #22c55e;
 }
 
+/* When collapsed, center the icon */
+.sidebar.collapsed .categoryItem {
+    justify-content: center;
+    padding: 10px;
+    border-left: none;
+    border-radius: 8px;
+}
+
+.sidebar.collapsed .categoryItem.active {
+    background: rgba(34, 197, 94, 0.2);
+}
+
 .icon {
     width: 28px;
     height: 28px;
@@ -73,6 +125,13 @@
     background: rgba(34, 197, 94, 0.1);
     border-radius: 6px;
     font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.sidebar.collapsed .icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
 }
 
 .name {

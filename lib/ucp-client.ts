@@ -2,7 +2,7 @@
 import { UCPCheckout, UCPCreateCheckoutRequest } from '@/types/ucp';
 import { v4 as uuidv4 } from 'uuid';
 
-const UCP_API_URL = process.env.NEXT_PUBLIC_UCP_API_URL || 'http://localhost:8182';
+const UCP_API_URL = process.env.NEXT_PUBLIC_UCP_API_URL || '/api/merchant';
 
 // Helper to generate required UCP headers
 const getHeaders = () => {
