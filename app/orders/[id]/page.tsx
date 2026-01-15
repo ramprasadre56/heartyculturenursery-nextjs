@@ -4,32 +4,73 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { getCheckout } from '@/lib/ucp-client';
 import { getOrderDetailsLocal } from '@/lib/order-storage';
-import { UCPCheckout } from '@/types/ucp';
+
+interface OrderData {
+    id: string;
+    status: string;
+    line_items: Array<{
+        id?: string;
+        item: { title: string; price: number };
+        quantity: number;
+    }>;
+}
 
 export default function OrderDetailsPage() {
     const params = useParams();
     const router = useRouter();
-    const [order, setOrder] = useState<UCPCheckout | null>(null);
+    const [order, setOrder] = useState<OrderData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const [localOrderDetails, setLocalOrderDetails] = useState<any>(null);
+    const [localOrderDetails, setLocalOrderDetails] = useState<{
+        id: string;
+        items?: Array<{
+            common_name?: string;
+            scientific_name?: string;
+            title?: string;
+            price?: number;
+            image_url?: string;
+            image?: string;
+            quantity?: number;
+        }>;
+    } | null>(null);
 
     useEffect(() => {
         const fetchOrder = async () => {
             // Handle case where params might be null or undefined initially
             if (!params?.id) return;
 
-            try {
-                const orderData = await getCheckout(params.id as string);
-                setOrder(orderData);
+            const orderId = params.id as string;
 
-                // Fetch local details
-                const local = await getOrderDetailsLocal(params.id as string);
-                if (local) setLocalOrderDetails(local);
-            } catch (err: any) {
-                console.error("Failed to fetch order:", err);
-                setError(err.message || "Failed to load order details.");
+            // First, try to get local details
+            const local = await getOrderDetailsLocal(orderId);
+            if (local) setLocalOrderDetails(local);
+
+            try {
+                // Try to fetch from backend
+                const orderData = await getCheckout(orderId);
+                setOrder(orderData);
+            } catch (err) {
+                console.warn("Backend unavailable, using local data:", err);
+
+                // Fallback: construct order from local data
+                if (local && local.items && local.items.length > 0) {
+                    const fallbackOrder: OrderData = {
+                        id: orderId,
+                        status: 'paid',
+                        line_items: local.items.map((item, idx) => ({
+                            id: `item_${idx}`,
+                            item: {
+                                title: item.common_name || item.scientific_name || item.title || 'Plant',
+                                price: item.price || 0,
+                            },
+                            quantity: item.quantity || 1
+                        }))
+                    };
+                    setOrder(fallbackOrder);
+                } else {
+                    setError("Order not found in local storage.");
+                }
             } finally {
                 setLoading(false);
             }
