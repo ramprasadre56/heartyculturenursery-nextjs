@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
 import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 
 interface OrderItem {
     common_name?: string;
@@ -47,7 +48,7 @@ const FULFILLMENT_OPTIONS = [
 ];
 
 export default function AdminDashboard() {
-    const { status } = useSession();
+    const { status } = useUnifiedAuth();
     const router = useRouter();
     const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(true);
@@ -71,7 +72,15 @@ export default function AdminDashboard() {
             if (dateFrom) params.set('dateFrom', dateFrom);
             if (dateTo) params.set('dateTo', dateTo);
 
-            const response = await fetch(`/api/admin/orders?${params}`);
+            // Get Supabase access token
+            const { data: sessionData } = await supabase.auth.getSession();
+            const accessToken = sessionData?.session?.access_token || '';
+
+            const response = await fetch(`/api/admin/orders?${params}`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                },
+            });
             const data = await response.json();
 
             if (!response.ok) {
@@ -97,9 +106,16 @@ export default function AdminDashboard() {
 
     const updateFulfillmentStatus = async (orderId: string, newStatus: string) => {
         try {
+            // Get Supabase access token
+            const { data: sessionData } = await supabase.auth.getSession();
+            const accessToken = sessionData?.session?.access_token || '';
+
             const response = await fetch('/api/admin/orders', {
                 method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
+                },
                 body: JSON.stringify({ orderId, fulfillmentStatus: newStatus })
             });
 
