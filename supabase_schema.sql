@@ -4,6 +4,7 @@
 create table if not exists orders (
   id text primary key,
   user_session_id text not null,
+  user_email text, -- Added to link orders to user accounts
   details jsonb not null,
   payment_id text,
   payment_status text default 'pending',

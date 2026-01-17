@@ -203,7 +203,16 @@ export default function CheckoutPage() {
             setSavedAddresses([...savedAddresses, data]);
             setSelectedAddressId(data.id);
             setShowAddressForm(false);
-            setFormData({ fullName: '', email: session.user.email, phone: '', address: '', city: '', state: '', zip: '' });
+            // Update formData with the saved address details (instead of clearing it) so checkout can proceed
+            setFormData({
+                fullName: data.full_name,
+                email: session?.user?.email || '',
+                phone: data.phone || '',
+                address: data.address_line1,
+                city: data.city,
+                state: data.state || '',
+                zip: data.zip_code,
+            });
         } catch (err: unknown) {
             console.error('Failed to save address:', err);
             setError('Failed to save address');
@@ -290,7 +299,19 @@ export default function CheckoutPage() {
                         }));
                         await saveOrder(response.razorpay_order_id, enrichedItems, {
                             paymentId: response.razorpay_payment_id,
-                            status: 'paid'
+                            status: 'paid',
+                            userEmail: session?.user?.email || formData.email, // Pass email to link order
+                            customer: {
+                                name: formData.fullName,
+                                email: formData.email,
+                                phone: formData.phone
+                            },
+                            shipping: {
+                                address: formData.address,
+                                city: formData.city,
+                                state: formData.state,
+                                zip: formData.zip
+                            }
                         });
 
                         clearCart();

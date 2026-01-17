@@ -67,7 +67,7 @@ export const createCheckout = async (checkoutData: UCPCreateCheckoutRequest): Pr
     }
 };
 
-export const getCheckout = async (checkoutId: string): Promise<UCPCheckout> => {
+export const getCheckout = async (checkoutId: string): Promise<UCPCheckout | null> => {
     try {
         const response = await fetch(`${UCP_API_URL}/checkout-sessions/${checkoutId}`, {
             method: 'GET',
@@ -75,6 +75,9 @@ export const getCheckout = async (checkoutId: string): Promise<UCPCheckout> => {
         });
 
         if (!response.ok) {
+            if (response.status === 404) {
+                return null;
+            }
             throw new Error(`Failed to get checkout: ${response.statusText}`);
         }
 

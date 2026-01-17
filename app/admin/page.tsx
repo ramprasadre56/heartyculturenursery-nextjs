@@ -15,6 +15,17 @@ interface OrderDetails {
     id: string;
     items: OrderItem[];
     date: string;
+    customer?: {
+        name: string;
+        email: string;
+        phone: string;
+    };
+    shipping?: {
+        address: string;
+        city: string;
+        state: string;
+        zip: string;
+    };
 }
 
 interface Order {
@@ -301,6 +312,31 @@ export default function AdminDashboard() {
                                                             <h4 className="text-[#ffd700] font-semibold mb-2">Payment Details</h4>
                                                             <p className="text-gray-300">Payment ID: {order.payment_id || 'N/A'}</p>
                                                             <p className="text-gray-300">Session: {order.user_session_id?.substring(0, 8)}...</p>
+                                                        </div>
+                                                        <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-white/20 pt-4 mt-2">
+                                                            <div>
+                                                                <h4 className="text-[#ffd700] font-semibold mb-2">Customer Details</h4>
+                                                                {order.details?.customer ? (
+                                                                    <>
+                                                                        <p className="text-gray-300"><span className="text-gray-400">Name:</span> {order.details.customer.name}</p>
+                                                                        <p className="text-gray-300"><span className="text-gray-400">Email:</span> {order.details.customer.email}</p>
+                                                                        <p className="text-gray-300"><span className="text-gray-400">Phone:</span> {order.details.customer.phone}</p>
+                                                                    </>
+                                                                ) : (
+                                                                    <p className="text-gray-400 italic">No customer details available</p>
+                                                                )}
+                                                            </div>
+                                                            <div>
+                                                                <h4 className="text-[#ffd700] font-semibold mb-2">Shipping Address</h4>
+                                                                {order.details?.shipping ? (
+                                                                    <>
+                                                                        <p className="text-gray-300">{order.details.shipping.address}</p>
+                                                                        <p className="text-gray-300">{order.details.shipping.city}, {order.details.shipping.state} - {order.details.shipping.zip}</p>
+                                                                    </>
+                                                                ) : (
+                                                                    <p className="text-gray-400 italic">No shipping address available</p>
+                                                                )}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </td>

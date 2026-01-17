@@ -4,8 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getCheckout } from '@/lib/ucp-client';
 
+import { useSession } from 'next-auth/react';
+
 export default function MyOrdersPage() {
     const router = useRouter();
+    const { data: session } = useSession();
     const [orders, setOrders] = useState<any[]>([]); // Using any for enriched object
     const [loading, setLoading] = useState(true);
 
@@ -13,7 +16,7 @@ export default function MyOrdersPage() {
         const fetchOrders = async () => {
             // Fetch local details (with correct prices)
             const { getStoredOrders } = await import('@/lib/order-storage');
-            const storedOrders = await getStoredOrders();
+            const storedOrders = await getStoredOrders(session?.user?.email || undefined);
 
             if (storedOrders.length === 0) {
                 setLoading(false);
@@ -82,7 +85,7 @@ export default function MyOrdersPage() {
         };
 
         fetchOrders();
-    }, []);
+    }, [session]);
 
     // Currency formatter
     const formatPrice = (amount: number, currency = 'INR') => {

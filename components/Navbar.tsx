@@ -3,19 +3,34 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
+import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
 import { useCart } from '@/context/CartContext';
 import { PLANT_CATEGORIES } from '@/lib/categories';
 import { SEED_CATEGORIES } from '@/lib/seedCategories';
+import { supabase } from '@/lib/supabase';
 import styles from './Navbar.module.css';
+import LoginModal from './LoginModal';
 
 export default function Navbar() {
     const { totalItems, toggleCart } = useCart();
-    const { data: session, status } = useSession();
+    const { user, status } = useUnifiedAuth();
+    const session = user ? { user } : null; // Adapter for existing code
     const [menuOpen, setMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [seedsDropdownOpen, setSeedsDropdownOpen] = useState(false);
     const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
+    const [loginModalOpen, setLoginModalOpen] = useState(false);
+
+    const handleSignOut = async () => {
+        setAccountDropdownOpen(false);
+        // Sign out from both providers
+        await Promise.all([
+            signOut({ redirect: false }), // NextAuth
+            supabase.auth.signOut()       // Supabase
+        ]);
+        window.location.reload(); // Force refresh to clear state
+    };
 
     return (
         <header className={styles.header}>
@@ -32,8 +47,6 @@ export default function Navbar() {
                         priority
                     />
                 </Link>
-
-
 
                 {/* Navigation Items (Hidden on Mobile) */}
                 <div className={`${styles.navItems} ${menuOpen ? styles.mobileOpen : ''}`}>
@@ -124,14 +137,11 @@ export default function Navbar() {
                         <span>Our Story</span>
                     </Link>
 
-
-
                     <Link href="/chat" className={styles.navLink}>
                         <span className={styles.navIcon}>💬</span>
                         <span>Chat</span>
                     </Link>
                 </div>
-
 
                 {/* Account - Google Sign In */}
                 {status === "loading" ? (
@@ -180,10 +190,7 @@ export default function Navbar() {
                                 </Link>
                                 <button
                                     className={styles.dropdownItem}
-                                    onClick={() => {
-                                        setAccountDropdownOpen(false);
-                                        signOut();
-                                    }}
+                                    onClick={handleSignOut}
                                     style={{ width: '100%', border: 'none', background: 'none', cursor: 'pointer' }}
                                 >
                                     <span className={styles.dropdownIcon}>🚪</span>
@@ -195,7 +202,7 @@ export default function Navbar() {
                 ) : (
                     <div
                         className={styles.accountLink}
-                        onClick={() => signIn('google')}
+                        onClick={() => setLoginModalOpen(true)}
                         style={{ cursor: 'pointer' }}
                     >
                         <span className={styles.accountLabel}>Hello, sign in</span>
@@ -228,6 +235,11 @@ export default function Navbar() {
                     </svg>
                 </button>
             </div>
+
+            <LoginModal
+                isOpen={loginModalOpen}
+                onClose={() => setLoginModalOpen(false)}
+            />
         </header>
     );
 }

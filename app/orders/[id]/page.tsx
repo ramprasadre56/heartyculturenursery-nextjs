@@ -49,7 +49,11 @@ export default function OrderDetailsPage() {
             try {
                 // Try to fetch from backend
                 const orderData = await getCheckout(orderId);
-                setOrder(orderData);
+                if (orderData) {
+                    setOrder(orderData);
+                } else {
+                    throw new Error("Order not found on backend");
+                }
             } catch (err) {
                 console.warn("Backend unavailable, using local data:", err);
 
