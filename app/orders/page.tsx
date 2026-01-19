@@ -50,7 +50,7 @@ export default function MyOrdersPage() {
                         // Fallback: use local data when backend is unavailable
                         return {
                             id: localOrder.id,
-                            status: 'paid',
+                            status: localOrder.payment_status || 'pending',
                             line_items: (localOrder.items || []).map((item: any) => ({
                                 item: {
                                     id: item.unique_id || item.id,
@@ -70,7 +70,7 @@ export default function MyOrdersPage() {
                 // Still show local orders on total failure
                 const localOnlyOrders = storedOrders.map(localOrder => ({
                     id: localOrder.id,
-                    status: 'paid',
+                    status: localOrder.payment_status || 'pending',
                     line_items: (localOrder.items || []).map((item: any) => ({
                         item: {
                             id: item.unique_id || item.id,

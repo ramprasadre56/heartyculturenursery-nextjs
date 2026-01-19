@@ -33,6 +33,7 @@ export default function OrderDetailsPage() {
             image?: string;
             quantity?: number;
         }>;
+        payment_status?: string;
     } | null>(null);
 
     useEffect(() => {
@@ -61,7 +62,7 @@ export default function OrderDetailsPage() {
                 if (local && local.items && local.items.length > 0) {
                     const fallbackOrder: OrderData = {
                         id: orderId,
-                        status: 'paid',
+                        status: local.payment_status || 'pending',
                         line_items: local.items.map((item, idx) => ({
                             id: `item_${idx}`,
                             item: {

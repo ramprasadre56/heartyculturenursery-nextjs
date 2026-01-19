@@ -34,6 +34,7 @@ const getSessionId = (): string => {
 export const saveOrder = async (orderId: string, items: any[], paymentInfo?: {
     paymentId?: string;
     status?: string;
+    paymentMethod?: string;
     userEmail?: string;
     customer?: { name: string; email: string; phone: string; };
     shipping?: { address: string; city: string; state: string; zip: string; };
@@ -70,14 +71,14 @@ export const saveOrder = async (orderId: string, items: any[], paymentInfo?: {
 };
 
 
-export const getStoredOrders = async (userEmail?: string): Promise<StoredOrder[]> => {
+export const getStoredOrders = async (userEmail?: string): Promise<(StoredOrder & { payment_status?: string })[]> => {
     const sessionId = getSessionId();
     if (!sessionId) return [];
 
     try {
         let query = supabase
             .from('orders')
-            .select('details, created_at, user_email') // Fetch user_email to allow filtering
+            .select('details, created_at, user_email, payment_status') // Also fetch payment_status
             .order('created_at', { ascending: false });
 
         if (userEmail) {
@@ -113,7 +114,7 @@ export const getStoredOrders = async (userEmail?: string): Promise<StoredOrder[]
                 // If it belongs to a user, I shouldn't see it (privacy).
                 return row.user_email === null;
             }
-        }).map((row: any) => row.details);
+        }).map((row: any) => ({ ...row.details, payment_status: row.payment_status }));
     } catch (e) {
         console.error('Exception fetching from Supabase:', e);
         return [];
@@ -126,16 +127,16 @@ export const getOrderIds = async (): Promise<string[]> => {
     return orders.map(o => o.id);
 };
 
-export const getOrderDetailsLocal = async (orderId: string): Promise<StoredOrder | undefined> => {
+export const getOrderDetailsLocal = async (orderId: string): Promise<(StoredOrder & { payment_status?: string }) | undefined> => {
     try {
         const { data, error } = await supabase
             .from('orders')
-            .select('details')
+            .select('details, payment_status')
             .eq('id', orderId)
             .single();
 
         if (error || !data) return undefined;
-        return data.details;
+        return { ...data.details, payment_status: data.payment_status };
     } catch (e) {
         console.error('Error fetching details:', e);
         return undefined;

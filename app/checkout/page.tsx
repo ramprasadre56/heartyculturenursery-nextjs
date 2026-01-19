@@ -70,6 +70,9 @@ export default function CheckoutPage() {
     const [error, setError] = useState<string | null>(null);
     const [razorpayLoaded, setRazorpayLoaded] = useState(false);
 
+    // Payment method
+    const [paymentMethod, setPaymentMethod] = useState<'razorpay' | 'cod'>('razorpay');
+
     // Address management
     const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([]);
     const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
@@ -239,15 +242,22 @@ export default function CheckoutPage() {
         setLoading(true);
         setError(null);
 
-        if (!razorpayLoaded) {
-            setError("Payment system is loading. Please try again.");
+        // Validate we have address info
+        if (!formData.fullName || !formData.address || !formData.city || !formData.zip) {
+            setError("Please fill in all required address fields");
             setLoading(false);
             return;
         }
 
-        // Validate we have address info
-        if (!formData.fullName || !formData.address || !formData.city || !formData.zip) {
-            setError("Please fill in all required address fields");
+        // Handle Cash on Delivery
+        if (paymentMethod === 'cod') {
+            await handleCODOrder();
+            return;
+        }
+
+        // For Razorpay, check if loaded
+        if (!razorpayLoaded) {
+            setError("Payment system is loading. Please try again.");
             setLoading(false);
             return;
         }
@@ -345,6 +355,42 @@ export default function CheckoutPage() {
             });
             razorpay.open();
 
+        } catch (err: unknown) {
+            console.error(err);
+            setError(`Failed to place order: ${err instanceof Error ? err.message : 'Unknown error'}`);
+            setLoading(false);
+        }
+    };
+
+    // Handle Cash on Delivery order
+    const handleCODOrder = async () => {
+        try {
+            const orderId = `COD_${Date.now()}`;
+            const { saveOrder } = await import('@/lib/order-storage');
+            const enrichedItems = cartItems.map(item => ({
+                ...item,
+                price: Math.round(getPrice(item) * 100)
+            }));
+            await saveOrder(orderId, enrichedItems, {
+                paymentId: 'COD',
+                status: 'pending',
+                paymentMethod: 'cod',
+                userEmail: session?.user?.email || formData.email,
+                customer: {
+                    name: formData.fullName,
+                    email: formData.email,
+                    phone: formData.phone
+                },
+                shipping: {
+                    address: formData.address,
+                    city: formData.city,
+                    state: formData.state,
+                    zip: formData.zip
+                }
+            });
+
+            clearCart();
+            router.push(`/orders/${orderId}`);
         } catch (err: unknown) {
             console.error(err);
             setError(`Failed to place order: ${err instanceof Error ? err.message : 'Unknown error'}`);
@@ -513,6 +559,62 @@ export default function CheckoutPage() {
                             )}
                         </form>
                     )}
+
+                    {/* Payment Method Selection */}
+                    <div className="mt-6 pt-6 border-t border-white/20">
+                        <h2 className="text-xl font-semibold mb-4 text-[#ffd700]">Payment Method</h2>
+                        <div className="space-y-3">
+                            {/* Razorpay Option */}
+                            <div
+                                onClick={() => setPaymentMethod('razorpay')}
+                                className={`p-4 rounded-lg border cursor-pointer transition-all ${paymentMethod === 'razorpay'
+                                    ? 'border-[#ffd700] bg-[#ffd700]/10'
+                                    : 'border-white/20 hover:border-white/40'
+                                    }`}
+                            >
+                                <div className="flex items-center gap-3">
+                                    <input
+                                        type="radio"
+                                        checked={paymentMethod === 'razorpay'}
+                                        onChange={() => setPaymentMethod('razorpay')}
+                                        className="w-4 h-4 accent-[#ffd700]"
+                                    />
+                                    <div className="flex-1">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-lg">💳</span>
+                                            <p className="font-medium">Pay Online (Razorpay)</p>
+                                        </div>
+                                        <p className="text-sm text-gray-400 mt-1">UPI, Credit/Debit Card, Net Banking, Wallets</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Cash on Delivery Option */}
+                            <div
+                                onClick={() => setPaymentMethod('cod')}
+                                className={`p-4 rounded-lg border cursor-pointer transition-all ${paymentMethod === 'cod'
+                                    ? 'border-[#ffd700] bg-[#ffd700]/10'
+                                    : 'border-white/20 hover:border-white/40'
+                                    }`}
+                            >
+                                <div className="flex items-center gap-3">
+                                    <input
+                                        type="radio"
+                                        checked={paymentMethod === 'cod'}
+                                        onChange={() => setPaymentMethod('cod')}
+                                        className="w-4 h-4 accent-[#ffd700]"
+                                    />
+                                    <div className="flex-1">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-lg">💵</span>
+                                            <p className="font-medium">Cash on Delivery (COD)</p>
+                                        </div>
+                                        <p className="text-sm text-gray-400 mt-1">Pay when your order is delivered</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Order Summary - NOW ON RIGHT with Sticky Position */}
@@ -563,7 +665,11 @@ export default function CheckoutPage() {
 
                         {/* Trust badges */}
                         <div className="mt-4 pt-4 border-t border-white/20">
-                            <p className="text-xs text-gray-400 flex items-center gap-2">💳 Secure payment via Razorpay</p>
+                            <p className="text-xs text-gray-400 flex items-center gap-2">
+                                {paymentMethod === 'razorpay'
+                                    ? '💳 Secure payment via Razorpay'
+                                    : '💵 Pay cash when your order arrives'}
+                            </p>
                         </div>
                     </div>
                 </div>
