@@ -4634,7 +4634,7 @@
     "common_name": "Hanging Lobster Claw",
     "category": "Heliconia Varieties",
     "page": 20,
-    "image": "/heartyculture_catalogue/heliconia_varieties/hanging_lobster_claw.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/hanging_lobster_claw_v2.png",
     "global_id": 467,
     "available_quantity": 10
   },
@@ -4684,7 +4684,7 @@
     "common_name": "Heliconia meana",
     "category": "Heliconia Varieties",
     "page": 20,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_meana.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_meana_v2.png",
     "global_id": 472,
     "available_quantity": 10
   },
@@ -4694,7 +4694,7 @@
     "common_name": "Heliconia excelsa",
     "category": "Heliconia Varieties",
     "page": 20,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_excelsa.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_excelsa_v2.png",
     "global_id": 473,
     "available_quantity": 10
   },
@@ -4704,7 +4704,7 @@
     "common_name": "Beefsteak Heliconia",
     "category": "Heliconia Varieties",
     "page": 20,
-    "image": "/heartyculture_catalogue/heliconia_varieties/beefsteak_heliconia.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/beefsteak_heliconia_v2.png",
     "global_id": 474,
     "available_quantity": 10
   },
@@ -4714,17 +4714,17 @@
     "common_name": "Heliconia longa",
     "category": "Heliconia Varieties",
     "page": 20,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_longa.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_longa_v2.png",
     "global_id": 475,
     "available_quantity": 10
   },
   {
     "id": 10,
-    "scientific_name": "Heliconia vellerigera she kong Heliconia rostrata ten day",
-    "common_name": "Heliconia vellerigera she kong Heliconia rostrata ten day",
+    "scientific_name": "Heliconia vellerigera she kong",
+    "common_name": "Heliconia vellerigera she kong",
     "category": "Heliconia Varieties",
     "page": 20,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_vellerigera_she_kong_heliconia_rostrata_.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_vellerigera_she_kong_heliconia_rostrata_v2.png",
     "global_id": 476,
     "available_quantity": 10
   },
@@ -4734,7 +4734,7 @@
     "common_name": "Heliconia caribaea red",
     "category": "Heliconia Varieties",
     "page": 20,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_caribaea_red.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_caribaea_red_v2.png",
     "global_id": 477,
     "available_quantity": 10
   },
@@ -4744,14 +4744,14 @@
     "common_name": "Heliconia caribaea cream",
     "category": "Heliconia Varieties",
     "page": 20,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_caribaea_cream.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_caribaea_cream_v2.png",
     "global_id": 478,
     "available_quantity": 10
   },
   {
     "id": 13,
-    "scientific_name": "Heliconia bihai × caribaea 'Burgundy Heliconia lingulata fan",
-    "common_name": "Heliconia bihai × caribaea 'Burgundy Heliconia lingulata fan",
+    "scientific_name": "Heliconia bihai × caribaea 'Burgundy'",
+    "common_name": "Heliconia bihai × caribaea 'Burgundy'",
     "category": "Heliconia Varieties",
     "page": 20,
     "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_bihai__caribaea_burgundy_heliconia_lingu.png",
@@ -4764,7 +4764,7 @@
     "common_name": "Heliconia kawauchi",
     "category": "Heliconia Varieties",
     "page": 20,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_kawauchi.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_kawauchi_v2.png",
     "global_id": 480,
     "available_quantity": 10
   },
@@ -4774,7 +4774,7 @@
     "common_name": "Heliconia maya blood",
     "category": "Heliconia Varieties",
     "page": 21,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_maya_blood.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_maya_blood_v2.png",
     "global_id": 481,
     "available_quantity": 10
   },
@@ -4784,7 +4784,7 @@
     "common_name": "Heliconia mexican gold",
     "category": "Heliconia Varieties",
     "page": 21,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_mexican_gold.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_mexican_gold_v3.png",
     "global_id": 482,
     "available_quantity": 10
   },
@@ -4824,7 +4824,7 @@
     "common_name": "Heliconia longiflora",
     "category": "Heliconia Varieties",
     "page": 21,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_longiflora.jpeg",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_longiflora.png",
     "global_id": 486,
     "available_quantity": 10
   },
@@ -4844,7 +4844,7 @@
     "common_name": "Heliconia she",
     "category": "Heliconia Varieties",
     "page": 21,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_she.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_she_new.png",
     "global_id": 488,
     "available_quantity": 10
   },
@@ -4854,7 +4854,7 @@
     "common_name": "Heliconia eden pink",
     "category": "Heliconia Varieties",
     "page": 21,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_eden_pink.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_eden_pink_new.png",
     "global_id": 489,
     "available_quantity": 10
   },
@@ -4864,7 +4864,7 @@
     "common_name": "Heliconia macas pink",
     "category": "Heliconia Varieties",
     "page": 21,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_macas_pink.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_macas_pink_new.png",
     "global_id": 490,
     "available_quantity": 10
   },
@@ -4874,7 +4874,7 @@
     "common_name": "Heliconia wagneriana red",
     "category": "Heliconia Varieties",
     "page": 21,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_wagneriana_red.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_wagneriana_red_new.png",
     "global_id": 491,
     "available_quantity": 10
   },
@@ -4884,7 +4884,7 @@
     "common_name": "Heliconia wagneriana tricolor",
     "category": "Heliconia Varieties",
     "page": 21,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_wagneriana_tricolor.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_wagneriana_pumpkin.png",
     "global_id": 492,
     "available_quantity": 10
   },
@@ -4894,7 +4894,7 @@
     "common_name": "Heliconia Wagneriana ''pumpkin''",
     "category": "Heliconia Varieties",
     "page": 21,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_wagneriana_pumpkin.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_cinnamon_twist.png",
     "global_id": 493,
     "available_quantity": 10
   },
@@ -4904,7 +4904,7 @@
     "common_name": "Heliconia cinnamon twist",
     "category": "Heliconia Varieties",
     "page": 21,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_cinnamon_twist.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_sunrise.png",
     "global_id": 494,
     "available_quantity": 10
   },
@@ -4914,7 +4914,7 @@
     "common_name": "Heliconia sunrise",
     "category": "Heliconia Varieties",
     "page": 21,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_sunrise.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_sunrise_new.png",
     "global_id": 495,
     "available_quantity": 10
   },
@@ -4924,7 +4924,7 @@
     "common_name": "Heliconia aurea",
     "category": "Heliconia Varieties",
     "page": 21,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_aurea.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_aurea_new.png",
     "global_id": 496,
     "available_quantity": 10
   },
@@ -4934,7 +4934,7 @@
     "common_name": "Heliconia jacquinii",
     "category": "Heliconia Varieties",
     "page": 22,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_jacquinii.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_jacquinii_v2.png",
     "global_id": 497,
     "available_quantity": 10
   },
@@ -4950,8 +4950,8 @@
   },
   {
     "id": 33,
-    "scientific_name": "Heliconia psittacorum lena  Heliconia st vincent red",
-    "common_name": "Heliconia psittacorum lena  Heliconia st vincent red",
+    "scientific_name": "Heliconia psittacorum lena",
+    "common_name": "Heliconia psittacorum lena",
     "category": "Heliconia Varieties",
     "page": 22,
     "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_psittacorum_lena__heliconia_st_vincent_r.png",
@@ -4984,17 +4984,17 @@
     "common_name": "Heliconia adrian",
     "category": "Heliconia Varieties",
     "page": 22,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_adrian.jpeg",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_adrian.png",
     "global_id": 502,
     "available_quantity": 10
   },
   {
     "id": 37,
     "scientific_name": "Heliconia sunshine",
-    "common_name": "Santol fruit",
+    "common_name": "Heliconia sunshine",
     "category": "Heliconia Varieties",
     "page": 22,
-    "image": "/heartyculture_catalogue/heliconia_varieties/santol_fruit.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_sunshine.png",
     "global_id": 503,
     "available_quantity": 10
   },
@@ -5004,7 +5004,7 @@
     "common_name": "Heliconia latispatha",
     "category": "Heliconia Varieties",
     "page": 22,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_latispatha.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_oriole_orange.png",
     "global_id": 504,
     "available_quantity": 10
   },
@@ -5014,7 +5014,7 @@
     "common_name": "Heliconia christmas (Original)",
     "category": "Heliconia Varieties",
     "page": 22,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_christmas_original.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_christmas_original_v2.png",
     "global_id": 505,
     "available_quantity": 10
   },
@@ -5024,7 +5024,7 @@
     "common_name": "Heliconia red christmas",
     "category": "Heliconia Varieties",
     "page": 22,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_red_christmas.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_red_christmas_v2.png",
     "global_id": 506,
     "available_quantity": 10
   },
@@ -5054,18 +5054,58 @@
     "common_name": "Heliconia peachy pink",
     "category": "Heliconia Varieties",
     "page": 22,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_peachy_pink.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_peachy_pink_v2.png",
     "global_id": 509,
     "available_quantity": 10
   },
   {
     "id": 44,
-    "scientific_name": "Heliconia vellerigera Heliconia Unnamed yellow color",
-    "common_name": "Heliconia vellerigera Heliconia Unnamed yellow color",
+    "scientific_name": "Heliconia vellerigera",
+    "common_name": "Heliconia vellerigera",
     "category": "Heliconia Varieties",
     "page": 22,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_vellerigera_heliconia_unnamed_yellow_col.png",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_vellerigera_v2.png",
     "global_id": 510,
+    "available_quantity": 10
+  },
+  {
+    "id": 45,
+    "scientific_name": "Heliconia rostrata ten day",
+    "common_name": "Heliconia rostrata ten day",
+    "category": "Heliconia Varieties",
+    "page": 22,
+    "image": "/heartyculture_catalogue/heliconia_varieties/hanging_lobster_claw_v2.png",
+    "global_id": 5101,
+    "available_quantity": 10
+  },
+  {
+    "id": 46,
+    "scientific_name": "Heliconia lingulata fan",
+    "common_name": "Heliconia lingulata fan",
+    "category": "Heliconia Varieties",
+    "page": 20,
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_lingulata_fan_v3.png",
+    "global_id": 5102,
+    "available_quantity": 10
+  },
+  {
+    "id": 47,
+    "scientific_name": "Heliconia Unnamed yellow color",
+    "common_name": "Heliconia Unnamed yellow color",
+    "category": "Heliconia Varieties",
+    "page": 22,
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_unnamed_yellow_color_v3.png",
+    "global_id": 5103,
+    "available_quantity": 10
+  },
+  {
+    "id": 48,
+    "scientific_name": "Heliconia st vincent red",
+    "common_name": "Heliconia st vincent red",
+    "category": "Heliconia Varieties",
+    "page": 22,
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_st_vincent_red.png",
+    "global_id": 5104,
     "available_quantity": 10
   },
   {
