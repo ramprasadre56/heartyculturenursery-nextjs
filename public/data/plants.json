@@ -13,7 +13,7 @@
     "scientific_name": "Salvinia natans",
     "common_name": "Floating fern",
     "category": "Aquatic Plants",
-    "image": "/heartyculture_catalogue/aquatic_plants/floating_fern.jpeg",
+    "image": "/heartyculture_catalogue/aquatic_plants/floating_fern.png",
     "global_id": 2,
     "available_quantity": 10
   },
@@ -4684,7 +4684,7 @@
     "common_name": "Heliconia meana",
     "category": "Heliconia Varieties",
     "page": 20,
-    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_meana.jpeg",
+    "image": "/heartyculture_catalogue/heliconia_varieties/heliconia_meana.png",
     "global_id": 472,
     "available_quantity": 10
   },
