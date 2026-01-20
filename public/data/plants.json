@@ -3984,7 +3984,7 @@
     "common_name": "Mangosteen",
     "category": "Fruit Varieties",
     "page": 39,
-    "image": "/heartyculture_catalogue/fruit_varieties/mangosteen.png",
+    "image": "/heartyculture_catalogue/fruit_varieties/mangosteen_fixed.png",
     "global_id": 402,
     "available_quantity": 10
   },
@@ -4154,7 +4154,7 @@
     "common_name": "Mamey Sapota",
     "category": "Fruit Varieties",
     "page": 40,
-    "image": "/heartyculture_catalogue/fruit_varieties/mamey_sapota.png",
+    "image": "/heartyculture_catalogue/fruit_varieties/mamey_sapota_fixed.png",
     "global_id": 419,
     "available_quantity": 10
   },
