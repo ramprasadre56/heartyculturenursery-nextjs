@@ -120,10 +120,7 @@ export default function CartPage() {
                                                     🌱 {item.category}
                                                 </span>
                                             </div>
-                                            <div className="text-right">
-                                                <p className="text-2xl font-bold text-[#1a472a]">₹{(getPrice(item) * item.quantity).toFixed(0)}</p>
-                                                <p className="text-sm text-gray-400">₹{getPrice(item)} each</p>
-                                            </div>
+                                            {/* Price hidden */}
                                         </div>
 
                                         {/* Actions */}
@@ -170,72 +167,27 @@ export default function CartPage() {
                     {/* Order Summary - Sticky Sidebar */}
                     <div>
                         <div className="sticky top-24 bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-                            <h2 className="text-xl font-bold text-gray-800 mb-6 pb-4 border-b border-gray-100">Order Summary</h2>
+                            <h2 className="text-xl font-bold text-gray-800 mb-6 pb-4 border-b border-gray-100">Quote Summary</h2>
 
-                            {/* Promo Code */}
-                            <div className="mb-6">
-                                <label className="block text-sm font-medium text-gray-600 mb-2">Promo Code</label>
-                                <div className="flex gap-2">
-                                    <input
-                                        type="text"
-                                        value={promoCode}
-                                        onChange={(e) => setPromoCode(e.target.value)}
-                                        placeholder="Enter code"
-                                        disabled={promoApplied}
-                                        className="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1a472a] focus:ring-2 focus:ring-[#1a472a]/20 outline-none transition-all disabled:bg-gray-50"
-                                    />
-                                    <button
-                                        onClick={handleApplyPromo}
-                                        disabled={promoApplied}
-                                        className="px-4 py-3 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-colors disabled:opacity-50"
-                                    >
-                                        {promoApplied ? '✓' : 'Apply'}
-                                    </button>
-                                </div>
-                                {promoApplied && (
-                                    <p className="text-green-600 text-sm mt-2">✨ 10% discount applied!</p>
-                                )}
-                                <p className="text-gray-400 text-xs mt-1">Try: PLANTS10</p>
-                            </div>
-
-                            {/* Price Breakdown */}
                             <div className="space-y-3 mb-6">
                                 <div className="flex justify-between text-gray-600">
-                                    <span>Subtotal ({totalItems} items)</span>
-                                    <span className="font-medium">₹{subtotal.toFixed(0)}</span>
+                                    <span>{totalItems} {totalItems === 1 ? 'item' : 'items'} selected</span>
                                 </div>
-                                {discount > 0 && (
-                                    <div className="flex justify-between text-green-600">
-                                        <span>Discount</span>
-                                        <span className="font-medium">-₹{discount}</span>
-                                    </div>
-                                )}
-                                <div className="flex justify-between text-gray-600">
-                                    <span>Shipping</span>
-                                    <span className="font-semibold text-green-600">FREE</span>
-                                </div>
+                                <p className="text-sm text-gray-500">Add the plants you want and request a quote. We&apos;ll get back to you with pricing and availability.</p>
                             </div>
 
-                            <div className="border-t border-dashed border-gray-200 pt-4 mb-6">
-                                <div className="flex justify-between items-center">
-                                    <span className="text-lg font-bold text-gray-800">Total</span>
-                                    <span className="text-2xl font-bold text-[#1a472a]">₹{total.toFixed(0)}</span>
-                                </div>
-                            </div>
-
-                            {/* Checkout Button */}
+                            {/* Request Quote Button */}
                             <Link
                                 href="/checkout"
                                 className="block w-full py-4 bg-gradient-to-r from-[#1a472a] to-[#2d5a3d] text-white text-center font-bold text-lg rounded-xl hover:from-[#143821] hover:to-[#1a472a] transition-all hover:shadow-lg hover:-translate-y-0.5"
                             >
-                                Proceed to Checkout
+                                Request Quote
                             </Link>
 
-                            {/* Trust Badges */}
                             <div className="mt-6 pt-6 border-t border-gray-100">
                                 <div className="flex items-center gap-3 text-gray-600 text-sm">
-                                    <span className="text-lg">💳</span>
-                                    <span>Secure payment via Razorpay</span>
+                                    <span className="text-lg">📋</span>
+                                    <span>We&apos;ll share the best price for your selection</span>
                                 </div>
                             </div>
                         </div>
@@ -246,14 +198,13 @@ export default function CartPage() {
                 <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 shadow-2xl lg:hidden z-50">
                     <div className="flex items-center justify-between gap-4">
                         <div>
-                            <p className="text-sm text-gray-500">Total</p>
-                            <p className="text-xl font-bold text-[#1a472a]">₹{total.toFixed(0)}</p>
+                            <p className="text-sm text-gray-500">{totalItems} {totalItems === 1 ? 'item' : 'items'}</p>
                         </div>
                         <Link
                             href="/checkout"
                             className="flex-1 py-4 bg-gradient-to-r from-[#1a472a] to-[#2d5a3d] text-white text-center font-bold rounded-xl"
                         >
-                            Checkout
+                            Request Quote
                         </Link>
                     </div>
                 </div>
