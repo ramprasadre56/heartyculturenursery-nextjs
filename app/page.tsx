@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import { PLANT_CATEGORIES } from '@/lib/categories';
+import PlantSizesGuide from '@/components/PlantSizesGuide';
 import styles from './page.module.css';
 
 export default function Home() {
   return (
     <>
-
-
+      <PlantSizesGuide />
 
       {/* Browse Categories Section */}
       <section className={styles.categories}>
