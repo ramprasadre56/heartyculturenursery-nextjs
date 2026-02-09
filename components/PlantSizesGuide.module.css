@@ -1,0 +1,483 @@
+/* ===== Section ===== */
+.section {
+  padding: 5rem 2rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f0f7f0 50%, #ffffff 100%);
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ===== Header ===== */
+.sectionTitle {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--color-primary, #1a472a);
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.sectionSubtitle {
+  color: var(--color-text-light, #666);
+  font-size: 1.1rem;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease 0.15s, transform 0.6s ease 0.15s;
+}
+
+.sectionVisible .sectionTitle,
+.sectionVisible .sectionSubtitle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Tab Switcher ===== */
+.tabSwitcher {
+  display: inline-flex;
+  gap: 0;
+  background: #e8ede8;
+  border-radius: 50px;
+  padding: 4px;
+  margin-bottom: 3rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease 0.25s, transform 0.5s ease 0.25s;
+}
+
+.sectionVisible .tabSwitcher {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tab {
+  padding: 0.75rem 2rem;
+  border: none;
+  background: transparent;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #666;
+  font-family: inherit;
+}
+
+.tab:hover {
+  color: var(--color-primary, #1a472a);
+}
+
+.tabActive {
+  background: linear-gradient(135deg, #1a472a, #2d5a3d);
+  color: white;
+  box-shadow: 0 2px 8px rgba(26, 71, 42, 0.3);
+}
+
+.tabActive:hover {
+  color: white;
+}
+
+/* ===== Tab Content ===== */
+.tabContent {
+  display: none;
+}
+
+.tabContentActive {
+  display: block;
+}
+
+/* ===== Size Grid ===== */
+.sizeGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  align-items: stretch;
+}
+
+.sizeGridTwo {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+}
+
+/* ===== Size Cards - Scroll Reveal ===== */
+.sizeCard {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  border: 1px solid #e8e8e8;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  /* Pre-animation state */
+  opacity: 0;
+  transform: translateY(60px) scale(0.95);
+}
+
+.sizeCardVisible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0ms),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0ms),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.sizeCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(26, 71, 42, 0.12);
+  border-color: var(--color-accent, #22c55e);
+}
+
+/* ===== Visual Container ===== */
+.visualContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 140px;
+  margin-bottom: 1.25rem;
+}
+
+/* ===== Bag Visual (Grow Bags) ===== */
+.bagVisual {
+  background: linear-gradient(180deg, #2d3a2d 0%, #1a251a 100%);
+  border-radius: 4px 4px 6px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Bag fold line at top */
+.bagVisual::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 15%;
+  right: 15%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 1px;
+}
+
+/* Bag bottom seam */
+.bagVisual::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sizeCard:hover .bagVisual {
+  transform: scale(1.08);
+}
+
+/* ===== Pot Visual (Poly Packs) ===== */
+.potVisual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.potBody {
+  background: linear-gradient(135deg, #4a7c5c 0%, #3a6349 100%);
+  border-radius: 6px 6px 4px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Pot rim */
+.potBody::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  height: 8px;
+  background: linear-gradient(135deg, #5a8c6c 0%, #4a7c5c 100%);
+  border-radius: 4px 4px 0 0;
+}
+
+.sizeCard:hover .potVisual {
+  transform: scale(1.08);
+}
+
+.visualIcon {
+  font-size: 1.5rem;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+/* ===== Card Content ===== */
+.cardTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primary, #1a472a);
+  margin-bottom: 0.75rem;
+}
+
+.cardMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.metaItem {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.metaLabel {
+  color: var(--color-primary, #1a472a);
+  font-weight: 600;
+}
+
+.cardDescription {
+  font-size: 0.88rem;
+  color: var(--color-text-light, #666);
+  line-height: 1.55;
+  margin-bottom: 1rem;
+}
+
+/* ===== Size Tags ===== */
+.sizeTagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+}
+
+.sizeTag {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  background: rgba(34, 197, 94, 0.08);
+  color: var(--color-primary, #1a472a);
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 20px;
+  border: 1px solid rgba(34, 197, 94, 0.18);
+}
+
+/* ===== Poly Pack Table ===== */
+.packTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.75rem;
+  text-align: left;
+}
+
+.packTable th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary, #1a472a);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.5rem 0.5rem;
+  border-bottom: 2px solid rgba(34, 197, 94, 0.2);
+}
+
+.packTable td {
+  font-size: 0.85rem;
+  color: #555;
+  padding: 0.4rem 0.5rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.packTable tr:last-child td {
+  border-bottom: none;
+}
+
+.packLabel {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  background: rgba(255, 215, 0, 0.15);
+  color: #8a6d00;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: 10px;
+  margin-left: 0.4rem;
+}
+
+/* ===== Connection Arrow (between cards) ===== */
+.arrowContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.5s ease var(--arrow-delay, 0ms);
+}
+
+.sectionVisible .arrowContainer {
+  opacity: 1;
+}
+
+.arrow {
+  color: var(--color-accent, #22c55e);
+  font-size: 1.25rem;
+  opacity: 0.5;
+}
+
+/* ===== Disclaimer ===== */
+.disclaimer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding: 0.85rem 1.5rem;
+  background: rgba(255, 215, 0, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  border-radius: 12px;
+  font-size: 0.88rem;
+  color: #666;
+  font-style: italic;
+}
+
+.disclaimerIcon {
+  font-size: 1.1rem;
+  color: var(--color-orange, #f97316);
+  flex-shrink: 0;
+}
+
+/* ===== Progress Bar (visual scale indicator) ===== */
+.progressBar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0 0.5rem;
+}
+
+.progressTrack {
+  flex: 1;
+  height: 4px;
+  background: #e8e8e8;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent, #22c55e), var(--color-primary, #1a472a));
+  border-radius: 2px;
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 0;
+}
+
+.sizeCardVisible .progressFill {
+  width: var(--fill-width, 0%);
+  transition-delay: calc(var(--delay, 0ms) + 300ms);
+}
+
+.progressLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #999;
+  white-space: nowrap;
+}
+
+/* ===== Responsive: Tablet ===== */
+@media (max-width: 1024px) {
+  .sizeGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sizeGridTwo {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 100%;
+  }
+}
+
+/* ===== Responsive: Mobile ===== */
+@media (max-width: 768px) {
+  .section {
+    padding: 3rem 1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.75rem;
+  }
+
+  .sectionSubtitle {
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  .tabSwitcher {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 0.65rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .sizeGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .sizeGridTwo {
+    grid-template-columns: 1fr;
+  }
+
+  .sizeCard {
+    transform: translateY(40px) scale(0.98);
+  }
+
+  .visualContainer {
+    height: 110px;
+  }
+
+  .arrowContainer {
+    display: none;
+  }
+}
+
+/* ===== Responsive: Small Mobile ===== */
+@media (max-width: 480px) {
+  .section {
+    padding: 2.5rem 0.75rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.4rem;
+  }
+
+  .sectionSubtitle {
+    font-size: 0.88rem;
+  }
+
+  .cardTitle {
+    font-size: 1rem;
+  }
+
+  .sizeCard {
+    padding: 1.5rem 1rem;
+  }
+
+  .disclaimer {
+    font-size: 0.8rem;
+    padding: 0.75rem 1rem;
+  }
+}
