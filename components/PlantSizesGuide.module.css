@@ -91,6 +91,21 @@
   display: block;
 }
 
+/* ===== Guide Infographic Image ===== */
+.guideImageWrapper {
+  margin-bottom: 2.5rem;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(26, 71, 42, 0.1);
+  border: 1px solid #e0ebe0;
+}
+
+.guideImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* ===== Size Grid ===== */
 .sizeGrid {
   display: grid;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import styles from './PlantSizesGuide.module.css';
 import {
   GROW_BAG_CATEGORIES,
@@ -193,6 +194,16 @@ export default function PlantSizesGuide() {
 
         {/* Grow Bags */}
         <div className={`${styles.tabContent} ${activeTab === 'bags' ? styles.tabContentActive : ''}`}>
+          <div className={styles.guideImageWrapper}>
+            <Image
+              src="/growbagsizes.png"
+              alt="Bag Sizes & Potting Guide - Small (Seedling), Medium (Primary Growth), Large (Specimen Stock), Extra Large (Instant Greenery)"
+              width={1200}
+              height={600}
+              className={styles.guideImage}
+              priority
+            />
+          </div>
           <div className={styles.sizeGrid}>
             {GROW_BAG_CATEGORIES.map((cat, index) => (
               <BagSizeCard key={cat.category} data={cat} index={index} />
@@ -202,6 +213,15 @@ export default function PlantSizesGuide() {
 
         {/* Poly Packs */}
         <div className={`${styles.tabContent} ${activeTab === 'packs' ? styles.tabContentActive : ''}`}>
+          <div className={styles.guideImageWrapper}>
+            <Image
+              src="/ppsizes.png"
+              alt="Poly Packs (PP) Guide - 4-inch Liner Pack, 8-inch Retail Pot, 10-inch Advanced Growth Pack, 20-inch Advanced Growth Pack"
+              width={1200}
+              height={600}
+              className={styles.guideImage}
+            />
+          </div>
           <div className={`${styles.sizeGrid} ${styles.sizeGridTwo}`}>
             {POLY_PACK_CATEGORIES.map((cat, index) => (
               <PolyPackCard key={cat.category} data={cat} index={index} />
