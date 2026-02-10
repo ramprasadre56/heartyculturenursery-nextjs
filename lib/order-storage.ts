@@ -3,6 +3,7 @@ import { supabase } from './supabase';
 import { v4 as uuidv4 } from 'uuid';
 
 const SESSION_KEY = 'heartyculture_session_id';
+const ORDERS_LOCAL_KEY = 'heartyculture_orders';
 
 export interface StoredOrder {
     id: string;
@@ -31,6 +32,28 @@ const getSessionId = (): string => {
     return sessionId;
 };
 
+// localStorage helpers
+function getLocalOrders(): (StoredOrder & { payment_status?: string })[] {
+    if (typeof window === 'undefined') return [];
+    try {
+        const stored = localStorage.getItem(ORDERS_LOCAL_KEY);
+        return stored ? JSON.parse(stored) : [];
+    } catch {
+        return [];
+    }
+}
+
+function saveLocalOrder(order: StoredOrder & { payment_status?: string }) {
+    if (typeof window === 'undefined') return;
+    try {
+        const orders = getLocalOrders();
+        orders.unshift(order);
+        localStorage.setItem(ORDERS_LOCAL_KEY, JSON.stringify(orders));
+    } catch {
+        // ignore storage errors
+    }
+}
+
 export const saveOrder = async (orderId: string, items: any[], paymentInfo?: {
     paymentId?: string;
     status?: string;
@@ -42,13 +65,19 @@ export const saveOrder = async (orderId: string, items: any[], paymentInfo?: {
     const sessionId = getSessionId();
     if (!sessionId) return;
 
-    const newOrder: StoredOrder = {
+    const newOrder: StoredOrder & { payment_status?: string } = {
         id: orderId,
         items,
         date: new Date().toISOString(),
         customer: paymentInfo?.customer,
-        shipping: paymentInfo?.shipping
+        shipping: paymentInfo?.shipping,
+        payment_status: paymentInfo?.status
     };
+
+    // Always save to localStorage as fallback
+    saveLocalOrder(newOrder);
+
+    if (!supabase) return;
 
     try {
         const { error } = await supabase
@@ -56,17 +85,17 @@ export const saveOrder = async (orderId: string, items: any[], paymentInfo?: {
             .insert({
                 id: orderId,
                 user_session_id: sessionId,
-                user_email: paymentInfo?.userEmail, // Link to user email
-                details: newOrder, // JSONB column
+                user_email: paymentInfo?.userEmail,
+                details: newOrder,
                 payment_id: paymentInfo?.paymentId,
                 payment_status: paymentInfo?.status
             });
 
         if (error) {
-            console.error('Failed to save order to Supabase:', error);
+            console.warn('Failed to save order to Supabase:', error?.message || error);
         }
     } catch (e) {
-        console.error('Exception saving to Supabase:', e);
+        console.warn('Exception saving to Supabase:', e);
     }
 };
 
@@ -75,49 +104,39 @@ export const getStoredOrders = async (userEmail?: string): Promise<(StoredOrder 
     const sessionId = getSessionId();
     if (!sessionId) return [];
 
+    if (!supabase) return getLocalOrders();
+
     try {
         let query = supabase
             .from('orders')
-            .select('details, created_at, user_email, payment_status') // Also fetch payment_status
+            .select('details, created_at, user_email, payment_status')
             .order('created_at', { ascending: false });
 
         if (userEmail) {
-            // If user is logged in, get orders for email OR session (to catch orders just made)
             query = query.or(`user_email.eq.${userEmail},user_session_id.eq.${sessionId}`);
         } else {
-            // Anonymous user
             query = query.eq('user_session_id', sessionId);
         }
 
         const { data, error } = await query;
 
         if (error) {
-            console.error('Failed to fetch orders from Supabase:', error);
-            return [];
+            console.warn('Failed to fetch orders from Supabase:', error?.message || error);
+            return getLocalOrders();
         }
 
-        // Filter: 
-        // 1. If I have no email (anonymous), I only see orders with NO email attached (truly anonymous) 
-        //    OR orders that I just created in this session (but if they have an email, they shouldn't legally exist for me unless I logged out? 
-        //    Actually, if I am anonymous, I shouldn't see orders belonging to 'user@gmail.com' even if session matches.)
-        // 2. If I have an email, I see my orders + anonymous orders from this session. 
-        //    I should NOT see orders from this session that belong to 'other@gmail.com'.
-
-        return data.filter((row: any) => {
+        const supabaseOrders = data.filter((row: any) => {
             if (userEmail) {
-                // I am logged in.
-                // Show if it belongs to me OR if it belongs to nobody (anonymous session order)
                 return row.user_email === userEmail || row.user_email === null;
             } else {
-                // I am anonymous.
-                // Show only if it belongs to nobody.
-                // If it belongs to a user, I shouldn't see it (privacy).
                 return row.user_email === null;
             }
         }).map((row: any) => ({ ...row.details, payment_status: row.payment_status }));
+
+        return supabaseOrders.length > 0 ? supabaseOrders : getLocalOrders();
     } catch (e) {
-        console.error('Exception fetching from Supabase:', e);
-        return [];
+        console.warn('Exception fetching from Supabase:', e);
+        return getLocalOrders();
     }
 };
 
@@ -128,19 +147,26 @@ export const getOrderIds = async (): Promise<string[]> => {
 };
 
 export const getOrderDetailsLocal = async (orderId: string): Promise<(StoredOrder & { payment_status?: string }) | undefined> => {
-    try {
-        const { data, error } = await supabase
-            .from('orders')
-            .select('details, payment_status')
-            .eq('id', orderId)
-            .single();
+    // Try Supabase first
+    if (supabase) {
+        try {
+            const { data, error } = await supabase
+                .from('orders')
+                .select('details, payment_status')
+                .eq('id', orderId)
+                .single();
 
-        if (error || !data) return undefined;
-        return { ...data.details, payment_status: data.payment_status };
-    } catch (e) {
-        console.error('Error fetching details:', e);
-        return undefined;
+            if (!error && data) {
+                return { ...data.details, payment_status: data.payment_status };
+            }
+        } catch {
+            // fall through to localStorage
+        }
     }
+
+    // Fallback to localStorage
+    const localOrders = getLocalOrders();
+    return localOrders.find(o => o.id === orderId);
 };
 
 // Deprecated wrapper

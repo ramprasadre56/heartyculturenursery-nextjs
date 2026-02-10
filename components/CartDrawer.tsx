@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
+import { formatSizeDisplay } from '@/lib/data';
 import styles from './CartDrawer.module.css';
 
 export default function CartDrawer() {
@@ -72,6 +73,9 @@ export default function CartDrawer() {
                                     </h4>
                                     <p className={styles.itemScientific}>{item.scientific_name}</p>
                                     <p className={styles.itemCategory}>{item.category}</p>
+                                    {item.sizeSelection && (
+                                        <p className={styles.itemSize}>{formatSizeDisplay(item.sizeSelection)}</p>
+                                    )}
                                 </div>
                                 <div className={styles.itemActions}>
                                     <div className={styles.quantityControls}>

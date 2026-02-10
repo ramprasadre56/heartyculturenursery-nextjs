@@ -10,9 +10,17 @@ export interface Plant {
     image?: string;
 }
 
+export interface SizeSelection {
+    containerType: 'grow_bag' | 'pp_pot';
+    size: string;
+    weightKg: number;
+    categoryLabel: string;
+}
+
 export interface CartItem extends Plant {
     quantity: number;
     unique_id: string;
+    sizeSelection?: SizeSelection;
 }
 
 // Cache for loaded plants
@@ -83,6 +91,13 @@ export async function getAllCategories(): Promise<string[]> {
 }
 
 // Create unique ID for cart items
-export function createUniqueId(category: string, id: number): string {
-    return `${category.toLowerCase().replace(/[^a-z0-9]/g, '-')}_${id}`;
+export function createUniqueId(category: string, id: number, sizeKey?: string): string {
+    const base = `${category.toLowerCase().replace(/[^a-z0-9]/g, '-')}_${id}`;
+    return sizeKey ? `${base}_${sizeKey}` : base;
+}
+
+// Format size selection for display
+export function formatSizeDisplay(sel: SizeSelection): string {
+    const type = sel.containerType === 'grow_bag' ? 'Grow Bag' : 'PP Pot';
+    return `${type} ${sel.size} (${sel.weightKg}kg)`;
 }

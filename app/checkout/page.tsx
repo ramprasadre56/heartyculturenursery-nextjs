@@ -6,6 +6,7 @@ import { useCart } from '@/context/CartContext';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { supabase } from '@/lib/supabase';
+import { formatSizeDisplay } from '@/lib/data';
 
 interface SavedAddress {
     id: string;
@@ -48,30 +49,34 @@ export default function CheckoutPage() {
 
     // Load saved addresses
     const fetchAddresses = useCallback(async () => {
-        if (!session?.user?.email) return;
+        if (!session?.user?.email || !supabase) return;
 
-        const { data, error } = await supabase
-            .from('addresses')
-            .select('*')
-            .eq('user_email', session.user.email)
-            .order('is_default', { ascending: false });
+        try {
+            const { data, error } = await supabase
+                .from('addresses')
+                .select('*')
+                .eq('user_email', session.user.email)
+                .order('is_default', { ascending: false });
 
-        if (!error && data) {
-            setSavedAddresses(data);
-            const defaultAddr = data.find((a: SavedAddress) => a.is_default);
-            const selectedAddr = defaultAddr || data[0];
-            if (selectedAddr) {
-                setSelectedAddressId(selectedAddr.id);
-                setFormData(prev => ({
-                    ...prev,
-                    fullName: selectedAddr.full_name,
-                    phone: selectedAddr.phone || '',
-                    address: selectedAddr.address_line1,
-                    city: selectedAddr.city,
-                    state: selectedAddr.state || '',
-                    zip: selectedAddr.zip_code,
-                }));
+            if (!error && data) {
+                setSavedAddresses(data);
+                const defaultAddr = data.find((a: SavedAddress) => a.is_default);
+                const selectedAddr = defaultAddr || data[0];
+                if (selectedAddr) {
+                    setSelectedAddressId(selectedAddr.id);
+                    setFormData(prev => ({
+                        ...prev,
+                        fullName: selectedAddr.full_name,
+                        phone: selectedAddr.phone || '',
+                        address: selectedAddr.address_line1,
+                        city: selectedAddr.city,
+                        state: selectedAddr.state || '',
+                        zip: selectedAddr.zip_code,
+                    }));
+                }
             }
+        } catch {
+            // Supabase unavailable, skip loading addresses
         }
     }, [session?.user?.email]);
 
@@ -92,6 +97,11 @@ export default function CheckoutPage() {
     const handleSaveAddress = async () => {
         if (!session?.user?.email) {
             setError('Please sign in to save addresses');
+            return;
+        }
+
+        if (!supabase) {
+            setError('Address saving is temporarily unavailable. You can still submit your quote.');
             return;
         }
 
@@ -142,8 +152,8 @@ export default function CheckoutPage() {
                 notes: formData.notes,
             });
         } catch (err: unknown) {
-            console.error('Failed to save address:', err);
-            setError('Failed to save address');
+            console.warn('Failed to save address:', err);
+            setError('Failed to save address. You can still submit your quote.');
         } finally {
             setSavingAddress(false);
         }
@@ -287,6 +297,11 @@ export default function CheckoutPage() {
                                                     {item.category}
                                                 </span>
                                             )}
+                                            {item.sizeSelection && (
+                                                <span className="inline-block mt-1 text-[10px] bg-orange-500/20 text-orange-300 px-1.5 py-0.5 rounded-full">
+                                                    {formatSizeDisplay(item.sizeSelection)}
+                                                </span>
+                                            )}
                                         </div>
                                     </div>
                                 ))}
@@ -316,6 +331,11 @@ export default function CheckoutPage() {
                                         {item.category && (
                                             <span className="hidden sm:inline-block text-xs bg-white/10 text-gray-300 px-2 py-0.5 rounded-full flex-shrink-0">
                                                 {item.category}
+                                            </span>
+                                        )}
+                                        {item.sizeSelection && (
+                                            <span className="hidden sm:inline-block text-xs bg-orange-500/20 text-orange-300 px-2 py-0.5 rounded-full flex-shrink-0">
+                                                {formatSizeDisplay(item.sizeSelection)}
                                             </span>
                                         )}
                                         <span className="text-xs bg-[#ffd700]/20 text-[#ffd700] px-2 py-0.5 rounded-full font-semibold flex-shrink-0">

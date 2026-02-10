@@ -168,6 +168,13 @@
     font-weight: 500;
 }
 
+.itemSize {
+    font-size: 0.7rem;
+    color: #ea580c;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
 /* Item Actions */
 .itemActions {
     display: flex;

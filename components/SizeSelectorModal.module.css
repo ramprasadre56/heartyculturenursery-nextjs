@@ -1,0 +1,205 @@
+/* Overlay */
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    animation: overlayIn 0.2s ease;
+}
+
+@keyframes overlayIn {
+    from {
+        background: rgba(0, 0, 0, 0);
+        backdrop-filter: blur(0px);
+    }
+    to {
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+    }
+}
+
+/* Modal */
+.modal {
+    position: relative;
+    width: 480px;
+    max-width: 90vw;
+    max-height: 85vh;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    animation: modalIn 0.25s ease;
+}
+
+@keyframes modalIn {
+    from {
+        transform: translateY(20px) scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Close Button */
+.closeBtn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    color: #666;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    z-index: 1;
+}
+
+.closeBtn:hover {
+    background: #f5f5f5;
+    color: #333;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 1.25rem;
+}
+
+.plantName {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a472a;
+    margin: 0 0 0.25rem;
+}
+
+.scientificName {
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #666;
+    margin: 0;
+}
+
+/* Tab Switcher */
+.tabSwitcher {
+    display: flex;
+    background: #f0f0f0;
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 1.25rem;
+}
+
+.tab {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+    color: #666;
+}
+
+.tabActive {
+    background: #1a472a;
+    color: white;
+    box-shadow: 0 2px 8px rgba(26, 71, 42, 0.3);
+}
+
+/* Scrollable Content */
+.content {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* Category Group */
+.categoryGroup {
+    margin-bottom: 1.25rem;
+}
+
+.categoryLabel {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #1a472a;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+/* Size Grid */
+.sizeGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.5rem;
+}
+
+/* Size Button */
+.sizeBtn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.75rem 0.5rem;
+    background: #f8faf8;
+    border: 1.5px solid #e0e8e0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.sizeBtn:hover {
+    border-color: #22c55e;
+    background: #f0fdf4;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.15);
+}
+
+.sizeName {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1a472a;
+}
+
+.sizeWeight {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.sizeLabel {
+    font-size: 0.7rem;
+    color: #22c55e;
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .modal {
+        padding: 1.5rem;
+        border-radius: 12px;
+    }
+
+    .plantName {
+        font-size: 1.1rem;
+    }
+
+    .sizeGrid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+}

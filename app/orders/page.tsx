@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getCheckout } from '@/lib/ucp-client';
+import { formatSizeDisplay } from '@/lib/data';
 
 import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
 
@@ -107,11 +108,11 @@ export default function MyOrdersPage() {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8 min-h-screen pt-24 bg-[#1a472a] text-white">
-            <h1 className="text-3xl font-bold mb-8 text-[#ffd700] text-center">My Orders</h1>
+        <div className="w-full px-6 lg:px-12 py-8 min-h-screen pt-24 bg-[#1a472a] text-white">
+            <h1 className="text-3xl font-bold mb-8 text-[#ffd700]">My Orders</h1>
 
             {orders.length === 0 ? (
-                <div className="text-center bg-white/10 p-8 rounded-lg backdrop-blur-md max-w-2xl mx-auto">
+                <div className="text-center bg-white/10 p-8 rounded-lg backdrop-blur-md">
                     <p className="text-xl mb-6">You haven't placed any orders yet.</p>
                     <button
                         onClick={() => router.push('/')}
@@ -121,7 +122,7 @@ export default function MyOrdersPage() {
                     </button>
                 </div>
             ) : (
-                <div className="grid gap-6 max-w-4xl mx-auto">
+                <div className="grid gap-6 w-full">
                     {orders.map((order) => {
                         // Calculate total from local items if available (stored in cents)
                         // otherwise fallback to backend total
@@ -143,9 +144,24 @@ export default function MyOrdersPage() {
                                 onClick={() => router.push(`/orders/${order.id}`)}
                                 className="bg-white/10 p-6 rounded-lg backdrop-blur-md border border-white/10 hover:bg-white/20 transition-colors cursor-pointer flex justify-between items-center"
                             >
-                                <div>
+                                <div className="flex-1 min-w-0">
                                     <p className="text-[#ffd700] font-mono mb-1">#{order.id}</p>
-                                    <p className="text-sm text-gray-300">{order.line_items.length} items</p>
+                                    <p className="text-sm text-gray-300 mb-1">{order.line_items.length} items</p>
+                                    {order.localDetails?.items?.slice(0, 3).map((item: any, idx: number) => (
+                                        <div key={idx} className="flex items-center gap-2 flex-wrap">
+                                            <span className="text-xs text-gray-300">
+                                                {item.common_name || item.scientific_name} x{item.quantity || 1}
+                                            </span>
+                                            {item.sizeSelection && (
+                                                <span className="text-[10px] bg-orange-500/20 text-orange-300 px-1.5 py-0.5 rounded-full">
+                                                    {formatSizeDisplay(item.sizeSelection)}
+                                                </span>
+                                            )}
+                                        </div>
+                                    ))}
+                                    {order.localDetails?.items?.length > 3 && (
+                                        <span className="text-xs text-gray-500">+{order.localDetails.items.length - 3} more</span>
+                                    )}
                                     <p className="text-sm capitalize mt-1">Status: <span className="font-bold">{order.status}</span></p>
                                 </div>
                                 <div className="text-right">

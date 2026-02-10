@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { getCheckout } from '@/lib/ucp-client';
 import { getOrderDetailsLocal } from '@/lib/order-storage';
+import { formatSizeDisplay } from '@/lib/data';
 
 interface OrderData {
     id: string;
@@ -128,8 +129,9 @@ export default function OrderDetailsPage() {
         return {
             ...lineItem,
             displayTitle,
-            displayImage: localDetails?.image_url,
-            displayPrice: price
+            displayImage: localDetails?.image_url || (localDetails as any)?.image,
+            displayPrice: price,
+            sizeSelection: (localDetails as any)?.sizeSelection
         };
     });
 
@@ -142,8 +144,8 @@ export default function OrderDetailsPage() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8 min-h-screen pt-24 bg-[#1a472a] text-white">
-            <div className="max-w-4xl mx-auto">
+        <div className="w-full px-6 lg:px-12 py-8 min-h-screen pt-24 bg-[#1a472a] text-white">
+            <div className="w-full">
                 <div className="bg-white/10 p-8 rounded-lg backdrop-blur-md border border-white/10 shadow-xl">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b border-white/20 pb-6">
                         <div>
@@ -176,6 +178,11 @@ export default function OrderDetailsPage() {
                                             <div>
                                                 <p className="font-bold text-lg">{item.displayTitle}</p>
                                                 <p className="text-sm text-gray-400">Qty: {item.quantity}</p>
+                                                {item.sizeSelection && (
+                                                    <span className="inline-block mt-1 text-xs bg-orange-500/20 text-orange-300 px-2 py-0.5 rounded-full">
+                                                        {formatSizeDisplay(item.sizeSelection)}
+                                                    </span>
+                                                )}
                                             </div>
                                         </div>
                                         <p className="font-bold text-[#ffd700]">

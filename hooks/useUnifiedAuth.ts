@@ -19,6 +19,11 @@ export function useUnifiedAuth() {
     const [supabaseLoading, setSupabaseLoading] = useState(true);
 
     useEffect(() => {
+        if (!supabase) {
+            setSupabaseLoading(false);
+            return;
+        }
+
         // Check active Supabase session
         const checkSupabaseSession = async () => {
             const { data: { session } } = await supabase.auth.getSession();

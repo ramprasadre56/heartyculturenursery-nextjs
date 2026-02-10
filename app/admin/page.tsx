@@ -4,12 +4,19 @@ import React, { useState, useEffect } from 'react';
 import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import { formatSizeDisplay } from '@/lib/data';
 
 interface OrderItem {
     common_name?: string;
     scientific_name?: string;
     quantity: number;
     price: number;
+    sizeSelection?: {
+        containerType: 'grow_bag' | 'pp_pot';
+        size: string;
+        weightKg: number;
+        categoryLabel: string;
+    };
 }
 
 interface OrderDetails {
@@ -73,7 +80,7 @@ export default function AdminDashboard() {
             if (dateTo) params.set('dateTo', dateTo);
 
             // Get Supabase access token
-            const { data: sessionData } = await supabase.auth.getSession();
+            const { data: sessionData } = await supabase?.auth?.getSession() || { data: { session: null } };
             const accessToken = sessionData?.session?.access_token || '';
 
             const response = await fetch(`/api/admin/orders?${params}`, {
@@ -107,7 +114,7 @@ export default function AdminDashboard() {
     const updateFulfillmentStatus = async (orderId: string, newStatus: string) => {
         try {
             // Get Supabase access token
-            const { data: sessionData } = await supabase.auth.getSession();
+            const { data: sessionData } = await supabase?.auth?.getSession() || { data: { session: null } };
             const accessToken = sessionData?.session?.access_token || '';
 
             const response = await fetch('/api/admin/orders', {
@@ -320,6 +327,11 @@ export default function AdminDashboard() {
                                                                 {order.details?.items?.map((item, idx) => (
                                                                     <li key={idx} className="text-gray-300">
                                                                         • {item.common_name || item.scientific_name} x{item.quantity} - ₹{(item.price * item.quantity / 100).toFixed(2)}
+                                                                        {item.sizeSelection && (
+                                                                            <span className="ml-2 text-xs bg-orange-500/20 text-orange-300 px-1.5 py-0.5 rounded-full">
+                                                                                {formatSizeDisplay(item.sizeSelection)}
+                                                                            </span>
+                                                                        )}
                                                                     </li>
                                                                 ))}
                                                             </ul>

@@ -27,7 +27,7 @@ export default function Navbar() {
     // Sign out from both providers
     await Promise.all([
       signOut({ redirect: false }), // NextAuth
-      supabase.auth.signOut(), // Supabase
+      supabase ? supabase.auth.signOut() : Promise.resolve(), // Supabase
     ]);
     window.location.reload(); // Force refresh to clear state
   };

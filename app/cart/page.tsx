@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
+import { formatSizeDisplay } from '@/lib/data';
 
 export default function CartPage() {
     const {
@@ -119,6 +120,11 @@ export default function CartPage() {
                                                 <span className="inline-flex items-center mt-2 px-3 py-1 bg-gradient-to-r from-[#1a472a]/10 to-[#2d5a3d]/10 text-[#1a472a] text-xs font-semibold rounded-full">
                                                     🌱 {item.category}
                                                 </span>
+                                                {item.sizeSelection && (
+                                                    <span className="inline-flex items-center mt-1 px-3 py-1 bg-orange-50 text-orange-600 text-xs font-semibold rounded-full">
+                                                        📦 {formatSizeDisplay(item.sizeSelection)}
+                                                    </span>
+                                                )}
                                             </div>
                                             {/* Price hidden */}
                                         </div>

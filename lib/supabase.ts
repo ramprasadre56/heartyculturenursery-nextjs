@@ -4,7 +4,8 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-// Create a dummy client if env vars are missing (build time)
-export const supabase = supabaseUrl && supabaseKey
+// Create client only if we have a valid URL and key
+const isValidUrl = supabaseUrl.startsWith('http://') || supabaseUrl.startsWith('https://');
+export const supabase = isValidUrl && supabaseKey
     ? createClient(supabaseUrl, supabaseKey)
-    : null as any; // Will be properly initialized at runtime
+    : null as any;

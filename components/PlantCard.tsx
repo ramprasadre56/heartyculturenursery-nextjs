@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
-import { Plant } from '@/lib/data';
+import { Plant, SizeSelection } from '@/lib/data';
+import SizeSelectorModal from './SizeSelectorModal';
 import styles from './PlantCard.module.css';
 
 interface PlantCardProps {
@@ -11,8 +13,13 @@ interface PlantCardProps {
 
 export default function PlantCard({ plant }: PlantCardProps) {
     const { addToCart } = useCart();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const imageSrc = plant.image || '/heartyculture_catalogue/placeholder.png';
+
+    const handleSelectSize = (plant: Plant, sizeSelection: SizeSelection) => {
+        addToCart(plant, sizeSelection);
+    };
 
     return (
         <div className={styles.card}>
@@ -38,16 +45,23 @@ export default function PlantCard({ plant }: PlantCardProps) {
 
                 <button
                     className={styles.addToCart}
-                    onClick={() => addToCart(plant)}
+                    onClick={() => setIsModalOpen(true)}
                 >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <circle cx="8" cy="21" r="1"></circle>
                         <circle cx="19" cy="21" r="1"></circle>
                         <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
                     </svg>
-                    <span>Add to Cart</span>
+                    <span>Select Size</span>
                 </button>
             </div>
+
+            <SizeSelectorModal
+                isOpen={isModalOpen}
+                plant={plant}
+                onClose={() => setIsModalOpen(false)}
+                onSelectSize={handleSelectSize}
+            />
         </div>
     );
 }

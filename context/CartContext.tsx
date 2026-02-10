@@ -1,13 +1,13 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { CartItem, Plant, createUniqueId } from '@/lib/data';
+import { CartItem, Plant, SizeSelection, createUniqueId } from '@/lib/data';
 
 interface CartContextType {
     cartItems: CartItem[];
     isOpen: boolean;
     totalItems: number;
-    addToCart: (plant: Plant) => void;
+    addToCart: (plant: Plant, sizeSelection: SizeSelection) => void;
     removeFromCart: (uniqueId: string) => void;
     incrementQuantity: (uniqueId: string) => void;
     decrementQuantity: (uniqueId: string) => void;
@@ -47,8 +47,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-    const addToCart = (plant: Plant) => {
-        const uniqueId = createUniqueId(plant.category, plant.id);
+    const addToCart = (plant: Plant, sizeSelection: SizeSelection) => {
+        const sizeKey = `${sizeSelection.containerType}-${sizeSelection.size}`;
+        const uniqueId = createUniqueId(plant.category, plant.id, sizeKey);
 
         setCartItems(prev => {
             const existing = prev.find(item => item.unique_id === uniqueId);
@@ -59,7 +60,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
                         : item
                 );
             }
-            return [...prev, { ...plant, quantity: 1, unique_id: uniqueId }];
+            return [...prev, { ...plant, quantity: 1, unique_id: uniqueId, sizeSelection }];
         });
 
         setIsOpen(true);
