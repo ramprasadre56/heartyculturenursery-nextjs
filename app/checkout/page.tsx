@@ -221,10 +221,10 @@ export default function CheckoutPage() {
 
     if (cartItems.length === 0) {
         return (
-            <div className="w-full px-6 lg:px-12 py-8 text-center text-white min-h-screen pt-24 bg-[#1a472a] flex flex-col justify-center items-center">
-                <h1 className="text-3xl font-bold mb-4">Your Cart is Empty</h1>
-                <p className="mb-4">Go back to shop and add some plants!</p>
-                <button className="bg-[#ffd700] text-black px-6 py-2 rounded font-bold hover:bg-yellow-400" onClick={() => router.push('/')}>
+            <div className="w-full px-6 lg:px-12 py-8 text-center text-white min-h-screen pt-24 bg-gradient-to-b from-[#070e09] via-[#0f2e1a] to-[#070e09] flex flex-col justify-center items-center">
+                <h1 className="text-3xl font-bold mb-4" style={{ fontFamily: 'var(--font-display)' }}>Your Cart is Empty</h1>
+                <p className="mb-4 text-white/50">Go back to shop and add some plants</p>
+                <button className="bg-[#ffd700] text-[#0f2e1a] px-6 py-3 rounded-xl font-bold hover:bg-[#ffde33] transition-all cursor-pointer" onClick={() => router.push('/')}>
                     Shop Now
                 </button>
             </div>
@@ -232,13 +232,13 @@ export default function CheckoutPage() {
     }
 
     return (
-        <div className="w-full px-6 lg:px-12 py-8 text-white min-h-screen pt-24 bg-[#1a472a]">
-            <h1 className="text-3xl font-bold mb-2 text-center text-[#ffd700]">Request a Quote</h1>
+        <div className="w-full px-6 lg:px-12 py-8 text-white min-h-screen pt-24 bg-gradient-to-b from-[#070e09] via-[#0f2e1a] to-[#070e09]">
+            <h1 className="text-3xl font-bold mb-2 text-center text-[#ffd700]" style={{ fontFamily: 'var(--font-display)' }}>Request a Quote</h1>
 
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8 w-full">
                 {/* Selected Plants — Main Area */}
                 <div>
-                    <div className="bg-white/10 p-6 lg:p-8 rounded-2xl backdrop-blur-md border border-white/10">
+                    <div className="bg-white/[0.03] p-6 lg:p-8 rounded-2xl backdrop-blur-xl border border-white/[0.06]">
                         <div className="flex items-center justify-between mb-5">
                             <div className="flex items-center gap-3">
                                 <h2 className="text-xl font-semibold text-[#ffd700]">Your Selection</h2>
@@ -273,7 +273,7 @@ export default function CheckoutPage() {
                         {viewMode === 'grid' && (
                             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3">
                                 {cartItems.map((item) => (
-                                    <div key={item.unique_id} className="bg-white/10 rounded-xl border border-white/10 overflow-hidden hover:border-[#ffd700]/40 transition-all hover:shadow-lg hover:shadow-[#ffd700]/5">
+                                    <div key={item.unique_id} className="bg-white/[0.03] rounded-xl border border-white/[0.06] overflow-hidden hover:border-[#ffd700]/20 transition-all">
                                         <div className="aspect-[4/3] w-full bg-white/5 relative">
                                             {item.image ? (
                                                 <img
@@ -282,7 +282,9 @@ export default function CheckoutPage() {
                                                     className="w-full h-full object-cover"
                                                 />
                                             ) : (
-                                                <div className="w-full h-full flex items-center justify-center text-3xl">🌿</div>
+                                                <div className="w-full h-full flex items-center justify-center">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5"><path d="M11 20A7 7 0 0 1 9.8 6.9C15.5 4.9 17 3.5 19 2c1 2 2 4.5 2 8 0 5.5-4.5 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" /></svg>
+                                                </div>
                                             )}
                                             <span className="absolute top-1.5 right-1.5 bg-black/60 backdrop-blur-sm text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
                                                 x{item.quantity}
@@ -311,7 +313,7 @@ export default function CheckoutPage() {
                         {viewMode === 'list' && (
                             <div className="space-y-2">
                                 {cartItems.map((item) => (
-                                    <div key={item.unique_id} className="flex items-center gap-4 bg-white/10 rounded-xl border border-white/10 p-3 hover:border-[#ffd700]/40 transition-all">
+                                    <div key={item.unique_id} className="flex items-center gap-4 bg-white/[0.03] rounded-xl border border-white/[0.06] p-3 hover:border-[#ffd700]/20 transition-all">
                                         <div className="w-14 h-14 flex-shrink-0 rounded-lg overflow-hidden bg-white/5">
                                             {item.image ? (
                                                 <img
@@ -320,7 +322,9 @@ export default function CheckoutPage() {
                                                     className="w-full h-full object-cover"
                                                 />
                                             ) : (
-                                                <div className="w-full h-full flex items-center justify-center text-xl">🌿</div>
+                                                <div className="w-full h-full flex items-center justify-center">
+                                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5"><path d="M11 20A7 7 0 0 1 9.8 6.9C15.5 4.9 17 3.5 19 2c1 2 2 4.5 2 8 0 5.5-4.5 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" /></svg>
+                                                </div>
                                             )}
                                         </div>
                                         <div className="flex-1 min-w-0">
@@ -357,11 +361,11 @@ export default function CheckoutPage() {
                             disabled={loading}
                             className="w-full bg-[#ffd700] text-[#1a472a] font-bold py-4 px-4 rounded-xl hover:bg-yellow-400 transition-all disabled:opacity-50 shadow-lg text-lg hover:shadow-xl hover:-translate-y-0.5"
                         >
-                            {loading ? 'Submitting...' : '📋 Request Quote'}
+                            {loading ? 'Submitting...' : 'Request Quote'}
                         </button>
                     )}
 
-                    <div className="bg-white/10 p-5 rounded-2xl backdrop-blur-md border border-white/10">
+                    <div className="bg-white/[0.03] p-5 rounded-2xl backdrop-blur-xl border border-white/[0.06]">
                         <h2 className="text-lg font-semibold mb-4 text-[#ffd700]">Your Details</h2>
                         {error && <div className="bg-red-500/50 text-white p-3 rounded-lg mb-4 text-sm">{error}</div>}
 
@@ -421,7 +425,7 @@ export default function CheckoutPage() {
                                         type="text"
                                         name="fullName"
                                         required
-                                        className="w-full p-2.5 rounded-lg bg-white/10 border border-white/20 text-white text-sm placeholder-gray-400 focus:outline-none focus:border-[#ffd700] focus:ring-1 focus:ring-[#ffd700]"
+                                        className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
                                         value={formData.fullName}
                                         onChange={handleInputChange}
                                     />
@@ -432,7 +436,7 @@ export default function CheckoutPage() {
                                         type="tel"
                                         name="phone"
                                         required
-                                        className="w-full p-2.5 rounded-lg bg-white/10 border border-white/20 text-white text-sm placeholder-gray-400 focus:outline-none focus:border-[#ffd700] focus:ring-1 focus:ring-[#ffd700]"
+                                        className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
                                         value={formData.phone}
                                         onChange={handleInputChange}
                                         placeholder="+91 XXXXXXXXXX"
@@ -443,7 +447,7 @@ export default function CheckoutPage() {
                                     <input
                                         type="text"
                                         name="address"
-                                        className="w-full p-2.5 rounded-lg bg-white/10 border border-white/20 text-white text-sm placeholder-gray-400 focus:outline-none focus:border-[#ffd700] focus:ring-1 focus:ring-[#ffd700]"
+                                        className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
                                         value={formData.address}
                                         onChange={handleInputChange}
                                         placeholder="House no, Building, Street, Area"
@@ -455,7 +459,7 @@ export default function CheckoutPage() {
                                         <input
                                             type="text"
                                             name="city"
-                                            className="w-full p-2.5 rounded-lg bg-white/10 border border-white/20 text-white text-sm placeholder-gray-400 focus:outline-none focus:border-[#ffd700] focus:ring-1 focus:ring-[#ffd700]"
+                                            className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
                                             value={formData.city}
                                             onChange={handleInputChange}
                                         />
@@ -465,7 +469,7 @@ export default function CheckoutPage() {
                                         <input
                                             type="text"
                                             name="state"
-                                            className="w-full p-2.5 rounded-lg bg-white/10 border border-white/20 text-white text-sm placeholder-gray-400 focus:outline-none focus:border-[#ffd700] focus:ring-1 focus:ring-[#ffd700]"
+                                            className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
                                             value={formData.state}
                                             onChange={handleInputChange}
                                         />
@@ -476,7 +480,7 @@ export default function CheckoutPage() {
                                     <input
                                         type="text"
                                         name="zip"
-                                        className="w-full p-2.5 rounded-lg bg-white/10 border border-white/20 text-white text-sm placeholder-gray-400 focus:outline-none focus:border-[#ffd700] focus:ring-1 focus:ring-[#ffd700]"
+                                        className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
                                         value={formData.zip}
                                         onChange={handleInputChange}
                                         placeholder="6 digit PIN code"
@@ -499,11 +503,11 @@ export default function CheckoutPage() {
                     </div>
 
                     {/* Additional Notes */}
-                    <div className="bg-white/10 p-5 rounded-2xl backdrop-blur-md border border-white/10">
+                    <div className="bg-white/[0.03] p-5 rounded-2xl backdrop-blur-xl border border-white/[0.06]">
                         <h2 className="text-lg font-semibold mb-3 text-[#ffd700]">Notes</h2>
                         <textarea
                             name="notes"
-                            className="w-full p-2.5 rounded-lg bg-white/10 border border-white/20 text-white text-sm placeholder-gray-400 focus:outline-none focus:border-[#ffd700] focus:ring-1 focus:ring-[#ffd700] min-h-[70px] resize-y"
+                            className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30 min-h-[70px] resize-y"
                             value={formData.notes}
                             onChange={handleInputChange}
                             placeholder="Plant sizes, quantity details, special requests..."

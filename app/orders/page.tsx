@@ -10,15 +10,13 @@ import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
 export default function MyOrdersPage() {
     const router = useRouter();
     const { user, status } = useUnifiedAuth();
-    const [orders, setOrders] = useState<any[]>([]); // Using any for enriched object
+    const [orders, setOrders] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchOrders = async () => {
-            // Wait for auth to load
             if (status === 'loading') return;
 
-            // Fetch local details (with correct prices)
             const { getStoredOrders } = await import('@/lib/order-storage');
             const storedOrders = await getStoredOrders(user?.email || undefined);
 
@@ -28,7 +26,6 @@ export default function MyOrdersPage() {
             }
 
             try {
-                // Try to fetch backend status/details
                 const promises = storedOrders.map(order => getCheckout(order.id).catch(err => {
                     console.warn(`Could not fetch backend status for order ${order.id}`, err);
                     return null;
@@ -36,7 +33,6 @@ export default function MyOrdersPage() {
 
                 const backendResults = await Promise.all(promises);
 
-                // Merge backend data with local details, or use local-only
                 const mergedOrders = storedOrders.map(localOrder => {
                     const backendOrder = backendResults.find(
                         (b): b is NonNullable<typeof b> => b !== null && b.id === localOrder.id
@@ -48,7 +44,6 @@ export default function MyOrdersPage() {
                             localDetails: localOrder
                         };
                     } else {
-                        // Fallback: use local data when backend is unavailable
                         return {
                             id: localOrder.id,
                             status: localOrder.payment_status || 'pending',
@@ -68,7 +63,6 @@ export default function MyOrdersPage() {
                 setOrders(mergedOrders);
             } catch (err) {
                 console.error("Error fetching orders list:", err);
-                // Still show local orders on total failure
                 const localOnlyOrders = storedOrders.map(localOrder => ({
                     id: localOrder.id,
                     status: localOrder.payment_status || 'pending',
@@ -93,56 +87,61 @@ export default function MyOrdersPage() {
 
     if (loading) {
         return (
-            <div className="container mx-auto px-4 py-8 min-h-screen pt-24 bg-[#1a472a] text-white flex justify-center items-center">
-                <p className="text-xl">Loading your orders...</p>
+            <div className="min-h-screen pt-24 bg-gradient-to-b from-[#070e09] via-[#0f2e1a] to-[#070e09] text-white flex justify-center items-center px-4">
+                <div className="flex items-center gap-3">
+                    <div className="w-5 h-5 border-2 border-[#ffd700]/30 border-t-[#ffd700] rounded-full animate-spin"></div>
+                    <p className="text-white/50">Loading your orders...</p>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="w-full px-6 lg:px-12 py-8 min-h-screen pt-24 bg-[#1a472a] text-white">
-            <h1 className="text-3xl font-bold mb-8 text-[#ffd700]">My Orders</h1>
+        <div className="w-full px-6 lg:px-12 py-8 min-h-screen pt-24 bg-gradient-to-b from-[#070e09] via-[#0f2e1a] to-[#070e09] text-white">
+            <h1 className="text-3xl font-bold mb-8 text-[#ffd700]" style={{ fontFamily: 'var(--font-display)' }}>My Orders</h1>
 
             {orders.length === 0 ? (
-                <div className="text-center bg-white/10 p-8 rounded-lg backdrop-blur-md">
-                    <p className="text-xl mb-6">You haven't placed any orders yet.</p>
+                <div className="text-center bg-white/[0.03] p-8 rounded-2xl backdrop-blur-xl border border-white/[0.06]">
+                    <p className="text-lg mb-6 text-white/50">You haven&apos;t placed any orders yet.</p>
                     <button
                         onClick={() => router.push('/')}
-                        className="bg-[#ffd700] text-[#1a472a] px-6 py-2 rounded font-bold hover:bg-yellow-400"
+                        className="bg-[#ffd700] text-[#0f2e1a] px-6 py-3 rounded-xl font-bold hover:bg-[#ffde33] transition-all cursor-pointer"
                     >
                         Start Shopping
                     </button>
                 </div>
             ) : (
-                <div className="grid gap-6 w-full">
+                <div className="grid gap-4 w-full">
                     {orders.map((order) => (
                             <div
                                 key={order.id}
                                 onClick={() => router.push(`/orders/${order.id}`)}
-                                className="bg-white/10 p-6 rounded-lg backdrop-blur-md border border-white/10 hover:bg-white/20 transition-colors cursor-pointer flex justify-between items-center"
+                                className="bg-white/[0.03] p-5 rounded-2xl backdrop-blur-xl border border-white/[0.06] hover:border-white/[0.12] transition-all cursor-pointer flex justify-between items-center"
                             >
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-[#ffd700] font-mono mb-1">#{order.id}</p>
-                                    <p className="text-sm text-gray-300 mb-1">{order.line_items.length} items</p>
+                                    <p className="text-[#ffd700]/80 font-mono text-sm mb-1">#{order.id}</p>
+                                    <p className="text-sm text-white/40 mb-1">{order.line_items.length} items</p>
                                     {order.localDetails?.items?.slice(0, 3).map((item: any, idx: number) => (
                                         <div key={idx} className="flex items-center gap-2 flex-wrap">
-                                            <span className="text-xs text-gray-300">
+                                            <span className="text-xs text-white/35">
                                                 {item.common_name || item.scientific_name} x{item.quantity || 1}
                                             </span>
                                             {item.sizeSelection && (
-                                                <span className="text-[10px] bg-orange-500/20 text-orange-300 px-1.5 py-0.5 rounded-full">
+                                                <span className="text-[10px] bg-[#ffd700]/[0.06] text-[#ffd700]/60 px-1.5 py-0.5 rounded-full border border-[#ffd700]/[0.1]">
                                                     {formatSizeDisplay(item.sizeSelection)}
                                                 </span>
                                             )}
                                         </div>
                                     ))}
                                     {order.localDetails?.items?.length > 3 && (
-                                        <span className="text-xs text-gray-500">+{order.localDetails.items.length - 3} more</span>
+                                        <span className="text-xs text-white/20">+{order.localDetails.items.length - 3} more</span>
                                     )}
-                                    <p className="text-sm capitalize mt-1">Status: <span className="font-bold">{order.status}</span></p>
+                                    <p className="text-sm capitalize mt-1 text-white/50">Status: <span className="font-semibold text-white/70">{order.status}</span></p>
                                 </div>
                                 <div className="text-right">
-                                    <span className="text-xs text-gray-400">View Details &rarr;</span>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2">
+                                        <path d="m9 18 6-6-6-6" />
+                                    </svg>
                                 </div>
                             </div>
                     ))}

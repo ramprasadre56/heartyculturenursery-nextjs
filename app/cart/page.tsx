@@ -16,46 +16,29 @@ export default function CartPage() {
         clearCart
     } = useCart();
 
-    const [promoCode, setPromoCode] = useState('');
-    const [promoApplied, setPromoApplied] = useState(false);
-
-    // Price calculation
-    const getPrice = (item: { id?: number; category?: string }) => {
-        if (!item.id) return 250;
-        const idStr = item.id.toString() + (item.category || '');
-        let hash = 0;
-        for (let i = 0; i < idStr.length; i++) {
-            hash = idStr.charCodeAt(i) + ((hash << 5) - hash);
-        }
-        return (Math.abs(hash) % 400) + 150;
-    };
-
-    const subtotal = cartItems.reduce((sum, item) => {
-        return sum + getPrice(item) * item.quantity;
-    }, 0);
-
-    const discount = promoApplied ? Math.round(subtotal * 0.1) : 0;
-    const total = subtotal - discount;
-
-    const handleApplyPromo = () => {
-        if (promoCode.toLowerCase() === 'plants10') {
-            setPromoApplied(true);
-        }
-    };
-
     if (cartItems.length === 0) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-[#1a472a] via-[#2d5a3d] to-[#1a472a] pt-24 pb-12 px-4">
+            <div className="min-h-screen bg-gradient-to-b from-[#070e09] via-[#0f2e1a] to-[#070e09] pt-24 pb-12 px-4">
                 <div className="max-w-4xl mx-auto">
-                    <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-12 text-center border border-white/20">
-                        <div className="text-8xl mb-6">🌱</div>
-                        <h1 className="text-3xl font-bold text-white mb-3">Your cart is empty</h1>
-                        <p className="text-gray-300 text-lg mb-8">Discover beautiful plants for your space!</p>
+                    <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl p-12 text-center border border-white/[0.06]">
+                        <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-white/[0.04] flex items-center justify-center">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,215,0,0.5)" strokeWidth="1.5">
+                                <circle cx="8" cy="21" r="1"></circle>
+                                <circle cx="19" cy="21" r="1"></circle>
+                                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                            </svg>
+                        </div>
+                        <h1 className="text-3xl font-bold text-white mb-3" style={{ fontFamily: 'var(--font-display)' }}>Your cart is empty</h1>
+                        <p className="text-white/50 text-lg mb-8">Discover beautiful plants for your space</p>
                         <Link
                             href="/plants/flowering-shrubs"
-                            className="inline-flex items-center gap-2 bg-[#ffd700] text-[#1a472a] px-8 py-4 rounded-full font-bold text-lg hover:bg-yellow-400 transition-all hover:scale-105 shadow-lg"
+                            className="inline-flex items-center gap-2 bg-[#ffd700] text-[#0f2e1a] px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#ffde33] transition-all cursor-pointer"
                         >
-                            🌿 Browse Plants
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M11 20A7 7 0 0 1 9.8 6.9C15.5 4.9 17 3.5 19 2c1 2 2 4.5 2 8 0 5.5-4.5 10-10 10Z" />
+                                <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+                            </svg>
+                            Browse Plants
                         </Link>
                     </div>
                 </div>
@@ -64,39 +47,45 @@ export default function CartPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pt-4 pb-8 px-6 lg:px-12">
+        <div className="min-h-screen bg-gradient-to-b from-[#070e09] via-[#0f2e1a] to-[#070e09] pt-4 pb-8 px-6 lg:px-12">
             <div className="w-full max-w-[1600px] mx-auto">
                 {/* Header */}
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-[#1a472a] to-[#2d5a3d] rounded-xl flex items-center justify-center shadow-md">
-                            <span className="text-lg">🛒</span>
+                        <div className="w-10 h-10 bg-white/[0.06] rounded-xl flex items-center justify-center border border-white/[0.08]">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,215,0,0.7)" strokeWidth="1.5">
+                                <circle cx="8" cy="21" r="1"></circle>
+                                <circle cx="19" cy="21" r="1"></circle>
+                                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                            </svg>
                         </div>
                         <div>
-                            <h1 className="text-2xl font-bold text-gray-800">Shopping Cart</h1>
-                            <p className="text-sm text-gray-500">{totalItems} {totalItems === 1 ? 'item' : 'items'}</p>
+                            <h1 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>Shopping Cart</h1>
+                            <p className="text-sm text-white/40">{totalItems} {totalItems === 1 ? 'item' : 'items'}</p>
                         </div>
                     </div>
                     <Link
                         href="/plants/flowering-shrubs"
-                        className="hidden md:flex items-center gap-2 text-[#1a472a] font-semibold hover:text-[#2d5a3d] transition-colors text-sm"
+                        className="hidden md:flex items-center gap-2 text-white/50 font-medium hover:text-[#ffd700] transition-colors text-sm cursor-pointer"
                     >
-                        ← Continue Shopping
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="m15 18-6-6 6-6" />
+                        </svg>
+                        Continue Shopping
                     </Link>
                 </div>
 
                 <div className="grid grid-cols-1 xl:grid-cols-[1fr_400px] gap-8">
-                    {/* Cart Items - Main section */}
-                    <div className="space-y-4">
+                    {/* Cart Items */}
+                    <div className="space-y-3">
                         {cartItems.map((item, index) => (
                             <div
                                 key={item.unique_id}
-                                className="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100"
-                                style={{ animationDelay: `${index * 0.1}s` }}
+                                className="group bg-white/[0.03] backdrop-blur-sm rounded-2xl p-5 border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300"
                             >
-                                <div className="flex gap-6">
+                                <div className="flex gap-5">
                                     {/* Image */}
-                                    <div className="relative w-32 h-32 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-50 flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                                    <div className="relative w-28 h-28 rounded-xl overflow-hidden bg-white/[0.04] flex-shrink-0">
                                         {item.image ? (
                                             <Image
                                                 src={item.image}
@@ -105,7 +94,12 @@ export default function CartPage() {
                                                 className="object-cover"
                                             />
                                         ) : (
-                                            <div className="w-full h-full flex items-center justify-center text-4xl">🌿</div>
+                                            <div className="w-full h-full flex items-center justify-center">
+                                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5">
+                                                    <path d="M11 20A7 7 0 0 1 9.8 6.9C15.5 4.9 17 3.5 19 2c1 2 2 4.5 2 8 0 5.5-4.5 10-10 10Z" />
+                                                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+                                                </svg>
+                                            </div>
                                         )}
                                     </div>
 
@@ -113,44 +107,43 @@ export default function CartPage() {
                                     <div className="flex-1 min-w-0">
                                         <div className="flex justify-between items-start gap-4">
                                             <div>
-                                                <h3 className="text-xl font-bold text-gray-800 group-hover:text-[#1a472a] transition-colors">
+                                                <h3 className="text-lg font-semibold text-white group-hover:text-[#ffd700] transition-colors">
                                                     {item.common_name !== "Unknown" ? item.common_name : item.scientific_name}
                                                 </h3>
-                                                <p className="text-gray-500 italic text-sm mt-1">{item.scientific_name}</p>
-                                                <span className="inline-flex items-center mt-2 px-3 py-1 bg-gradient-to-r from-[#1a472a]/10 to-[#2d5a3d]/10 text-[#1a472a] text-xs font-semibold rounded-full">
-                                                    🌱 {item.category}
+                                                <p className="text-white/35 italic text-sm mt-0.5">{item.scientific_name}</p>
+                                                <span className="inline-flex items-center mt-2 px-3 py-1 bg-white/[0.04] text-white/50 text-xs font-medium rounded-full border border-white/[0.06]">
+                                                    {item.category}
                                                 </span>
                                                 {item.sizeSelection && (
-                                                    <span className="inline-flex items-center mt-1 px-3 py-1 bg-orange-50 text-orange-600 text-xs font-semibold rounded-full">
-                                                        📦 {formatSizeDisplay(item.sizeSelection)}
+                                                    <span className="inline-flex items-center mt-1 ml-1 px-3 py-1 bg-[#ffd700]/[0.06] text-[#ffd700]/70 text-xs font-medium rounded-full border border-[#ffd700]/[0.1]">
+                                                        {formatSizeDisplay(item.sizeSelection)}
                                                     </span>
                                                 )}
                                             </div>
-                                            {/* Price hidden */}
                                         </div>
 
                                         {/* Actions */}
-                                        <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
-                                            <div className="flex items-center gap-1 bg-gray-100 rounded-full p-1">
+                                        <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/[0.06]">
+                                            <div className="flex items-center gap-1 bg-white/[0.04] rounded-full p-1 border border-white/[0.06]">
                                                 <button
                                                     onClick={() => decrementQuantity(item.unique_id)}
-                                                    className="w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-sm hover:bg-gray-50 text-gray-600 font-bold text-xl transition-all hover:scale-110"
+                                                    className="w-9 h-9 flex items-center justify-center rounded-full bg-white/[0.06] hover:bg-white/[0.1] text-white/60 font-bold text-lg transition-all cursor-pointer"
                                                 >
                                                     −
                                                 </button>
-                                                <span className="w-12 text-center font-bold text-lg">{item.quantity}</span>
+                                                <span className="w-10 text-center font-bold text-white text-sm">{item.quantity}</span>
                                                 <button
                                                     onClick={() => incrementQuantity(item.unique_id)}
-                                                    className="w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-sm hover:bg-gray-50 text-gray-600 font-bold text-xl transition-all hover:scale-110"
+                                                    className="w-9 h-9 flex items-center justify-center rounded-full bg-white/[0.06] hover:bg-white/[0.1] text-white/60 font-bold text-lg transition-all cursor-pointer"
                                                 >
                                                     +
                                                 </button>
                                             </div>
                                             <button
                                                 onClick={() => removeFromCart(item.unique_id)}
-                                                className="flex items-center gap-2 px-4 py-2 text-red-500 hover:bg-red-50 rounded-lg font-medium transition-colors"
+                                                className="flex items-center gap-2 px-3 py-2 text-red-400/70 hover:text-red-400 hover:bg-red-400/[0.06] rounded-lg font-medium transition-colors text-sm cursor-pointer"
                                             >
-                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                 </svg>
                                                 Remove
@@ -164,45 +157,44 @@ export default function CartPage() {
                         {/* Clear Cart */}
                         <button
                             onClick={clearCart}
-                            className="w-full py-3 text-gray-400 hover:text-red-500 font-medium transition-colors"
+                            className="w-full py-3 text-white/20 hover:text-red-400/60 font-medium transition-colors text-sm cursor-pointer"
                         >
                             Clear entire cart
                         </button>
                     </div>
 
-                    {/* Order Summary - Sticky Sidebar */}
+                    {/* Quote Summary - Sticky Sidebar */}
                     <div>
-                        <div className="sticky top-24 bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-                            <h2 className="text-xl font-bold text-gray-800 mb-6 pb-4 border-b border-gray-100">Quote Summary</h2>
+                        <div className="sticky top-24 bg-white/[0.03] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.06]">
+                            <h2 className="text-xl font-bold text-[#ffd700] mb-6 pb-4 border-b border-white/[0.06]" style={{ fontFamily: 'var(--font-display)' }}>Quote Summary</h2>
 
                             <div className="space-y-3 mb-6">
-                                <div className="flex justify-between text-gray-600">
+                                <div className="flex justify-between text-white/50">
                                     <span>{totalItems} {totalItems === 1 ? 'item' : 'items'} selected</span>
                                 </div>
-                                <p className="text-sm text-gray-500">Add the plants you want and request a quote. We&apos;ll get back to you with pricing and availability.</p>
+                                <p className="text-sm text-white/35">Add the plants you want and request a quote. We&apos;ll get back to you with pricing and availability.</p>
                             </div>
 
                             {/* Request Quote Button */}
                             <Link
                                 href="/checkout"
-                                className="block w-full py-4 bg-gradient-to-r from-[#1a472a] to-[#2d5a3d] text-white text-center font-bold text-lg rounded-xl hover:from-[#143821] hover:to-[#1a472a] transition-all hover:shadow-lg hover:-translate-y-0.5"
+                                className="block w-full py-4 bg-[#ffd700] text-[#0f2e1a] text-center font-bold text-lg rounded-xl hover:bg-[#ffde33] transition-all cursor-pointer"
                             >
                                 Request Quote
                             </Link>
-
                         </div>
                     </div>
                 </div>
 
                 {/* Mobile Checkout Bar */}
-                <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 shadow-2xl lg:hidden z-50">
+                <div className="fixed bottom-0 left-0 right-0 p-4 bg-[#0f2e1a]/95 backdrop-blur-xl border-t border-white/[0.06] lg:hidden z-50">
                     <div className="flex items-center justify-between gap-4">
                         <div>
-                            <p className="text-sm text-gray-500">{totalItems} {totalItems === 1 ? 'item' : 'items'}</p>
+                            <p className="text-sm text-white/40">{totalItems} {totalItems === 1 ? 'item' : 'items'}</p>
                         </div>
                         <Link
                             href="/checkout"
-                            className="flex-1 py-4 bg-gradient-to-r from-[#1a472a] to-[#2d5a3d] text-white text-center font-bold rounded-xl"
+                            className="flex-1 py-4 bg-[#ffd700] text-[#0f2e1a] text-center font-bold rounded-xl cursor-pointer"
                         >
                             Request Quote
                         </Link>

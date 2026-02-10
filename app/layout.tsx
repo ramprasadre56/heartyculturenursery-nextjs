@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant } from "next/font/google";
+import { Montserrat, Cormorant } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import AuthProvider from "@/context/AuthContext";
@@ -7,7 +7,11 @@ import Navbar from "@/components/Navbar";
 import CartDrawer from "@/components/CartDrawer";
 
 
-const inter = Inter({ subsets: ["latin"] });
+const montserrat = Montserrat({
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-body",
+});
 const cormorant = Cormorant({
   weight: ["300", "400", "600", "700"],
   subsets: ["latin"],
@@ -27,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} ${cormorant.variable}`} suppressHydrationWarning>
+      <body className={`${montserrat.className} ${montserrat.variable} ${cormorant.variable}`} suppressHydrationWarning>
         <AuthProvider>
           <CartProvider>
             <div className="app-wrapper">

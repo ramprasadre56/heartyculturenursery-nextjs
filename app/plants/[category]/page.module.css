@@ -1,6 +1,6 @@
 .container {
     min-height: 100vh;
-    background: #fafafa;
+    background: #FAFAF9;
 }
 
 .mainContent {
@@ -25,10 +25,10 @@
 
 .skeleton {
     height: 320px;
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background: linear-gradient(90deg, #f5f5f4 25%, #e7e5e4 50%, #f5f5f4 75%);
     background-size: 200% 100%;
-    animation: skeleton-loading 1.5s infinite;
-    border-radius: 12px;
+    animation: skeleton-loading 1.8s ease-in-out infinite;
+    border-radius: 14px;
 }
 
 @keyframes skeleton-loading {
@@ -49,16 +49,16 @@
     justify-content: center;
     padding: 4rem 2rem;
     text-align: center;
-    color: #666;
+    color: #78716C;
 }
 
-.empty span {
-    font-size: 4rem;
+.empty svg {
     margin-bottom: 1rem;
+    opacity: 0.6;
 }
 
 .empty p {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
 }
 
 /* Mobile */
