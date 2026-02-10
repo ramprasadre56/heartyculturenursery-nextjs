@@ -1,12 +1,14 @@
 import Razorpay from "razorpay";
-
 import { NextResponse } from "next/server";
 
-const razorpay = new Razorpay({
-    key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "",
-    key_secret: process.env.RAZORPAY_KEY_SECRET || "",
-});
-
+function getRazorpay() {
+    const key_id = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
+    const key_secret = process.env.RAZORPAY_KEY_SECRET;
+    if (!key_id || !key_secret) {
+        throw new Error("Razorpay credentials not configured");
+    }
+    return new Razorpay({ key_id, key_secret });
+}
 
 export async function POST(request: Request) {
     try {
@@ -19,8 +21,10 @@ export async function POST(request: Request) {
             );
         }
 
+        const razorpay = getRazorpay();
+
         const options = {
-            amount: Math.round(amount * 100), // Razorpay expects amount in paise
+            amount: Math.round(amount * 100),
             currency,
             receipt: receipt || `receipt_${Date.now()}`,
         };
