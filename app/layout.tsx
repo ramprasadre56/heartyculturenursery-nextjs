@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Cormorant } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import AuthProvider from "@/context/AuthContext";
@@ -8,6 +8,11 @@ import CartDrawer from "@/components/CartDrawer";
 
 
 const inter = Inter({ subsets: ["latin"] });
+const cormorant = Cormorant({
+  weight: ["300", "400", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-display",
+});
 
 export const metadata: Metadata = {
   title: "Govinda's Horticulture Nursery - From Our Nursery to Your Place",
@@ -22,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className} suppressHydrationWarning>
+      <body className={`${inter.className} ${cormorant.variable}`} suppressHydrationWarning>
         <AuthProvider>
           <CartProvider>
             <div className="app-wrapper">
