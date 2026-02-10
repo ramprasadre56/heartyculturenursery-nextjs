@@ -234,7 +234,6 @@ export default function CheckoutPage() {
     return (
         <div className="w-full px-6 lg:px-12 py-8 text-white min-h-screen pt-24 bg-[#1a472a]">
             <h1 className="text-3xl font-bold mb-2 text-center text-[#ffd700]">Request a Quote</h1>
-            <p className="text-center text-gray-300 mb-8 text-sm">Tell us where to deliver and we&apos;ll get back with the best price</p>
 
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8 w-full">
                 {/* Selected Plants — Main Area */}
@@ -346,11 +345,6 @@ export default function CheckoutPage() {
                             </div>
                         )}
 
-                        <div className="mt-5 pt-4 border-t border-white/15">
-                            <p className="text-sm text-gray-300">
-                                We&apos;ll review your selection and share the best price via phone or email.
-                            </p>
-                        </div>
                     </div>
                 </div>
 

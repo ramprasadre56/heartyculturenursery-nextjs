@@ -190,12 +190,6 @@ export default function CartPage() {
                                 Request Quote
                             </Link>
 
-                            <div className="mt-6 pt-6 border-t border-gray-100">
-                                <div className="flex items-center gap-3 text-gray-600 text-sm">
-                                    <span className="text-lg">📋</span>
-                                    <span>We&apos;ll share the best price for your selection</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
