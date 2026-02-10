@@ -61,6 +61,7 @@ export const saveOrder = async (orderId: string, items: any[], paymentInfo?: {
     userEmail?: string;
     customer?: { name: string; email: string; phone: string; };
     shipping?: { address: string; city: string; state: string; zip: string; };
+    notes?: string;
 }) => {
     const sessionId = getSessionId();
     if (!sessionId) return;
