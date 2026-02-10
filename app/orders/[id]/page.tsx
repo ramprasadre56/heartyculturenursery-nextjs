@@ -108,11 +108,7 @@ export default function OrderDetailsPage() {
         );
     }
 
-    // Calculate total based on what we are displaying (local or backend)
-    let calculatedTotal = 0;
-
     const itemsToDisplay = order.line_items.map((lineItem, idx) => {
-        // Try to find local item details
         const localDetails = (localOrderDetails?.items && localOrderDetails.items[idx])
             ? localOrderDetails.items[idx]
             : null;
@@ -121,27 +117,13 @@ export default function OrderDetailsPage() {
             ? (localDetails.common_name || localDetails.scientific_name || localDetails.title)
             : lineItem.item.title;
 
-        // Use local price (int cents) if available, otherwise backend price
-        const price = (localDetails?.price !== undefined) ? localDetails.price : lineItem.item.price;
-
-        calculatedTotal += price * lineItem.quantity;
-
         return {
             ...lineItem,
             displayTitle,
             displayImage: localDetails?.image_url || (localDetails as any)?.image,
-            displayPrice: price,
             sizeSelection: (localDetails as any)?.sizeSelection
         };
     });
-
-    // Currency formatter
-    const formatPrice = (amount: number) => {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'INR' // Enforce INR as per previous change
-        }).format(amount / 100);
-    };
 
     return (
         <div className="w-full px-6 lg:px-12 py-8 min-h-screen pt-24 bg-[#1a472a] text-white">
@@ -185,19 +167,9 @@ export default function OrderDetailsPage() {
                                                 )}
                                             </div>
                                         </div>
-                                        <p className="font-bold text-[#ffd700]">
-                                            {formatPrice(item.displayPrice * item.quantity)}
-                                        </p>
                                     </div>
                                 );
                             })}
-                        </div>
-                    </div>
-
-                    <div className="flex justify-end border-t border-white/20 pt-6">
-                        <div className="text-right">
-                            <p className="text-gray-300 text-lg">Total Amount</p>
-                            <p className="text-3xl font-bold text-[#ffd700]">{formatPrice(calculatedTotal)}</p>
                         </div>
                     </div>
 

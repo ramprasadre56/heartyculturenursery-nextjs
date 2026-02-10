@@ -91,14 +91,6 @@ export default function MyOrdersPage() {
         fetchOrders();
     }, [user, status]);
 
-    // Currency formatter
-    const formatPrice = (amount: number, currency = 'INR') => {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: currency
-        }).format(amount / 100);
-    };
-
     if (loading) {
         return (
             <div className="container mx-auto px-4 py-8 min-h-screen pt-24 bg-[#1a472a] text-white flex justify-center items-center">
@@ -123,22 +115,7 @@ export default function MyOrdersPage() {
                 </div>
             ) : (
                 <div className="grid gap-6 w-full">
-                    {orders.map((order) => {
-                        // Calculate total from local items if available (stored in cents)
-                        // otherwise fallback to backend total
-                        let totalAmount = 0;
-
-                        if (order.localDetails?.items && order.localDetails.items.length > 0) {
-                            totalAmount = order.localDetails.items.reduce((sum: number, item: any) => {
-                                // item.price is stored in cents
-                                return sum + ((item.price || 0) * (item.quantity || 1));
-                            }, 0);
-                        } else {
-                            totalAmount = order.totals?.find((t: any) => t.type === 'total')?.amount ||
-                                order.line_items.reduce((sum: number, item: any) => sum + (item.item.price * item.quantity), 0);
-                        }
-
-                        return (
+                    {orders.map((order) => (
                             <div
                                 key={order.id}
                                 onClick={() => router.push(`/orders/${order.id}`)}
@@ -165,12 +142,10 @@ export default function MyOrdersPage() {
                                     <p className="text-sm capitalize mt-1">Status: <span className="font-bold">{order.status}</span></p>
                                 </div>
                                 <div className="text-right">
-                                    <p className="text-2xl font-bold text-white">{formatPrice(totalAmount, 'INR')}</p>
                                     <span className="text-xs text-gray-400">View Details &rarr;</span>
                                 </div>
                             </div>
-                        );
-                    })}
+                    ))}
                 </div>
             )}
         </div>

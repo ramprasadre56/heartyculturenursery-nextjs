@@ -10,7 +10,7 @@ import CartDrawer from "@/components/CartDrawer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Horticulture Nursery - From Our Nursery to Your Place",
+  title: "Govinda's Horticulture Nursery - From Our Nursery to Your Place",
   description: "Discover 400+ varieties of plants. Flowering shrubs, palms, fruit trees, heliconia, and more. Order via WhatsApp for delivery.",
   keywords: "nursery, plants, garden, flowering shrubs, palms, fruit trees, heliconia, plumeria, india",
 };

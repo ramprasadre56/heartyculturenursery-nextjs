@@ -7,14 +7,14 @@
 .sectionTitle {
   font-size: 2.25rem;
   font-weight: 700;
-  color: #1a1a1a;
+  color: #ffd700;
   margin-bottom: 0.5rem;
 }
 
 .sectionSubtitle {
-  color: #666;
-  font-size: 1.1rem;
-  margin-bottom: 3rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 1.05rem;
+  margin-bottom: 0;
 }
 
 .offerGrid {
@@ -56,71 +56,180 @@
   font-size: 0.95rem;
 }
 
-/* Categories Section */
+/* ======================================
+   CATEGORIES SECTION — Horizontal Scroll
+   ====================================== */
+
 .categories {
-  padding: 4rem 2rem;
-  background: #f8faf8;
+  padding: 3.5rem 0 4rem;
+  background: #1a472a;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Subtle texture overlay */
+.categories::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(255, 215, 0, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(34, 197, 94, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.categoriesHeader {
   text-align: center;
-}
-
-.categoryGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1.25rem;
-  max-width: 100%;
-  margin: 0 auto 2rem;
   padding: 0 2rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 1;
 }
 
-.categoryCard {
+/* Groups */
+.groupsContainer {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.categoryGroup {
+  /* no special layout — just stacks header + scroll row */
+}
+
+/* Group Header: number + title + line */
+.groupHeader {
+  display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 1.5rem;
-  background: white;
-  border-radius: 12px;
+  padding: 0 2rem;
+  margin-bottom: 0.85rem;
+}
+
+.groupNumber {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ffd700;
+  opacity: 0.5;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.groupTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.groupLine {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.25), transparent 80%);
+  margin-left: 0.5rem;
+}
+
+/* Horizontal Scroll Row */
+.scrollRow {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  padding-bottom: 4px;
+}
+
+.scrollRow::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollTrack {
+  display: flex;
+  gap: 0.85rem;
+  padding: 0 2rem;
+  /* Allow items to extend past viewport */
+  width: max-content;
+}
+
+/* Category Card */
+.categoryCard {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.9rem 1.25rem;
+  min-width: 210px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
   text-decoration: none;
-  border: 1px solid #eee;
-  transition: all 0.3s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  cursor: pointer;
 }
 
 .categoryCard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  border-color: #22c55e;
+  background: rgba(255, 215, 0, 0.1);
+  border-color: rgba(255, 215, 0, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 .categoryIcon {
-  font-size: 2.5rem;
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
 }
 
-.categoryCard h3 {
-  font-size: 0.95rem;
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.cardName {
+  font-size: 0.88rem;
   font-weight: 600;
-  color: #1a1a1a;
-  text-align: center;
+  color: rgba(255, 255, 255, 0.92);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.viewAllLink {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background: #22c55e;
-  color: white;
-  border-radius: 8px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background 0.2s;
+.cardArrow {
+  font-size: 0.75rem;
+  color: #ffd700;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.25s ease;
 }
 
-.viewAllLink:hover {
-  background: #16a34a;
+.categoryCard:hover .cardArrow {
+  opacity: 1;
+  transform: translateX(0);
 }
 
-/* CTA Section */
+/* ======================================
+   CTA SECTION
+   ====================================== */
+
 .cta {
   padding: 5rem 2rem;
-  background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%);
+  background: linear-gradient(135deg, #122318 0%, #1a472a 50%, #24573a 100%);
   text-align: center;
 }
 
@@ -161,10 +270,60 @@
   box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
 }
 
-/* Responsive */
+/* ======================================
+   RESPONSIVE
+   ====================================== */
+
 @media (max-width: 768px) {
+  .categories {
+    padding: 2.5rem 0 3rem;
+  }
+
+  .categoriesHeader {
+    margin-bottom: 2rem;
+  }
+
   .sectionTitle {
-    font-size: 1.75rem;
+    font-size: 1.6rem;
+  }
+
+  .sectionSubtitle {
+    font-size: 0.9rem;
+  }
+
+  .groupsContainer {
+    gap: 1.5rem;
+  }
+
+  .groupHeader {
+    padding: 0 1.25rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .groupTitle {
+    font-size: 0.85rem;
+  }
+
+  .scrollTrack {
+    gap: 0.65rem;
+    padding: 0 1.25rem;
+  }
+
+  .categoryCard {
+    min-width: 175px;
+    padding: 0.75rem 1rem;
+    gap: 0.7rem;
+  }
+
+  .categoryIcon {
+    font-size: 1.6rem;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+  }
+
+  .cardName {
+    font-size: 0.8rem;
   }
 
   .offerGrid {
@@ -176,24 +335,26 @@
     padding: 1.5rem;
   }
 
-  .categoryGrid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
+  .cta h2 {
+    font-size: 1.75rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .groupHeader {
+    padding: 0 3rem;
+  }
+
+  .scrollTrack {
+    padding: 0 3rem;
+  }
+
+  .categoriesHeader {
+    padding: 0 3rem;
   }
 
   .categoryCard {
-    padding: 1rem;
-  }
-
-  .categoryIcon {
-    font-size: 2rem;
-  }
-
-  .categoryCard h3 {
-    font-size: 0.8rem;
-  }
-
-  .cta h2 {
-    font-size: 1.75rem;
+    min-width: 230px;
+    padding: 1rem 1.4rem;
   }
 }

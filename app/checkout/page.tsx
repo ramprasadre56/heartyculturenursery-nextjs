@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
 import { supabase } from '@/lib/supabase';
 import { formatSizeDisplay } from '@/lib/data';
 
@@ -24,7 +24,7 @@ interface SavedAddress {
 export default function CheckoutPage() {
     const { cartItems, clearCart } = useCart();
     const router = useRouter();
-    const { data: session } = useSession();
+    const { user } = useUnifiedAuth();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -49,13 +49,13 @@ export default function CheckoutPage() {
 
     // Load saved addresses
     const fetchAddresses = useCallback(async () => {
-        if (!session?.user?.email || !supabase) return;
+        if (!user?.email || !supabase) return;
 
         try {
             const { data, error } = await supabase
                 .from('addresses')
                 .select('*')
-                .eq('user_email', session.user.email)
+                .eq('user_email', user?.email)
                 .order('is_default', { ascending: false });
 
             if (!error && data) {
@@ -78,24 +78,24 @@ export default function CheckoutPage() {
         } catch {
             // Supabase unavailable, skip loading addresses
         }
-    }, [session?.user?.email]);
+    }, [user?.email]);
 
     useEffect(() => {
         fetchAddresses();
-        if (session?.user?.email) {
-            setFormData(prev => ({ ...prev, email: session.user?.email || '' }));
+        if (user?.email) {
+            setFormData(prev => ({ ...prev, email: user.email || '' }));
         }
-        if (session?.user?.name) {
-            setFormData(prev => ({ ...prev, fullName: session.user?.name || '' }));
+        if (user?.name) {
+            setFormData(prev => ({ ...prev, fullName: user.name || '' }));
         }
-    }, [session, fetchAddresses]);
+    }, [user?.email, user?.name, fetchAddresses]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleSaveAddress = async () => {
-        if (!session?.user?.email) {
+        if (!user?.email) {
             setError('Please sign in to save addresses');
             return;
         }
@@ -110,7 +110,7 @@ export default function CheckoutPage() {
             const { data: existing } = await supabase
                 .from('addresses')
                 .select('id')
-                .eq('user_email', session.user.email)
+                .eq('user_email', user?.email)
                 .eq('address_line1', formData.address)
                 .eq('zip_code', formData.zip)
                 .single();
@@ -124,7 +124,7 @@ export default function CheckoutPage() {
             const { data, error: insertError } = await supabase
                 .from('addresses')
                 .insert({
-                    user_email: session.user.email,
+                    user_email: user?.email,
                     full_name: formData.fullName,
                     phone: formData.phone,
                     address_line1: formData.address,
@@ -143,7 +143,7 @@ export default function CheckoutPage() {
             setShowAddressForm(false);
             setFormData({
                 fullName: data.full_name,
-                email: session?.user?.email || '',
+                email: user?.email || '',
                 phone: data.phone || '',
                 address: data.address_line1,
                 city: data.city,
@@ -163,7 +163,7 @@ export default function CheckoutPage() {
         setSelectedAddressId(address.id);
         setFormData({
             fullName: address.full_name,
-            email: session?.user?.email || '',
+            email: user?.email || '',
             phone: address.phone || '',
             address: address.address_line1,
             city: address.city,
@@ -195,7 +195,7 @@ export default function CheckoutPage() {
                 paymentId: 'QUOTE',
                 status: 'pending',
                 paymentMethod: 'quote',
-                userEmail: session?.user?.email || formData.email,
+                userEmail: user?.email || formData.email,
                 customer: {
                     name: formData.fullName,
                     email: formData.email,
@@ -489,7 +489,7 @@ export default function CheckoutPage() {
                                     />
                                 </div>
 
-                                {session?.user?.email ? (
+                                {user?.email ? (
                                     <button
                                         type="submit"
                                         disabled={savingAddress}

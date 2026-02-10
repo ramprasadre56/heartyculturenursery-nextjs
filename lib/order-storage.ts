@@ -125,15 +125,17 @@ export const getStoredOrders = async (userEmail?: string): Promise<(StoredOrder 
             return getLocalOrders();
         }
 
-        const supabaseOrders = data.filter((row: any) => {
-            if (userEmail) {
-                return row.user_email === userEmail || row.user_email === null;
-            } else {
-                return row.user_email === null;
-            }
-        }).map((row: any) => ({ ...row.details, payment_status: row.payment_status }));
+        const supabaseOrders = data.map((row: any) => ({ ...row.details, payment_status: row.payment_status }));
 
-        return supabaseOrders.length > 0 ? supabaseOrders : getLocalOrders();
+        // Merge with localStorage orders, deduplicating by ID
+        const localOrders = getLocalOrders();
+        const seenIds = new Set(supabaseOrders.map((o: any) => o.id));
+        const mergedOrders = [
+            ...supabaseOrders,
+            ...localOrders.filter(o => !seenIds.has(o.id))
+        ];
+
+        return mergedOrders;
     } catch (e) {
         console.warn('Exception fetching from Supabase:', e);
         return getLocalOrders();

@@ -1,21 +1,27 @@
 "use client";
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { loadPlantsByCategory, Plant } from '@/lib/data';
 import { getCategoryBySlug } from '@/lib/categories';
+import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
 import CategorySidebar from '@/components/CategorySidebar';
 import PlantCard from '@/components/PlantCard';
+import LoginModal from '@/components/LoginModal';
 import styles from './page.module.css';
 
 export default function CategoryPage() {
     const params = useParams();
     const categorySlug = params.category as string;
 
+    const { status } = useUnifiedAuth();
     const [plants, setPlants] = useState<Plant[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
+    const [loginModalOpen, setLoginModalOpen] = useState(false);
+
+    const onLoginRequired = useCallback(() => setLoginModalOpen(true), []);
 
     const category = getCategoryBySlug(categorySlug);
 
@@ -93,12 +99,21 @@ export default function CategoryPage() {
                     ) : (
                         <div className="plant-grid">
                             {filteredPlants.map((plant, index) => (
-                                <PlantCard key={`${plant.category}-${plant.id}-${index}`} plant={plant} />
+                                <PlantCard
+                                    key={`${plant.category}-${plant.id}-${index}`}
+                                    plant={plant}
+                                    onLoginRequired={status === 'authenticated' ? undefined : onLoginRequired}
+                                />
                             ))}
                         </div>
                     )}
                 </div>
             </div>
+
+            <LoginModal
+                isOpen={loginModalOpen}
+                onClose={() => setLoginModalOpen(false)}
+            />
         </div>
     );
 }

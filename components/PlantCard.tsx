@@ -9,9 +9,10 @@ import styles from './PlantCard.module.css';
 
 interface PlantCardProps {
     plant: Plant;
+    onLoginRequired?: () => void;
 }
 
-export default function PlantCard({ plant }: PlantCardProps) {
+export default function PlantCard({ plant, onLoginRequired }: PlantCardProps) {
     const { addToCart } = useCart();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -19,6 +20,14 @@ export default function PlantCard({ plant }: PlantCardProps) {
 
     const handleSelectSize = (plant: Plant, sizeSelection: SizeSelection) => {
         addToCart(plant, sizeSelection);
+    };
+
+    const handleSelectSizeClick = () => {
+        if (onLoginRequired) {
+            onLoginRequired();
+        } else {
+            setIsModalOpen(true);
+        }
     };
 
     return (
@@ -45,7 +54,7 @@ export default function PlantCard({ plant }: PlantCardProps) {
 
                 <button
                     className={styles.addToCart}
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={handleSelectSizeClick}
                 >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <circle cx="8" cy="21" r="1"></circle>

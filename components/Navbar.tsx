@@ -39,9 +39,9 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className={styles.logoLink}>
           <Image
-            src="/logo.png"
-            alt="Horticulture Nursery"
-            width={55}
+            src="/govindalogo.png"
+            alt="Govinda's Horticulture Nursery"
+            width={180}
             height={55}
             className={styles.logo}
             priority

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { PLANT_CATEGORIES } from '@/lib/categories';
+import { CATEGORY_GROUPS } from '@/lib/categories';
 import PlantSizesGuide from '@/components/PlantSizesGuide';
 import styles from './page.module.css';
 
@@ -10,27 +10,41 @@ export default function Home() {
 
       {/* Browse Categories Section */}
       <section className={styles.categories}>
-        <h2 className={styles.sectionTitle}>Browse Categories</h2>
-        <p className={styles.sectionSubtitle}>
-          Explore our collection organized by plant type
-        </p>
-
-        <div className={styles.categoryGrid}>
-          {PLANT_CATEGORIES.slice(0, 12).map((cat) => (
-            <Link
-              key={cat.slug}
-              href={`/plants/${cat.slug}`}
-              className={styles.categoryCard}
-            >
-              <span className={styles.categoryIcon}>{cat.icon}</span>
-              <h3>{cat.name}</h3>
-            </Link>
-          ))}
+        <div className={styles.categoriesHeader}>
+          <h2 className={styles.sectionTitle}>Browse Our Collection</h2>
+          <p className={styles.sectionSubtitle}>
+            From sacred trees to flowering shrubs — swipe to explore
+          </p>
         </div>
 
-        <Link href="/plants" className={styles.viewAllLink}>
-          View All Categories →
-        </Link>
+        <div className={styles.groupsContainer}>
+          {CATEGORY_GROUPS.map((group, groupIdx) => (
+            <div key={group.group} className={styles.categoryGroup}>
+              <div className={styles.groupHeader}>
+                <span className={styles.groupNumber}>0{groupIdx + 1}</span>
+                <h3 className={styles.groupTitle}>{group.group}</h3>
+                <div className={styles.groupLine} />
+              </div>
+              <div className={styles.scrollRow}>
+                <div className={styles.scrollTrack}>
+                  {group.items.map((cat) => (
+                    <Link
+                      key={cat.slug}
+                      href={`/plants/${cat.slug}`}
+                      className={styles.categoryCard}
+                    >
+                      <span className={styles.categoryIcon}>{cat.icon}</span>
+                      <div className={styles.cardContent}>
+                        <h4 className={styles.cardName}>{cat.name}</h4>
+                        <span className={styles.cardArrow}>&#8594;</span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* CTA Section */}

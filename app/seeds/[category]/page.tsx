@@ -3,7 +3,9 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
 import { getSeedCategoryBySlug, SEED_CATEGORIES } from '@/lib/seedCategories';
+import LoginModal from '@/components/LoginModal';
 import styles from './page.module.css';
 
 interface Seed {
@@ -45,10 +47,13 @@ const MOCK_SEEDS: Record<string, Seed[]> = {
 export default function SeedCategoryPage() {
     const params = useParams();
     const categorySlug = params.category as string;
+    const { status } = useUnifiedAuth();
+    const isAuthenticated = status === 'authenticated';
 
     const [seeds, setSeeds] = useState<Seed[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
+    const [loginModalOpen, setLoginModalOpen] = useState(false);
 
     const category = getSeedCategoryBySlug(categorySlug);
 
@@ -146,7 +151,10 @@ export default function SeedCategoryPage() {
                                         {seed.scientific_name && (
                                             <p className={styles.seedScientific}>{seed.scientific_name}</p>
                                         )}
-                                        <button className={styles.addToCart}>
+                                        <button
+                                            className={styles.addToCart}
+                                            onClick={() => { if (!isAuthenticated) setLoginModalOpen(true); }}
+                                        >
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                 <circle cx="8" cy="21" r="1"></circle>
                                                 <circle cx="19" cy="21" r="1"></circle>
@@ -161,6 +169,11 @@ export default function SeedCategoryPage() {
                     )}
                 </div>
             </div>
+
+            <LoginModal
+                isOpen={loginModalOpen}
+                onClose={() => setLoginModalOpen(false)}
+            />
         </div>
     );
 }
