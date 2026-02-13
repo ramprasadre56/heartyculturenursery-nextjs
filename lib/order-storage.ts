@@ -1,5 +1,6 @@
 
-import { supabase } from './supabase';
+import { db } from './firebase';
+import { doc, setDoc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 
 const SESSION_KEY = 'heartyculture_session_id';
@@ -78,68 +79,78 @@ export const saveOrder = async (orderId: string, items: any[], paymentInfo?: {
     // Always save to localStorage as fallback
     saveLocalOrder(newOrder);
 
-    if (!supabase) return;
-
     try {
-        const { error } = await supabase
-            .from('orders')
-            .insert({
-                id: orderId,
-                user_session_id: sessionId,
-                user_email: paymentInfo?.userEmail,
-                details: newOrder,
-                payment_id: paymentInfo?.paymentId,
-                payment_status: paymentInfo?.status
-            });
-
-        if (error) {
-            console.warn('Failed to save order to Supabase:', error?.message || error);
-        }
+        await setDoc(doc(db, 'orders', orderId), {
+            user_session_id: sessionId,
+            user_email: paymentInfo?.userEmail || null,
+            details: newOrder,
+            payment_id: paymentInfo?.paymentId || null,
+            payment_status: paymentInfo?.status || null,
+            fulfillment_status: 'pending',
+            created_at: new Date().toISOString(),
+        });
     } catch (e) {
-        console.warn('Exception saving to Supabase:', e);
+        console.warn('Failed to save order to Firestore:', e);
     }
 };
 
 
 export const getStoredOrders = async (userEmail?: string): Promise<(StoredOrder & { payment_status?: string })[]> => {
     const sessionId = getSessionId();
-    if (!sessionId) return [];
-
-    if (!supabase) return getLocalOrders();
+    if (!sessionId && !userEmail) return [];
 
     try {
-        let query = supabase
-            .from('orders')
-            .select('details, created_at, user_email, payment_status')
-            .order('created_at', { ascending: false });
+        // When user is authenticated, only fetch orders for their email
+        // This prevents orders from other accounts on the same browser from leaking
+        const ordersRef = collection(db, 'orders');
+        const queries: Promise<any>[] = [];
 
         if (userEmail) {
-            query = query.or(`user_email.eq.${userEmail},user_session_id.eq.${sessionId}`);
+            const emailQuery = query(ordersRef, where('user_email', '==', userEmail));
+            queries.push(getDocs(emailQuery));
         } else {
-            query = query.eq('user_session_id', sessionId);
+            // Only use session-based query for unauthenticated users
+            const sessionQuery = query(ordersRef, where('user_session_id', '==', sessionId));
+            queries.push(getDocs(sessionQuery));
         }
 
-        const { data, error } = await query;
+        const results = await Promise.all(queries);
+        const seenIds = new Set<string>();
+        const firestoreOrders: (StoredOrder & { payment_status?: string; _created_at?: string })[] = [];
 
-        if (error) {
-            console.warn('Failed to fetch orders from Supabase:', error?.message || error);
-            return getLocalOrders();
+        for (const snapshot of results) {
+            for (const docSnap of snapshot.docs) {
+                const data = docSnap.data();
+                if (!seenIds.has(docSnap.id)) {
+                    seenIds.add(docSnap.id);
+                    firestoreOrders.push({ ...data.details, payment_status: data.payment_status, _created_at: data.created_at });
+                }
+            }
         }
 
-        const supabaseOrders = data.map((row: any) => ({ ...row.details, payment_status: row.payment_status }));
+        // Sort by created_at descending (newest first) in JavaScript
+        firestoreOrders.sort((a, b) => (b._created_at || b.date || '').localeCompare(a._created_at || a.date || ''));
+        // Remove temp sort key
+        const cleanedOrders = firestoreOrders.map(({ _created_at, ...rest }) => rest);
 
         // Merge with localStorage orders, deduplicating by ID
+        // When authenticated, only include local orders that match the user's email
         const localOrders = getLocalOrders();
-        const seenIds = new Set(supabaseOrders.map((o: any) => o.id));
+        const filteredLocalOrders = userEmail
+            ? localOrders.filter(o => !seenIds.has(o.id) && o.customer?.email === userEmail)
+            : localOrders.filter(o => !seenIds.has(o.id));
         const mergedOrders = [
-            ...supabaseOrders,
-            ...localOrders.filter(o => !seenIds.has(o.id))
+            ...cleanedOrders,
+            ...filteredLocalOrders
         ];
 
         return mergedOrders;
     } catch (e) {
-        console.warn('Exception fetching from Supabase:', e);
-        return getLocalOrders();
+        console.warn('Exception fetching from Firestore, falling back to localStorage:', e);
+        const localOrders = getLocalOrders();
+        return userEmail
+            ? localOrders.filter(o => o.customer?.email === userEmail)
+            : localOrders;
     }
 };
 
@@ -150,21 +161,15 @@ export const getOrderIds = async (): Promise<string[]> => {
 };
 
 export const getOrderDetailsLocal = async (orderId: string): Promise<(StoredOrder & { payment_status?: string }) | undefined> => {
-    // Try Supabase first
-    if (supabase) {
-        try {
-            const { data, error } = await supabase
-                .from('orders')
-                .select('details, payment_status')
-                .eq('id', orderId)
-                .single();
-
-            if (!error && data) {
-                return { ...data.details, payment_status: data.payment_status };
-            }
-        } catch {
-            // fall through to localStorage
+    // Try Firestore first
+    try {
+        const docSnap = await getDoc(doc(db, 'orders', orderId));
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            return { ...data.details, payment_status: data.payment_status };
         }
+    } catch {
+        // fall through to localStorage
     }
 
     // Fallback to localStorage

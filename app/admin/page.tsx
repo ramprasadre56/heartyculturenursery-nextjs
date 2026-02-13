@@ -1,10 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
+import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { db } from '@/lib/firebase';
+import { collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { formatSizeDisplay } from '@/lib/data';
+
+// Admin emails whitelist
+const ADMIN_EMAILS = ['ramprasadre56@gmail.com'];
 
 interface OrderItem {
     common_name?: string;
@@ -39,6 +43,7 @@ interface OrderDetails {
 interface Order {
     id: string;
     user_session_id: string;
+    user_email?: string;
     details: OrderDetails;
     payment_id?: string;
     payment_status?: string;
@@ -55,7 +60,7 @@ const FULFILLMENT_OPTIONS = [
 ];
 
 export default function AdminDashboard() {
-    const { status } = useUnifiedAuth();
+    const { user, status } = useAuth();
     const router = useRouter();
     const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(true);
@@ -65,6 +70,8 @@ export default function AdminDashboard() {
     const [dateTo, setDateTo] = useState('');
     const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
 
+    const isAdmin = user?.email && ADMIN_EMAILS.includes(user.email);
+
     useEffect(() => {
         if (status === 'unauthenticated') {
             router.push('/');
@@ -72,65 +79,64 @@ export default function AdminDashboard() {
     }, [status, router]);
 
     const fetchOrders = React.useCallback(async () => {
+        if (!isAdmin) return;
         setLoading(true);
         try {
-            const params = new URLSearchParams();
-            if (statusFilter) params.set('status', statusFilter);
-            if (dateFrom) params.set('dateFrom', dateFrom);
-            if (dateTo) params.set('dateTo', dateTo);
+            const ordersRef = collection(db, 'orders');
 
-            // Get Supabase access token
-            const { data: sessionData } = await supabase?.auth?.getSession() || { data: { session: null } };
-            const accessToken = sessionData?.session?.access_token || '';
-
-            const response = await fetch(`/api/admin/orders?${params}`, {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                },
-            });
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.error || 'Failed to fetch orders');
+            // Use simple queries to avoid composite index requirements
+            let q;
+            if (statusFilter && statusFilter !== 'all') {
+                q = query(ordersRef, where('payment_status', '==', statusFilter));
+            } else {
+                q = query(ordersRef);
             }
 
-            setOrders(data.orders || []);
+            const snapshot = await getDocs(q);
+            let fetchedOrders: Order[] = snapshot.docs.map(d => ({
+                id: d.id,
+                ...d.data(),
+            } as Order));
+
+            // Filter by date range in JavaScript
+            if (dateFrom) {
+                fetchedOrders = fetchedOrders.filter(o => o.created_at && o.created_at >= dateFrom);
+            }
+            if (dateTo) {
+                fetchedOrders = fetchedOrders.filter(o => o.created_at && o.created_at <= dateTo + 'T23:59:59');
+            }
+
+            // Sort by created_at descending
+            fetchedOrders.sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''));
+
+            setOrders(fetchedOrders);
             setError(null);
         } catch (err: unknown) {
+            console.error('Admin fetch error:', err);
             if (err instanceof Error) {
                 setError(err.message);
             } else {
-                setError('An error occurred');
+                setError('Failed to fetch orders');
             }
         } finally {
             setLoading(false);
         }
-    }, [statusFilter, dateFrom, dateTo]);
+    }, [statusFilter, dateFrom, dateTo, isAdmin]);
 
     useEffect(() => {
-        fetchOrders();
-    }, [fetchOrders]);
+        if (isAdmin) {
+            fetchOrders();
+        } else if (status !== 'loading') {
+            setLoading(false);
+        }
+    }, [fetchOrders, isAdmin, status]);
 
     const updateFulfillmentStatus = async (orderId: string, newStatus: string) => {
         try {
-            // Get Supabase access token
-            const { data: sessionData } = await supabase?.auth?.getSession() || { data: { session: null } };
-            const accessToken = sessionData?.session?.access_token || '';
-
-            const response = await fetch('/api/admin/orders', {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify({ orderId, fulfillmentStatus: newStatus })
+            await updateDoc(doc(db, 'orders', orderId), {
+                fulfillment_status: newStatus,
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to update status');
-            }
-
-            // Update local state
             setOrders(orders.map(order =>
                 order.id === orderId
                     ? { ...order, fulfillment_status: newStatus }
@@ -154,13 +160,6 @@ export default function AdminDashboard() {
         return order.details.items.reduce((sum, item) => sum + (item.price * item.quantity) / 100, 0);
     };
 
-    const getFulfillmentBadge = (status?: string) => {
-        const option = FULFILLMENT_OPTIONS.find(o => o.value === status) || FULFILLMENT_OPTIONS[0];
-        return <span className={`${option.color} text-white px-2 py-1 rounded text-sm`}>{option.label}</span>;
-    };
-    // Suppress unused warning - used for future badge display
-    void getFulfillmentBadge;
-
     if (status === 'loading') {
         return (
             <div className="min-h-screen bg-[#1a472a] flex items-center justify-center">
@@ -169,8 +168,25 @@ export default function AdminDashboard() {
         );
     }
 
+    if (!isAdmin) {
+        return (
+            <div className="min-h-screen bg-[#1a472a] pt-24 flex items-center justify-center">
+                <div className="text-center">
+                    <p className="text-white text-xl mb-4">Access Denied</p>
+                    <p className="text-gray-400 mb-4">You don&apos;t have admin access.</p>
+                    <button
+                        onClick={() => router.push('/')}
+                        className="bg-[#ffd700] text-[#1a472a] font-bold py-2 px-6 rounded hover:bg-yellow-400"
+                    >
+                        Go Home
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div className="min-h-screen bg-[#1a472a] pt-4 px-6 lg:px-12 pb-8">
+        <div className="min-h-screen bg-[#1a472a] pt-20 px-6 lg:px-12 pb-8">
             <div className="w-full">
                 <h1 className="text-2xl font-bold text-[#ffd700] mb-4">Admin Dashboard</h1>
 
@@ -258,12 +274,13 @@ export default function AdminDashboard() {
                 ) : orders.length === 0 ? (
                     <div className="text-white text-center py-8">No orders found</div>
                 ) : (
-                    <div className="bg-white/10 rounded-lg overflow-hidden backdrop-blur-md">
+                    <div className="bg-white/10 rounded-lg overflow-x-auto backdrop-blur-md">
                         <table className="w-full">
                             <thead className="bg-white/10">
                                 <tr>
                                     <th className="text-left p-4 text-[#ffd700]">Order ID</th>
                                     <th className="text-left p-4 text-[#ffd700]">Date</th>
+                                    <th className="text-left p-4 text-[#ffd700]">Customer</th>
                                     <th className="text-left p-4 text-[#ffd700]">Items</th>
                                     <th className="text-left p-4 text-[#ffd700]">Total</th>
                                     <th className="text-left p-4 text-[#ffd700]">Payment</th>
@@ -280,6 +297,9 @@ export default function AdminDashboard() {
                                             </td>
                                             <td className="p-4 text-gray-300 text-sm">
                                                 {formatDate(order.created_at)}
+                                            </td>
+                                            <td className="p-4 text-gray-300 text-sm">
+                                                {order.details?.customer?.name || order.user_email || '—'}
                                             </td>
                                             <td className="p-4 text-white">
                                                 {order.details?.items?.length || 0} items
@@ -319,7 +339,7 @@ export default function AdminDashboard() {
                                         </tr>
                                         {expandedOrder === order.id && (
                                             <tr className="bg-white/5">
-                                                <td colSpan={7} className="p-4">
+                                                <td colSpan={8} className="p-4">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         <div>
                                                             <h4 className="text-[#ffd700] font-semibold mb-2">Order Items</h4>
@@ -339,6 +359,7 @@ export default function AdminDashboard() {
                                                         <div>
                                                             <h4 className="text-[#ffd700] font-semibold mb-2">Payment Details</h4>
                                                             <p className="text-gray-300">Payment ID: {order.payment_id || 'N/A'}</p>
+                                                            <p className="text-gray-300">User Email: {order.user_email || 'N/A'}</p>
                                                             <p className="text-gray-300">Session: {order.user_session_id?.substring(0, 8)}...</p>
                                                         </div>
                                                         <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-white/20 pt-4 mt-2">

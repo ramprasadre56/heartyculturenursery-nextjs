@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
+import { useAuth } from '@/context/AuthContext';
 import { getSeedCategoryBySlug, SEED_CATEGORIES } from '@/lib/seedCategories';
 import LoginModal from '@/components/LoginModal';
 import styles from './page.module.css';
@@ -47,7 +47,7 @@ const MOCK_SEEDS: Record<string, Seed[]> = {
 export default function SeedCategoryPage() {
     const params = useParams();
     const categorySlug = params.category as string;
-    const { status } = useUnifiedAuth();
+    const { status } = useAuth();
     const isAuthenticated = status === 'authenticated';
 
     const [seeds, setSeeds] = useState<Seed[]>([]);

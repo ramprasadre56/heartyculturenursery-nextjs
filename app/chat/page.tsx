@@ -4,21 +4,21 @@
 export const dynamic = 'force-dynamic';
 
 import React, { useEffect, useState, useCallback } from 'react';
-import { useSession, signIn } from 'next-auth/react';
+import { useAuth } from '@/context/AuthContext';
 import ChatSidebar from './_components/ChatSidebar';
 import ChatInterface from './_components/ChatInterface';
 import { ChatSession, createChatSession, getUserChatSessions } from '@/lib/chat-storage';
 
 export default function ChatPage() {
-    const { data: session, status } = useSession();
+    const { user, status, signInWithGoogle } = useAuth();
     const [sessions, setSessions] = useState<ChatSession[]>([]);
     const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
     const [sidebarOpen, setSidebarOpen] = useState(true);
 
     const handleNewChat = useCallback(async () => {
-        if (!session?.user?.email) return;
+        if (!user?.email) return;
 
-        let newId = await createChatSession(session.user.email, 'New Chat');
+        let newId = await createChatSession(user.email, 'New Chat');
 
         // Fallback if DB is not set up yet
         if (!newId) {
@@ -35,13 +35,13 @@ export default function ChatPage() {
             setSessions(prev => [newSession, ...prev]);
             setCurrentSessionId(newId);
         }
-    }, [session]);
+    }, [user]);
 
     // Fetch sessions on load
     useEffect(() => {
         async function initSessions() {
-            if (session?.user?.email) {
-                const loadedSessions = await getUserChatSessions(session.user.email);
+            if (user?.email) {
+                const loadedSessions = await getUserChatSessions(user.email);
 
                 if (loadedSessions && loadedSessions.length > 0) {
                     setSessions(loadedSessions);
@@ -55,7 +55,7 @@ export default function ChatPage() {
         if (status === 'authenticated') {
             initSessions();
         }
-    }, [session, status, handleNewChat]);
+    }, [user, status, handleNewChat]);
 
     const handleSelectSession = (id: string) => {
         setCurrentSessionId(id);
@@ -71,7 +71,7 @@ export default function ChatPage() {
                 <h2 className="text-2xl font-bold text-gray-800">Welcome to Business Agent</h2>
                 <p className="text-gray-600">Please sign in to start chatting and save your history.</p>
                 <button
-                    onClick={() => signIn('google')}
+                    onClick={() => signInWithGoogle()}
                     className="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition"
                 >
                     Sign In with Google
@@ -89,7 +89,7 @@ export default function ChatPage() {
                     currentSessionId={currentSessionId}
                     onSelectSession={handleSelectSession}
                     onNewChat={handleNewChat}
-                    userEmail={session?.user?.email}
+                    userEmail={user?.email}
                 />
             </div>
 
@@ -99,7 +99,7 @@ export default function ChatPage() {
                     <ChatInterface
                         key={currentSessionId}
                         sessionId={currentSessionId}
-                        userEmail={session?.user?.email || null}
+                        userEmail={user?.email || null}
                     />
                 ) : (
                     <div className="flex items-center justify-center h-full flex-col gap-2">

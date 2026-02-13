@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { loadPlantsByCategory, Plant } from '@/lib/data';
 import { getCategoryBySlug } from '@/lib/categories';
-import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
+import { useAuth } from '@/context/AuthContext';
 import CategorySidebar from '@/components/CategorySidebar';
 import PlantCard from '@/components/PlantCard';
 import LoginModal from '@/components/LoginModal';
@@ -15,7 +15,7 @@ export default function CategoryPage() {
     const params = useParams();
     const categorySlug = params.category as string;
 
-    const { status } = useUnifiedAuth();
+    const { status } = useAuth();
     const [plants, setPlants] = useState<Plant[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');

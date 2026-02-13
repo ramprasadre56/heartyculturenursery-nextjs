@@ -9,11 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.90.1",
+    "@opentelemetry/api": "^1.9.0",
     "@types/uuid": "^10.0.0",
+    "firebase": "^12.9.0",
+    "firebase-admin": "^13.6.1",
     "next": "16.1.1",
-    "next-auth": "^5.0.0-beta.30",
-    "nodemailer": "^7.0.12",
     "razorpay": "^2.9.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",

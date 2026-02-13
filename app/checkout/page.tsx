@@ -4,8 +4,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useRouter } from 'next/navigation';
-import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
-import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/context/AuthContext';
+import { db } from '@/lib/firebase';
+import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
 import { formatSizeDisplay } from '@/lib/data';
 
 interface SavedAddress {
@@ -17,14 +18,14 @@ interface SavedAddress {
     city: string;
     state?: string;
     zip_code: string;
-    country: string;
+    country?: string;
     is_default: boolean;
 }
 
 export default function CheckoutPage() {
     const { cartItems, clearCart } = useCart();
     const router = useRouter();
-    const { user } = useUnifiedAuth();
+    const { user } = useAuth();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -49,18 +50,21 @@ export default function CheckoutPage() {
 
     // Load saved addresses
     const fetchAddresses = useCallback(async () => {
-        if (!user?.email || !supabase) return;
+        if (!user?.email) return;
 
         try {
-            const { data, error } = await supabase
-                .from('addresses')
-                .select('*')
-                .eq('user_email', user?.email)
-                .order('is_default', { ascending: false });
+            const q = query(
+                collection(db, 'addresses'),
+                where('user_email', '==', user.email)
+            );
+            const snapshot = await getDocs(q);
+            const data = snapshot.docs
+                .map(d => ({ id: d.id, ...d.data() } as SavedAddress))
+                .sort((a, b) => (b.is_default ? 1 : 0) - (a.is_default ? 1 : 0));
 
-            if (!error && data) {
+            if (data.length > 0) {
                 setSavedAddresses(data);
-                const defaultAddr = data.find((a: SavedAddress) => a.is_default);
+                const defaultAddr = data.find((a) => a.is_default);
                 const selectedAddr = defaultAddr || data[0];
                 if (selectedAddr) {
                     setSelectedAddressId(selectedAddr.id);
@@ -75,8 +79,8 @@ export default function CheckoutPage() {
                     }));
                 }
             }
-        } catch {
-            // Supabase unavailable, skip loading addresses
+        } catch (err) {
+            console.warn('Failed to load addresses from Firestore:', err);
         }
     }, [user?.email]);
 
@@ -100,43 +104,35 @@ export default function CheckoutPage() {
             return;
         }
 
-        if (!supabase) {
-            setError('Address saving is temporarily unavailable. You can still submit your quote.');
-            return;
-        }
-
         setSavingAddress(true);
         try {
-            const { data: existing } = await supabase
-                .from('addresses')
-                .select('id')
-                .eq('user_email', user?.email)
-                .eq('address_line1', formData.address)
-                .eq('zip_code', formData.zip)
-                .single();
-
-            if (existing) {
+            // Check for duplicate
+            const dupQuery = query(
+                collection(db, 'addresses'),
+                where('user_email', '==', user.email),
+                where('address_line1', '==', formData.address),
+                where('zip_code', '==', formData.zip)
+            );
+            const dupSnapshot = await getDocs(dupQuery);
+            if (!dupSnapshot.empty) {
                 setError('This address is already saved. Please select it from the list.');
                 setSavingAddress(false);
                 return;
             }
 
-            const { data, error: insertError } = await supabase
-                .from('addresses')
-                .insert({
-                    user_email: user?.email,
-                    full_name: formData.fullName,
-                    phone: formData.phone,
-                    address_line1: formData.address,
-                    city: formData.city,
-                    state: formData.state,
-                    zip_code: formData.zip,
-                    is_default: savedAddresses.length === 0
-                })
-                .select()
-                .single();
-
-            if (insertError) throw insertError;
+            const newAddr = {
+                user_email: user.email,
+                full_name: formData.fullName,
+                phone: formData.phone,
+                address_line1: formData.address,
+                city: formData.city,
+                state: formData.state,
+                zip_code: formData.zip,
+                is_default: savedAddresses.length === 0,
+                created_at: new Date().toISOString(),
+            };
+            const docRef = await addDoc(collection(db, 'addresses'), newAddr);
+            const data = { id: docRef.id, ...newAddr } as SavedAddress;
 
             setSavedAddresses([...savedAddresses, data]);
             setSelectedAddressId(data.id);

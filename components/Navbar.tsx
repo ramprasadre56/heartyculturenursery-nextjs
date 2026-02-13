@@ -3,12 +3,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { signIn, signOut } from "next-auth/react";
-import { useUnifiedAuth } from "@/hooks/useUnifiedAuth";
+import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { PLANT_CATEGORIES } from "@/lib/categories";
 import { SEED_CATEGORIES } from "@/lib/seedCategories";
-import { supabase } from "@/lib/supabase";
 import styles from "./Navbar.module.css";
 import LoginModal from "./LoginModal";
 
@@ -88,7 +86,7 @@ function LogOutIcon({ size = 16 }: { size?: number }) {
 
 export default function Navbar() {
   const { totalItems, toggleCart } = useCart();
-  const { user, status } = useUnifiedAuth();
+  const { user, status, signOut: firebaseSignOut } = useAuth();
   const session = user ? { user } : null;
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -98,11 +96,7 @@ export default function Navbar() {
 
   const handleSignOut = async () => {
     setAccountDropdownOpen(false);
-    await Promise.all([
-      signOut({ redirect: false }),
-      supabase ? supabase.auth.signOut() : Promise.resolve(),
-    ]);
-    window.location.reload();
+    await firebaseSignOut();
   };
 
   return (
@@ -255,6 +249,19 @@ export default function Navbar() {
                 <div className={styles.dropdownHeader}>
                   Your Account
                 </div>
+                <Link
+                  href="/account"
+                  className={styles.dropdownItem}
+                  onClick={() => setAccountDropdownOpen(false)}
+                >
+                  <span className={styles.dropdownIcon}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="8" r="4" />
+                      <path d="M20 21a8 8 0 1 0-16 0" />
+                    </svg>
+                  </span>
+                  <span>My Account</span>
+                </Link>
                 <Link
                   href="/orders"
                   className={styles.dropdownItem}

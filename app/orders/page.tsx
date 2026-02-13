@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation';
 import { getCheckout } from '@/lib/ucp-client';
 import { formatSizeDisplay } from '@/lib/data';
 
-import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
+import { useAuth } from '@/context/AuthContext';
 
 export default function MyOrdersPage() {
     const router = useRouter();
-    const { user, status } = useUnifiedAuth();
+    const { user, status } = useAuth();
     const [orders, setOrders] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 

@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { supabase } from '@/lib/supabase';
-import { signIn } from 'next-auth/react';
+import { useAuth } from '@/context/AuthContext';
 import styles from './LoginModal.module.css';
 
 interface LoginModalProps {
@@ -14,10 +13,16 @@ type View = 'login' | 'check-email';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function mapSupabaseError(message: string): string {
-    if (message.includes('rate limit') || message.includes('too many requests')) return 'Too many attempts. Please wait a moment.';
-    if (message.includes('Email not confirmed')) return 'Please check your email to confirm your account.';
-    return 'Something went wrong. Please try again.';
+function mapFirebaseError(code: string): string {
+    if (code.includes('invalid-api-key')) return 'Firebase is not configured. Please set NEXT_PUBLIC_FIREBASE_API_KEY in .env.local';
+    if (code.includes('unauthorized-domain')) return 'This domain is not authorized in Firebase Console. Add it under Authentication > Settings > Authorized domains.';
+    if (code.includes('operation-not-allowed')) return 'Google sign-in is not enabled. Enable it in Firebase Console under Authentication > Sign-in method.';
+    if (code.includes('too-many-requests')) return 'Too many attempts. Please wait a moment.';
+    if (code.includes('invalid-email')) return 'Please enter a valid email address.';
+    if (code.includes('popup-closed') || code.includes('cancelled-popup-request')) return 'Sign-in popup was closed. Please try again.';
+    if (code.includes('popup-blocked')) return 'Popup was blocked by your browser. Please allow popups for this site.';
+    if (code.includes('network-request-failed')) return 'Network error. Please check your internet connection.';
+    return `Something went wrong (${code || 'unknown'}). Please try again.`;
 }
 
 function EmailIcon() {
@@ -41,6 +46,7 @@ function GoogleIcon() {
 }
 
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
+    const { signInWithGoogle, sendEmailLink } = useAuth();
     const [view, setView] = useState<View>('login');
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
@@ -95,19 +101,25 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
         setLoading(true);
         try {
-            const { error: authError } = await supabase.auth.signInWithOtp({ email });
-            if (authError) throw authError;
+            await sendEmailLink(email);
             setView('check-email');
         } catch (err: any) {
-            const message = err?.message || '';
-            setError(mapSupabaseError(message));
+            const code = err?.code || '';
+            setError(mapFirebaseError(code));
         } finally {
             setLoading(false);
         }
     };
 
-    const handleGoogleLogin = () => {
-        signIn('google');
+    const handleGoogleLogin = async () => {
+        try {
+            await signInWithGoogle();
+            onClose();
+        } catch (err: any) {
+            console.error('Google sign-in error:', err);
+            const code = err?.code || '';
+            setError(mapFirebaseError(code));
+        }
     };
 
     if (!isOpen) return null;
@@ -157,7 +169,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                             </div>
                             <h3 className={styles.successTitle}>Check your inbox</h3>
                             <p className={styles.successText}>
-                                We&apos;ve sent a magic link to <strong>{email}</strong>. Click the link in the email to sign in.
+                                We&apos;ve sent a sign-in link to <strong>{email}</strong>. Click the link in the email to sign in.
                             </p>
                             <button
                                 type="button"
