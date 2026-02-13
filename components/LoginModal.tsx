@@ -25,6 +25,15 @@ function mapFirebaseError(code: string): string {
     return `Something went wrong (${code || 'unknown'}). Please try again.`;
 }
 
+function getErrorMessage(err: any): string {
+    const code = err?.code || '';
+    const msg = mapFirebaseError(code);
+    if (msg.startsWith('Something went wrong')) {
+        return `${msg} ${err?.message ? `Details: ${err.message}` : ''}`;
+    }
+    return msg;
+}
+
 function EmailIcon() {
     return (
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -104,8 +113,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             await sendEmailLink(email);
             setView('check-email');
         } catch (err: any) {
-            const code = err?.code || '';
-            setError(mapFirebaseError(code));
+            setError(getErrorMessage(err));
         } finally {
             setLoading(false);
         }
@@ -117,8 +125,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             onClose();
         } catch (err: any) {
             console.error('Google sign-in error:', err);
-            const code = err?.code || '';
-            setError(mapFirebaseError(code));
+            setError(getErrorMessage(err));
         }
     };
 
