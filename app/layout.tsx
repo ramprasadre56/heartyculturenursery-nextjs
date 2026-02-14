@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
-import { Montserrat, Cormorant } from "next/font/google";
+import { Raleway, Lora } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import AuthProvider from "@/context/AuthContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 
 
-const montserrat = Montserrat({
+const raleway = Raleway({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-body",
 });
-const cormorant = Cormorant({
-  weight: ["300", "400", "600", "700"],
+const lora = Lora({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-display",
 });
@@ -31,7 +33,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${montserrat.className} ${montserrat.variable} ${cormorant.variable}`} suppressHydrationWarning>
+      <body className={`${raleway.className} ${raleway.variable} ${lora.variable}`} suppressHydrationWarning>
+        <ThemeProvider>
         <AuthProvider>
           <CartProvider>
             <div className="app-wrapper">
@@ -39,11 +42,12 @@ export default function RootLayout({
               <main className="main-content">
                 {children}
               </main>
-
+              <Footer />
               <CartDrawer />
             </div>
           </CartProvider>
         </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

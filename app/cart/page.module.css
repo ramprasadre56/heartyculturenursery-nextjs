@@ -101,7 +101,7 @@
 }
 
 .itemScientific {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-style: italic;
     color: #666;
     margin-bottom: 8px;
@@ -112,7 +112,7 @@
     padding: 4px 10px;
     background: rgba(34, 197, 94, 0.1);
     color: #22c55e;
-    font-size: 0.8rem;
+    font-size: 0.9375rem;
     font-weight: 500;
     border-radius: 20px;
 }
@@ -166,7 +166,7 @@
     border: 1px solid #dc2626;
     color: #dc2626;
     border-radius: 6px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
@@ -217,7 +217,7 @@
     padding: 1rem;
     background: #fffbeb;
     border-radius: 8px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #92400e;
     line-height: 1.5;
 }
@@ -229,7 +229,7 @@
     gap: 0.75rem;
     width: 100%;
     padding: 1rem;
-    background: #1a472a;
+    background: #059669;
     color: white;
     text-decoration: none;
     border-radius: 10px;
@@ -314,14 +314,14 @@
 .itemPrice {
     font-size: 1rem;
     font-weight: 600;
-    color: #1a472a;
+    color: #059669;
     margin-top: 8px;
 }
 
 .itemTotal {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #1a472a;
+    color: #059669;
 }
 
 .summaryItems {
@@ -334,7 +334,7 @@
 .summaryItem {
     display: flex;
     justify-content: space-between;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #666;
 }
 
@@ -361,7 +361,7 @@
 }
 
 .totalAmount {
-    color: #1a472a;
+    color: #059669;
 }
 
 .freeShipping {
@@ -377,7 +377,7 @@
 }
 
 .paymentInfo p {
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: #166534;
     margin: 0.25rem 0;
 }

@@ -81,12 +81,12 @@
 .plantName {
     font-size: 1.25rem;
     font-weight: 700;
-    color: #1a472a;
+    color: #059669;
     margin: 0 0 0.25rem;
 }
 
 .scientificName {
-    font-size: 0.85rem;
+    font-size: 1rem;
     font-style: italic;
     color: #666;
     margin: 0;
@@ -106,7 +106,7 @@
     padding: 0.6rem 1rem;
     border: none;
     border-radius: 8px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
@@ -115,9 +115,9 @@
 }
 
 .tabActive {
-    background: #1a472a;
+    background: #059669;
     color: white;
-    box-shadow: 0 2px 8px rgba(26, 71, 42, 0.3);
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
 }
 
 /* Scrollable Content */
@@ -133,9 +133,9 @@
 }
 
 .categoryLabel {
-    font-size: 0.8rem;
+    font-size: 0.9375rem;
     font-weight: 600;
-    color: #1a472a;
+    color: #059669;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 0.5rem;
@@ -172,18 +172,18 @@
 }
 
 .sizeName {
-    font-size: 0.95rem;
+    font-size: 1.0625rem;
     font-weight: 700;
-    color: #1a472a;
+    color: #059669;
 }
 
 .sizeWeight {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     color: #666;
 }
 
 .sizeLabel {
-    font-size: 0.7rem;
+    font-size: 0.8125rem;
     color: #22c55e;
     font-weight: 500;
 }

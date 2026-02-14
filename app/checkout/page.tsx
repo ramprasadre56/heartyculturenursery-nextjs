@@ -217,10 +217,10 @@ export default function CheckoutPage() {
 
     if (cartItems.length === 0) {
         return (
-            <div className="w-full px-6 lg:px-12 py-8 text-center text-white min-h-screen pt-24 bg-gradient-to-b from-[#070e09] via-[#0f2e1a] to-[#070e09] flex flex-col justify-center items-center">
-                <h1 className="text-3xl font-bold mb-4" style={{ fontFamily: 'var(--font-display)' }}>Your Cart is Empty</h1>
+            <div className="w-full px-6 lg:px-12 py-8 text-center text-white min-h-screen pt-24 bg-gradient-to-b from-[#070e09] via-[#064E3B] to-[#070e09] flex flex-col justify-center items-center">
+                <h1 className="text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-display)' }}>Your Cart is Empty</h1>
                 <p className="mb-4 text-white/50">Go back to shop and add some plants</p>
-                <button className="bg-[#ffd700] text-[#0f2e1a] px-6 py-3 rounded-xl font-bold hover:bg-[#ffde33] transition-all cursor-pointer" onClick={() => router.push('/')}>
+                <button className="bg-[#ffd700] text-[#064E3B] px-6 py-3 rounded-xl font-bold hover:bg-[#ffde33] transition-all cursor-pointer" onClick={() => router.push('/')}>
                     Shop Now
                 </button>
             </div>
@@ -228,8 +228,8 @@ export default function CheckoutPage() {
     }
 
     return (
-        <div className="w-full px-6 lg:px-12 py-8 text-white min-h-screen pt-24 bg-gradient-to-b from-[#070e09] via-[#0f2e1a] to-[#070e09]">
-            <h1 className="text-3xl font-bold mb-2 text-center text-[#ffd700]" style={{ fontFamily: 'var(--font-display)' }}>Request a Quote</h1>
+        <div className="w-full px-6 lg:px-12 py-8 text-white min-h-screen pt-24 bg-gradient-to-b from-[#070e09] via-[#064E3B] to-[#070e09]">
+            <h1 className="text-4xl font-bold mb-2 text-center text-[#ffd700]" style={{ fontFamily: 'var(--font-display)' }}>Request a Quote</h1>
 
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8 w-full">
                 {/* Selected Plants — Main Area */}
@@ -237,8 +237,8 @@ export default function CheckoutPage() {
                     <div className="bg-white/[0.03] p-6 lg:p-8 rounded-2xl backdrop-blur-xl border border-white/[0.06]">
                         <div className="flex items-center justify-between mb-5">
                             <div className="flex items-center gap-3">
-                                <h2 className="text-xl font-semibold text-[#ffd700]">Your Selection</h2>
-                                <span className="text-xs bg-[#ffd700]/20 text-[#ffd700] px-2.5 py-0.5 rounded-full font-semibold">
+                                <h2 className="text-2xl font-semibold text-[#ffd700]">Your Selection</h2>
+                                <span className="text-sm bg-[#ffd700]/20 text-[#ffd700] px-2.5 py-0.5 rounded-full font-semibold">
                                     {cartItems.length} {cartItems.length === 1 ? 'plant' : 'plants'}
                                 </span>
                             </div>
@@ -282,20 +282,20 @@ export default function CheckoutPage() {
                                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5"><path d="M11 20A7 7 0 0 1 9.8 6.9C15.5 4.9 17 3.5 19 2c1 2 2 4.5 2 8 0 5.5-4.5 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" /></svg>
                                                 </div>
                                             )}
-                                            <span className="absolute top-1.5 right-1.5 bg-black/60 backdrop-blur-sm text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                                            <span className="absolute top-1.5 right-1.5 bg-black/60 backdrop-blur-sm text-white text-sm font-bold px-1.5 py-0.5 rounded-full">
                                                 x{item.quantity}
                                             </span>
                                         </div>
                                         <div className="p-2.5">
-                                            <p className="font-semibold text-white text-xs truncate">{item.common_name !== "Unknown" ? item.common_name : item.scientific_name}</p>
-                                            <p className="text-[10px] text-gray-400 italic truncate">{item.scientific_name}</p>
+                                            <p className="font-semibold text-white text-sm truncate">{item.common_name !== "Unknown" ? item.common_name : item.scientific_name}</p>
+                                            <p className="text-sm text-gray-400 italic truncate">{item.scientific_name}</p>
                                             {item.category && (
-                                                <span className="inline-block mt-1.5 text-[10px] bg-white/10 text-gray-300 px-1.5 py-0.5 rounded-full">
+                                                <span className="inline-block mt-1.5 text-sm bg-white/10 text-gray-300 px-1.5 py-0.5 rounded-full">
                                                     {item.category}
                                                 </span>
                                             )}
                                             {item.sizeSelection && (
-                                                <span className="inline-block mt-1 text-[10px] bg-orange-500/20 text-orange-300 px-1.5 py-0.5 rounded-full">
+                                                <span className="inline-block mt-1 text-sm bg-orange-500/20 text-orange-300 px-1.5 py-0.5 rounded-full">
                                                     {formatSizeDisplay(item.sizeSelection)}
                                                 </span>
                                             )}
@@ -324,20 +324,20 @@ export default function CheckoutPage() {
                                             )}
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <p className="font-semibold text-white text-sm truncate">{item.common_name !== "Unknown" ? item.common_name : item.scientific_name}</p>
-                                            <p className="text-xs text-gray-400 italic truncate">{item.scientific_name}</p>
+                                            <p className="font-semibold text-white text-base truncate">{item.common_name !== "Unknown" ? item.common_name : item.scientific_name}</p>
+                                            <p className="text-sm text-gray-400 italic truncate">{item.scientific_name}</p>
                                         </div>
                                         {item.category && (
-                                            <span className="hidden sm:inline-block text-xs bg-white/10 text-gray-300 px-2 py-0.5 rounded-full flex-shrink-0">
+                                            <span className="hidden sm:inline-block text-sm bg-white/10 text-gray-300 px-2 py-0.5 rounded-full flex-shrink-0">
                                                 {item.category}
                                             </span>
                                         )}
                                         {item.sizeSelection && (
-                                            <span className="hidden sm:inline-block text-xs bg-orange-500/20 text-orange-300 px-2 py-0.5 rounded-full flex-shrink-0">
+                                            <span className="hidden sm:inline-block text-sm bg-orange-500/20 text-orange-300 px-2 py-0.5 rounded-full flex-shrink-0">
                                                 {formatSizeDisplay(item.sizeSelection)}
                                             </span>
                                         )}
-                                        <span className="text-xs bg-[#ffd700]/20 text-[#ffd700] px-2 py-0.5 rounded-full font-semibold flex-shrink-0">
+                                        <span className="text-sm bg-[#ffd700]/20 text-[#ffd700] px-2 py-0.5 rounded-full font-semibold flex-shrink-0">
                                             x{item.quantity}
                                         </span>
                                     </div>
@@ -355,25 +355,25 @@ export default function CheckoutPage() {
                         <button
                             onClick={handleRequestQuote}
                             disabled={loading}
-                            className="w-full bg-[#ffd700] text-[#1a472a] font-bold py-4 px-4 rounded-xl hover:bg-yellow-400 transition-all disabled:opacity-50 shadow-lg text-lg hover:shadow-xl hover:-translate-y-0.5"
+                            className="w-full bg-[#ffd700] text-[#059669] font-bold py-4 px-4 rounded-xl hover:bg-yellow-400 transition-all disabled:opacity-50 shadow-lg text-xl hover:shadow-xl hover:-translate-y-0.5"
                         >
                             {loading ? 'Submitting...' : 'Request Quote'}
                         </button>
                     )}
 
                     <div className="bg-white/[0.03] p-5 rounded-2xl backdrop-blur-xl border border-white/[0.06]">
-                        <h2 className="text-lg font-semibold mb-4 text-[#ffd700]">Your Details</h2>
-                        {error && <div className="bg-red-500/50 text-white p-3 rounded-lg mb-4 text-sm">{error}</div>}
+                        <h2 className="text-xl font-semibold mb-4 text-[#ffd700]">Your Details</h2>
+                        {error && <div className="bg-red-500/50 text-white p-3 rounded-lg mb-4 text-base">{error}</div>}
 
                         {/* Saved Addresses */}
                         {savedAddresses.length > 0 && !showAddressForm && (
                             <div className="space-y-2 mb-4">
-                                <p className="text-xs text-gray-400 mb-1">Saved addresses</p>
+                                <p className="text-sm text-gray-400 mb-1">Saved addresses</p>
                                 {savedAddresses.map((addr) => (
                                     <div
                                         key={addr.id}
                                         onClick={() => selectAddress(addr)}
-                                        className={`p-3 rounded-lg border cursor-pointer transition-all text-sm ${selectedAddressId === addr.id
+                                        className={`p-3 rounded-lg border cursor-pointer transition-all text-base ${selectedAddressId === addr.id
                                             ? 'border-[#ffd700] bg-[#ffd700]/10'
                                             : 'border-white/20 hover:border-white/40'
                                             }`}
@@ -387,8 +387,8 @@ export default function CheckoutPage() {
                                             />
                                             <div className="flex-1 min-w-0">
                                                 <p className="font-medium truncate">{addr.full_name}</p>
-                                                <p className="text-xs text-gray-300 truncate">{addr.address_line1}, {addr.city}</p>
-                                                {addr.phone && <p className="text-xs text-gray-400">{addr.phone}</p>}
+                                                <p className="text-sm text-gray-300 truncate">{addr.address_line1}, {addr.city}</p>
+                                                {addr.phone && <p className="text-sm text-gray-400">{addr.phone}</p>}
                                             </div>
                                         </div>
                                     </div>
@@ -396,7 +396,7 @@ export default function CheckoutPage() {
                                 <button
                                     type="button"
                                     onClick={() => setShowAddressForm(true)}
-                                    className="text-[#ffd700] text-xs hover:underline"
+                                    className="text-[#ffd700] text-sm hover:underline"
                                 >
                                     + Add new address
                                 </button>
@@ -410,40 +410,40 @@ export default function CheckoutPage() {
                                     <button
                                         type="button"
                                         onClick={() => setShowAddressForm(false)}
-                                        className="text-gray-400 text-xs hover:text-white mb-1"
+                                        className="text-gray-400 text-sm hover:text-white mb-1"
                                     >
                                         ← Back to saved addresses
                                     </button>
                                 )}
                                 <div>
-                                    <label className="block text-xs mb-1 text-gray-300">Full Name *</label>
+                                    <label className="block text-sm mb-1 text-gray-300">Full Name *</label>
                                     <input
                                         type="text"
                                         name="fullName"
                                         required
-                                        className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
+                                        className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-base placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
                                         value={formData.fullName}
                                         onChange={handleInputChange}
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-xs mb-1 text-gray-300">Phone *</label>
+                                    <label className="block text-sm mb-1 text-gray-300">Phone *</label>
                                     <input
                                         type="tel"
                                         name="phone"
                                         required
-                                        className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
+                                        className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-base placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
                                         value={formData.phone}
                                         onChange={handleInputChange}
                                         placeholder="+91 XXXXXXXXXX"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-xs mb-1 text-gray-300">Address</label>
+                                    <label className="block text-sm mb-1 text-gray-300">Address</label>
                                     <input
                                         type="text"
                                         name="address"
-                                        className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
+                                        className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-base placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
                                         value={formData.address}
                                         onChange={handleInputChange}
                                         placeholder="House no, Building, Street, Area"
@@ -451,32 +451,32 @@ export default function CheckoutPage() {
                                 </div>
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
-                                        <label className="block text-xs mb-1 text-gray-300">City</label>
+                                        <label className="block text-sm mb-1 text-gray-300">City</label>
                                         <input
                                             type="text"
                                             name="city"
-                                            className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
+                                            className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-base placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
                                             value={formData.city}
                                             onChange={handleInputChange}
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs mb-1 text-gray-300">State</label>
+                                        <label className="block text-sm mb-1 text-gray-300">State</label>
                                         <input
                                             type="text"
                                             name="state"
-                                            className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
+                                            className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-base placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
                                             value={formData.state}
                                             onChange={handleInputChange}
                                         />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-xs mb-1 text-gray-300">PIN Code</label>
+                                    <label className="block text-sm mb-1 text-gray-300">PIN Code</label>
                                     <input
                                         type="text"
                                         name="zip"
-                                        className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
+                                        className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-base placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30"
                                         value={formData.zip}
                                         onChange={handleInputChange}
                                         placeholder="6 digit PIN code"
@@ -487,12 +487,12 @@ export default function CheckoutPage() {
                                     <button
                                         type="submit"
                                         disabled={savingAddress}
-                                        className="w-full bg-white/15 text-white font-semibold py-2 rounded-lg hover:bg-white/25 transition-colors disabled:opacity-50 text-sm"
+                                        className="w-full bg-white/15 text-white font-semibold py-2 rounded-lg hover:bg-white/25 transition-colors disabled:opacity-50 text-base"
                                     >
                                         {savingAddress ? 'Saving...' : 'Save Address'}
                                     </button>
                                 ) : (
-                                    <p className="text-xs text-gray-400">Sign in to save addresses</p>
+                                    <p className="text-sm text-gray-400">Sign in to save addresses</p>
                                 )}
                             </form>
                         )}
@@ -500,10 +500,10 @@ export default function CheckoutPage() {
 
                     {/* Additional Notes */}
                     <div className="bg-white/[0.03] p-5 rounded-2xl backdrop-blur-xl border border-white/[0.06]">
-                        <h2 className="text-lg font-semibold mb-3 text-[#ffd700]">Notes</h2>
+                        <h2 className="text-xl font-semibold mb-3 text-[#ffd700]">Notes</h2>
                         <textarea
                             name="notes"
-                            className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30 min-h-[70px] resize-y"
+                            className="w-full p-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-base placeholder-gray-500 focus:outline-none focus:border-[#ffd700]/50 focus:ring-1 focus:ring-[#ffd700]/30 min-h-[70px] resize-y"
                             value={formData.notes}
                             onChange={handleInputChange}
                             placeholder="Plant sizes, quantity details, special requests..."

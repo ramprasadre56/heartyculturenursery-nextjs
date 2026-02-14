@@ -24,7 +24,7 @@
     width: 380px;
     max-width: 100%;
     height: 100vh;
-    background: #0f2e1a;
+    background: #064E3B;
     z-index: 999;
     display: flex;
     flex-direction: column;
@@ -56,15 +56,15 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    font-size: 1.15rem;
+    font-size: 1.3rem;
     font-weight: 600;
     color: white;
     font-family: var(--font-display);
 }
 
 .title svg {
-    color: rgba(255, 215, 0, 0.5);
-    stroke: rgba(255, 215, 0, 0.5);
+    color: rgba(52, 211, 153, 0.5);
+    stroke: rgba(52, 211, 153, 0.5);
 }
 
 .closeButton {
@@ -110,7 +110,7 @@
     margin-top: 1rem;
     padding: 0.75rem 1.5rem;
     background: #ffd700;
-    color: #0f2e1a;
+    color: #064E3B;
     text-decoration: none;
     border-radius: 10px;
     font-weight: 600;
@@ -154,7 +154,7 @@
 }
 
 .itemName {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 600;
     color: white;
     margin-bottom: 2px;
@@ -165,7 +165,7 @@
 }
 
 .itemScientific {
-    font-size: 0.78rem;
+    font-size: 0.9375rem;
     font-style: italic;
     color: rgba(255, 255, 255, 0.3);
     margin-bottom: 4px;
@@ -175,14 +175,14 @@
 }
 
 .itemCategory {
-    font-size: 0.72rem;
-    color: rgba(255, 215, 0, 0.4);
+    font-size: 0.8125rem;
+    color: rgba(52, 211, 153, 0.4);
     font-weight: 500;
 }
 
 .itemSize {
-    font-size: 0.68rem;
-    color: rgba(255, 215, 0, 0.35);
+    font-size: 0.8125rem;
+    color: rgba(52, 211, 153, 0.35);
     font-weight: 500;
     margin-top: 2px;
 }
@@ -230,7 +230,7 @@
     min-width: 22px;
     text-align: center;
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: white;
 }
 
@@ -270,7 +270,7 @@
     font-weight: 600;
     transition: all 0.2s;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    font-size: 0.9rem;
+    font-size: 1rem;
     cursor: pointer;
 }
 
@@ -286,12 +286,12 @@
     justify-content: center;
     padding: 0.75rem 1rem;
     background: #ffd700;
-    color: #0f2e1a;
+    color: #064E3B;
     text-decoration: none;
     border-radius: 10px;
     font-weight: 600;
     transition: all 0.2s;
-    font-size: 0.9rem;
+    font-size: 1rem;
     cursor: pointer;
 }
 

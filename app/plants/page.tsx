@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { PLANT_CATEGORIES } from '@/lib/categories';
+import CategoryIcon from '@/components/CategoryIcon';
 import styles from './page.module.css';
 
 export const metadata = {
@@ -18,7 +19,7 @@ export default function PlantsPage() {
                     <span>Plants</span>
                 </div>
                 <div className="page-title-row">
-                    <div className="page-icon">🌿</div>
+                    <div className="page-icon"><CategoryIcon slug="cordyline-varieties" size={24} /></div>
                     <h1 className="page-title">All Plants</h1>
                     <span className="badge">{PLANT_CATEGORIES.length} Categories</span>
                 </div>
@@ -38,7 +39,7 @@ export default function PlantsPage() {
                             href={`/plants/${cat.slug}`}
                             className={styles.card}
                         >
-                            <span className={styles.icon}>{cat.icon}</span>
+                            <span className={styles.icon}><CategoryIcon slug={cat.slug} size={20} /></span>
                             <h2 className={styles.cardTitle}>{cat.name}</h2>
                             <span className={styles.arrow}>→</span>
                         </Link>

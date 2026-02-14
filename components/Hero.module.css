@@ -149,14 +149,14 @@
     font-size: 1.1rem;
     text-decoration: none;
     border-radius: 50px;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    box-shadow: 0 4px 15px rgba(52, 211, 153, 0.4);
     transition: all 0.3s ease;
 }
 
 .cta:hover {
     background: linear-gradient(135deg, #ffb800 0%, #ff9500 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 6px 20px rgba(52, 211, 153, 0.5);
 }
 
 /* Navigation Arrows */
@@ -210,7 +210,7 @@
     width: 12px;
     height: 12px;
     background: #ffd700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
 }
 
 /* Responsive */

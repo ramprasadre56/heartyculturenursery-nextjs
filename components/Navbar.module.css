@@ -11,10 +11,11 @@
   align-items: center;
   gap: 1rem;
   padding: 0.5rem 2rem;
-  background-color: #0f2e1a;
-  min-height: 60px;
+  background-color: var(--color-nav-bg);
+  min-height: 56px;
   width: 100%;
-  border-bottom: 1px solid rgba(255, 215, 0, 0.06);
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color 0.3s ease;
 }
 
 .logoLink {
@@ -54,14 +55,14 @@
 }
 
 .accountLabel {
-  font-size: 0.72rem;
+  font-size: 0.9375rem;
   color: rgba(255, 255, 255, 0.6);
   white-space: nowrap;
   letter-spacing: 0.02em;
 }
 
 .accountText {
-  font-size: 0.88rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: white;
   white-space: nowrap;
@@ -100,17 +101,39 @@
   top: -5px;
   left: 50%;
   transform: translateX(-50%);
-  color: #ffd700;
-  font-size: 0.95rem;
+  color: #F97316;
+  font-size: 1.0625rem;
   font-weight: 700;
 }
 
 .cartText {
   font-weight: 600;
   color: white;
-  font-size: 0.88rem;
+  font-size: 0.9375rem;
   margin-bottom: 2px;
   white-space: nowrap;
+}
+
+/* Theme Toggle */
+.themeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--color-nav-accent);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.themeToggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Mobile Menu Toggle */
@@ -143,7 +166,7 @@
   background: none;
   border: none;
   color: white;
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   cursor: pointer;
   border-radius: 6px;
@@ -162,7 +185,7 @@
   gap: 0.5rem;
   padding: 0.6rem 0.85rem;
   color: rgba(255, 255, 255, 0.85);
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   text-decoration: none;
   border-radius: 6px;
@@ -180,7 +203,7 @@
 .navIcon {
   display: flex;
   align-items: center;
-  color: rgba(255, 215, 0, 0.7);
+  color: #34D399;
 }
 
 /* Dropdown */
@@ -204,12 +227,12 @@
   min-width: 280px;
   max-height: 400px;
   overflow-y: auto;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.04);
-  padding: 8px;
+  background: var(--color-card-bg);
+  border-radius: 10px;
+  box-shadow: 0 16px 32px var(--color-card-shadow), 0 0 0 1px var(--color-border);
+  padding: 6px;
   z-index: 1000;
-  padding-top: 12px;
+  padding-top: 10px;
 }
 
 .dropdownMenu::before {
@@ -227,9 +250,9 @@
   align-items: center;
   gap: 0.75rem;
   padding: 10px 12px;
-  color: #1C1917;
+  color: var(--color-text);
   text-decoration: none;
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   border-radius: 8px;
   transition: background 0.15s;
@@ -237,7 +260,7 @@
 }
 
 .dropdownItem:hover {
-  background: rgba(26, 71, 42, 0.06);
+  background: rgba(5, 150, 105, 0.08);
 }
 
 .dropdownIcon {
@@ -246,15 +269,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(26, 71, 42, 0.06);
+  background: rgba(5, 150, 105, 0.08);
   border-radius: 8px;
   font-size: 1rem;
-  color: #1a472a;
+  color: #059669;
 }
 
 .dropdownHeader {
   padding: 0.5rem 0.75rem 0.25rem;
-  font-size: 0.68rem;
+  font-size: 0.8125rem;
   font-weight: 700;
   color: #78716C;
   text-transform: uppercase;
@@ -271,10 +294,10 @@
   top: 100%;
   right: 0;
   min-width: 200px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.04);
-  padding: 8px;
+  background: var(--color-card-bg);
+  border-radius: 10px;
+  box-shadow: 0 16px 32px var(--color-card-shadow), 0 0 0 1px var(--color-border);
+  padding: 6px;
   z-index: 1000;
   padding-top: 4px;
 }
@@ -302,7 +325,7 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: #0f2e1a;
+    background: var(--color-nav-bg);
     padding: 1rem;
     min-height: auto;
     align-items: stretch;
@@ -362,11 +385,11 @@
   }
 
   .accountLabel {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
   }
 
   .accountText {
-    font-size: 0.8rem;
+    font-size: 0.9375rem;
   }
 
   .cartButton {
@@ -374,7 +397,7 @@
   }
 
   .cartText {
-    font-size: 0.8rem;
+    font-size: 0.9375rem;
   }
 
   .cartIconWrapper {
@@ -406,7 +429,7 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: #0f2e1a;
+    background: var(--color-nav-bg);
     padding: 1rem;
     z-index: 99;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);

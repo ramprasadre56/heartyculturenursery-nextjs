@@ -1,7 +1,8 @@
 .footer {
-    background: #070e09;
+    background: var(--color-nav-bg);
     color: white;
     margin-top: auto;
+    transition: background-color 0.3s ease;
 }
 
 .container {
@@ -10,7 +11,7 @@
     gap: 3rem;
     max-width: 100%;
     margin: 0 auto;
-    padding: 3.5rem 2rem;
+    padding: 3rem 2rem;
 }
 
 .brand {
@@ -19,7 +20,7 @@
 
 .brandName {
     font-family: var(--font-display);
-    font-size: 1.4rem;
+    font-size: 1.375rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: white;
@@ -27,8 +28,8 @@
 }
 
 .tagline {
-    color: rgba(255, 255, 255, 0.35);
-    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.9375rem;
     letter-spacing: 0.02em;
 }
 
@@ -38,10 +39,10 @@
 }
 
 .linkGroup h4 {
-    font-size: 0.75rem;
+    font-size: 0.8125rem; /* 13px */
     font-weight: 700;
-    margin-bottom: 1rem;
-    color: rgba(255, 215, 0, 0.5);
+    margin-bottom: 0.75rem;
+    color: var(--color-nav-accent);
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
@@ -50,21 +51,31 @@
     display: block;
     color: rgba(255, 255, 255, 0.45);
     text-decoration: none;
-    font-size: 0.88rem;
-    padding: 0.3rem 0;
+    font-size: 0.9375rem;
+    padding: 0.25rem 0;
     transition: color 0.2s;
 }
 
 .linkGroup a:hover {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.socialLink {
+    display: flex !important;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.socialLink:hover {
+    color: var(--color-nav-accent);
 }
 
 .bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.04);
-    padding: 1.5rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 1.25rem 2rem;
     text-align: center;
-    color: rgba(255, 255, 255, 0.2);
-    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 0.875rem;
     letter-spacing: 0.02em;
 }
 

@@ -9,6 +9,9 @@ import { PLANT_CATEGORIES } from "@/lib/categories";
 import { SEED_CATEGORIES } from "@/lib/seedCategories";
 import styles from "./Navbar.module.css";
 import LoginModal from "./LoginModal";
+import CategoryIcon from "./CategoryIcon";
+import { useTheme } from "@/context/ThemeContext";
+import { Sun, Moon } from "lucide-react";
 
 function LeafIcon({ size = 16 }: { size?: number }) {
   return (
@@ -85,6 +88,7 @@ function LogOutIcon({ size = 16 }: { size?: number }) {
 }
 
 export default function Navbar() {
+  const { theme, toggleTheme } = useTheme();
   const { totalItems, toggleCart } = useCart();
   const { user, status, signOut: firebaseSignOut } = useAuth();
   const session = user ? { user } : null;
@@ -158,7 +162,7 @@ export default function Navbar() {
                     className={styles.dropdownItem}
                     onClick={() => setDropdownOpen(false)}
                   >
-                    <span className={styles.dropdownIcon}>{cat.icon}</span>
+                    <span className={styles.dropdownIcon}><CategoryIcon slug={cat.slug} size={16} /></span>
                     <span>{cat.name}</span>
                   </Link>
                 ))}
@@ -189,7 +193,7 @@ export default function Navbar() {
                     className={styles.dropdownItem}
                     onClick={() => setSeedsDropdownOpen(false)}
                   >
-                    <span className={styles.dropdownIcon}>{cat.icon}</span>
+                    <span className={styles.dropdownIcon}><CategoryIcon slug={cat.slug} size={16} /></span>
                     <span>{cat.name}</span>
                   </Link>
                 ))}
@@ -303,6 +307,15 @@ export default function Navbar() {
             <span className={styles.accountText}>Account</span>
           </div>
         )}
+
+        {/* Theme Toggle */}
+        <button
+          className={styles.themeToggle}
+          onClick={toggleTheme}
+          aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+        >
+          {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+        </button>
 
         {/* Cart */}
         <button className={styles.cartButton} onClick={toggleCart}>

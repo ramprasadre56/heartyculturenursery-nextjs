@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { CATEGORY_GROUPS } from '@/lib/categories';
 import PlantSizesGuide from '@/components/PlantSizesGuide';
+import CategoryIcon from '@/components/CategoryIcon';
 import styles from './page.module.css';
 
 function useScrollReveal(threshold = 0.15) {
@@ -105,26 +106,24 @@ export default function Home() {
                 <h3 className={styles.groupTitle}>{group.group}</h3>
                 <div className={styles.groupLine} />
               </div>
-              <div className={styles.scrollRow}>
-                <div className={styles.scrollTrack}>
-                  {group.items.map((cat) => (
-                    <Link
-                      key={cat.slug}
-                      href={`/plants/${cat.slug}`}
-                      className={styles.categoryCard}
-                    >
-                      <span className={styles.categoryIcon}>{cat.icon}</span>
-                      <div className={styles.cardContent}>
-                        <h4 className={styles.cardName}>{cat.name}</h4>
-                        <span className={styles.cardArrow}>
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M5 12h14M12 5l7 7-7 7" />
-                          </svg>
-                        </span>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+              <div className={styles.categoryGrid}>
+                {group.items.map((cat) => (
+                  <Link
+                    key={cat.slug}
+                    href={`/plants/${cat.slug}`}
+                    className={styles.categoryCard}
+                  >
+                    <span className={styles.categoryIcon}><CategoryIcon slug={cat.slug} size={22} /></span>
+                    <div className={styles.cardContent}>
+                      <h4 className={styles.cardName}>{cat.name}</h4>
+                      <span className={styles.cardArrow}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </span>
+                    </div>
+                  </Link>
+                ))}
               </div>
             </div>
           ))}

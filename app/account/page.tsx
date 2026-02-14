@@ -70,7 +70,7 @@ export default function AccountPage() {
 
     if (status === "loading") {
         return (
-            <div className="min-h-screen pt-24 bg-gradient-to-b from-[#070e09] via-[#0f2e1a] to-[#070e09] text-white flex justify-center items-center">
+            <div className="min-h-screen pt-24 bg-gradient-to-b from-[#070e09] via-[#064E3B] to-[#070e09] text-white flex justify-center items-center">
                 <div className="flex items-center gap-3">
                     <div className="w-5 h-5 border-2 border-[#ffd700]/30 border-t-[#ffd700] rounded-full animate-spin" />
                     <p className="text-white/50">Loading...</p>
@@ -82,8 +82,8 @@ export default function AccountPage() {
     if (!user) return null;
 
     return (
-        <div className="w-full px-6 lg:px-12 py-8 min-h-screen pt-24 bg-gradient-to-b from-[#070e09] via-[#0f2e1a] to-[#070e09] text-white">
-            <h1 className="text-3xl font-bold mb-8 text-[#ffd700]" style={{ fontFamily: "var(--font-display)" }}>
+        <div className="w-full px-6 lg:px-12 py-8 min-h-screen pt-24 bg-gradient-to-b from-[#070e09] via-[#064E3B] to-[#070e09] text-white">
+            <h1 className="text-4xl font-bold mb-8 text-[#ffd700]" style={{ fontFamily: "var(--font-display)" }}>
                 My Account
             </h1>
 
@@ -103,10 +103,10 @@ export default function AccountPage() {
                         </div>
                     )}
                     <div>
-                        <h2 className="text-xl font-semibold text-white">
+                        <h2 className="text-2xl font-semibold text-white">
                             {user.name || "User"}
                         </h2>
-                        <div className="flex items-center gap-2 mt-1 text-white/50 text-sm">
+                        <div className="flex items-center gap-2 mt-1 text-white/50 text-base">
                             <MailIcon size={14} />
                             <span>{user.email}</span>
                         </div>
@@ -126,7 +126,7 @@ export default function AccountPage() {
                         </div>
                         <div>
                             <h3 className="font-semibold text-white">My Orders</h3>
-                            <p className="text-xs text-white/40">
+                            <p className="text-sm text-white/40">
                                 {orderCount === null
                                     ? "Loading..."
                                     : orderCount === 0
@@ -147,7 +147,7 @@ export default function AccountPage() {
                         </div>
                         <div>
                             <h3 className="font-semibold text-white group-hover:text-red-300">Sign Out</h3>
-                            <p className="text-xs text-white/40">Log out of your account</p>
+                            <p className="text-sm text-white/40">Log out of your account</p>
                         </div>
                     </div>
                 </button>

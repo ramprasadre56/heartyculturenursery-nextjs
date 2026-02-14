@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { CATEGORY_GROUPS } from '@/lib/categories';
+import CategoryIcon from './CategoryIcon';
 import styles from './CategorySidebar.module.css';
 
 interface CategorySidebarProps {
@@ -68,7 +69,7 @@ export default function CategorySidebar({ activeCategory }: CategorySidebarProps
                                     className={`${styles.categoryItem} ${isActive ? styles.active : ''}`}
                                     title={isCollapsed ? cat.name : undefined}
                                 >
-                                    <span className={styles.icon}>{cat.icon}</span>
+                                    <span className={styles.icon}><CategoryIcon slug={cat.slug} size={16} /></span>
                                     {!isCollapsed && (
                                         <span className={styles.name}>{cat.name}</span>
                                     )}

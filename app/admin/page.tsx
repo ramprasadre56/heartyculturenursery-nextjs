@@ -162,21 +162,21 @@ export default function AdminDashboard() {
 
     if (status === 'loading') {
         return (
-            <div className="min-h-screen bg-[#1a472a] flex items-center justify-center">
-                <div className="text-white text-xl">Loading...</div>
+            <div className="min-h-screen bg-[#059669] flex items-center justify-center">
+                <div className="text-white text-2xl">Loading...</div>
             </div>
         );
     }
 
     if (!isAdmin) {
         return (
-            <div className="min-h-screen bg-[#1a472a] pt-24 flex items-center justify-center">
+            <div className="min-h-screen bg-[#059669] pt-24 flex items-center justify-center">
                 <div className="text-center">
-                    <p className="text-white text-xl mb-4">Access Denied</p>
+                    <p className="text-white text-2xl mb-4">Access Denied</p>
                     <p className="text-gray-400 mb-4">You don&apos;t have admin access.</p>
                     <button
                         onClick={() => router.push('/')}
-                        className="bg-[#ffd700] text-[#1a472a] font-bold py-2 px-6 rounded hover:bg-yellow-400"
+                        className="bg-[#ffd700] text-[#059669] font-bold py-2 px-6 rounded hover:bg-yellow-400"
                     >
                         Go Home
                     </button>
@@ -186,16 +186,16 @@ export default function AdminDashboard() {
     }
 
     return (
-        <div className="min-h-screen bg-[#1a472a] pt-20 px-6 lg:px-12 pb-8">
+        <div className="min-h-screen bg-[#059669] pt-20 px-6 lg:px-12 pb-8">
             <div className="w-full">
-                <h1 className="text-2xl font-bold text-[#ffd700] mb-4">Admin Dashboard</h1>
+                <h1 className="text-3xl font-bold text-[#ffd700] mb-4">Admin Dashboard</h1>
 
                 {/* Filters */}
                 <div className="bg-white/10 rounded-lg p-4 mb-6 backdrop-blur-md">
                     <h2 className="text-white font-semibold mb-3">Filters</h2>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
-                            <label className="block text-gray-300 text-sm mb-1">Status</label>
+                            <label className="block text-gray-300 text-base mb-1">Status</label>
                             <select
                                 value={statusFilter}
                                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -207,7 +207,7 @@ export default function AdminDashboard() {
                             </select>
                         </div>
                         <div>
-                            <label className="block text-gray-300 text-sm mb-1">From Date</label>
+                            <label className="block text-gray-300 text-base mb-1">From Date</label>
                             <input
                                 type="date"
                                 value={dateFrom}
@@ -216,7 +216,7 @@ export default function AdminDashboard() {
                             />
                         </div>
                         <div>
-                            <label className="block text-gray-300 text-sm mb-1">To Date</label>
+                            <label className="block text-gray-300 text-base mb-1">To Date</label>
                             <input
                                 type="date"
                                 value={dateTo}
@@ -227,7 +227,7 @@ export default function AdminDashboard() {
                         <div className="flex items-end">
                             <button
                                 onClick={fetchOrders}
-                                className="w-full bg-[#ffd700] text-[#1a472a] font-bold py-2 px-4 rounded hover:bg-yellow-400"
+                                className="w-full bg-[#ffd700] text-[#059669] font-bold py-2 px-4 rounded hover:bg-yellow-400"
                             >
                                 Refresh
                             </button>
@@ -245,23 +245,23 @@ export default function AdminDashboard() {
                 {/* Orders Summary */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                     <div className="bg-white/10 rounded-lg p-4 text-center backdrop-blur-md">
-                        <div className="text-3xl font-bold text-[#ffd700]">{orders.length}</div>
+                        <div className="text-4xl font-bold text-[#ffd700]">{orders.length}</div>
                         <div className="text-gray-300">Total Orders</div>
                     </div>
                     <div className="bg-white/10 rounded-lg p-4 text-center backdrop-blur-md">
-                        <div className="text-3xl font-bold text-green-400">
+                        <div className="text-4xl font-bold text-green-400">
                             {orders.filter(o => o.payment_status === 'paid').length}
                         </div>
                         <div className="text-gray-300">Paid</div>
                     </div>
                     <div className="bg-white/10 rounded-lg p-4 text-center backdrop-blur-md">
-                        <div className="text-3xl font-bold text-yellow-400">
+                        <div className="text-4xl font-bold text-yellow-400">
                             {orders.filter(o => !o.fulfillment_status || o.fulfillment_status === 'pending').length}
                         </div>
                         <div className="text-gray-300">Pending Fulfillment</div>
                     </div>
                     <div className="bg-white/10 rounded-lg p-4 text-center backdrop-blur-md">
-                        <div className="text-3xl font-bold text-[#ffd700]">
+                        <div className="text-4xl font-bold text-[#ffd700]">
                             ₹{orders.reduce((sum, o) => sum + getOrderTotal(o), 0).toFixed(0)}
                         </div>
                         <div className="text-gray-300">Total Revenue</div>
@@ -292,13 +292,13 @@ export default function AdminDashboard() {
                                 {orders.map((order) => (
                                     <React.Fragment key={order.id}>
                                         <tr className="border-t border-white/10 hover:bg-white/5">
-                                            <td className="p-4 text-white font-mono text-sm">
+                                            <td className="p-4 text-white font-mono text-base">
                                                 {order.id.substring(0, 12)}...
                                             </td>
-                                            <td className="p-4 text-gray-300 text-sm">
+                                            <td className="p-4 text-gray-300 text-base">
                                                 {formatDate(order.created_at)}
                                             </td>
-                                            <td className="p-4 text-gray-300 text-sm">
+                                            <td className="p-4 text-gray-300 text-base">
                                                 {order.details?.customer?.name || order.user_email || '—'}
                                             </td>
                                             <td className="p-4 text-white">
@@ -308,7 +308,7 @@ export default function AdminDashboard() {
                                                 ₹{getOrderTotal(order).toFixed(2)}
                                             </td>
                                             <td className="p-4">
-                                                <span className={`px-2 py-1 rounded text-sm ${order.payment_status === 'paid'
+                                                <span className={`px-2 py-1 rounded text-base ${order.payment_status === 'paid'
                                                     ? 'bg-green-500 text-white'
                                                     : 'bg-yellow-500 text-black'
                                                     }`}>
@@ -319,10 +319,10 @@ export default function AdminDashboard() {
                                                 <select
                                                     value={order.fulfillment_status || 'pending'}
                                                     onChange={(e) => updateFulfillmentStatus(order.id, e.target.value)}
-                                                    className="bg-white/10 text-white border border-white/20 rounded p-1 text-sm"
+                                                    className="bg-white/10 text-white border border-white/20 rounded p-1 text-base"
                                                 >
                                                     {FULFILLMENT_OPTIONS.map(opt => (
-                                                        <option key={opt.value} value={opt.value} className="bg-[#1a472a]">
+                                                        <option key={opt.value} value={opt.value} className="bg-[#059669]">
                                                             {opt.label}
                                                         </option>
                                                     ))}
@@ -348,7 +348,7 @@ export default function AdminDashboard() {
                                                                     <li key={idx} className="text-gray-300">
                                                                         • {item.common_name || item.scientific_name} x{item.quantity} - ₹{(item.price * item.quantity / 100).toFixed(2)}
                                                                         {item.sizeSelection && (
-                                                                            <span className="ml-2 text-xs bg-orange-500/20 text-orange-300 px-1.5 py-0.5 rounded-full">
+                                                                            <span className="ml-2 text-sm bg-orange-500/20 text-orange-300 px-1.5 py-0.5 rounded-full">
                                                                                 {formatSizeDisplay(item.sizeSelection)}
                                                                             </span>
                                                                         )}

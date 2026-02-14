@@ -31,7 +31,7 @@
 }
 
 .sidebarTitle {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 700;
     color: #1a1a1a;
     text-transform: uppercase;
@@ -73,11 +73,11 @@
     justify-content: center;
     background: rgba(34, 197, 94, 0.1);
     border-radius: 6px;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
 .name {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 500;
     color: #444;
     white-space: nowrap;
@@ -172,7 +172,7 @@
 }
 
 .seedName {
-    font-size: 1.15rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: #1a1a1a;
     line-height: 1.4;
@@ -180,7 +180,7 @@
 }
 
 .seedScientific {
-    font-size: 0.95rem;
+    font-size: 1.0625rem;
     font-style: italic;
     color: #555;
     line-height: 1.4;
@@ -198,7 +198,7 @@
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 0.95rem;
+    font-size: 1.0625rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
