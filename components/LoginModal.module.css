@@ -174,7 +174,7 @@
     padding: 0.75rem 1rem;
     font-size: 1.0625rem;
     font-weight: 600;
-    color: #064E3B;
+    color: var(--color-primary-dark);
     background: #ffd700;
     border: none;
     border-radius: 12px;
@@ -201,7 +201,7 @@
     width: 18px;
     height: 18px;
     border: 2.5px solid rgba(15, 46, 26, 0.3);
-    border-top-color: #064E3B;
+    border-top-color: var(--color-primary-dark);
     border-radius: 50%;
     animation: spin 0.6s linear infinite;
 }

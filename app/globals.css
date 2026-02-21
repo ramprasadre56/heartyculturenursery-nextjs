@@ -73,43 +73,43 @@
   --color-orange: #FB923C;
   --color-cta: #FB923C;
 
-  /* Dark mode surfaces */
-  --color-text: #F9FAFB;
-  --color-text-light: #D1D5DB;
-  --color-text-muted: #9CA3AF;
-  --color-bg: #0F172A;
-  --color-bg-secondary: #1E293B;
-  --color-bg-tertiary: #334155;
-  --color-surface: #1E293B;
-  --color-surface-hover: #334155;
-  --color-border: #334155;
-  --color-border-light: #1E293B;
+  /* Dark mode surfaces — emerald palette */
+  --color-text: #F0FDF4;
+  --color-text-light: #D1FAE5;
+  --color-text-muted: #6EE7B7;
+  --color-bg: #021a13;
+  --color-bg-secondary: #042f2e;
+  --color-bg-tertiary: #064E3B;
+  --color-surface: #053a33;
+  --color-surface-hover: #065F46;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-light: rgba(255, 255, 255, 0.04);
 
   /* Navbar */
-  --color-nav-bg: #0F172A;
-  --color-nav-text: #F9FAFB;
+  --color-nav-bg: #042f2e;
+  --color-nav-text: #F0FDF4;
   --color-nav-accent: #34D399;
 
   /* Cards */
-  --color-card-bg: #1E293B;
-  --color-card-border: #334155;
-  --color-card-shadow: rgba(0, 0, 0, 0.3);
+  --color-card-bg: #053a33;
+  --color-card-border: rgba(255, 255, 255, 0.08);
+  --color-card-shadow: rgba(0, 0, 0, 0.4);
 
   /* Search */
-  --color-search-bg: #1E293B;
-  --color-search-border: #334155;
+  --color-search-bg: #053a33;
+  --color-search-border: rgba(255, 255, 255, 0.1);
 
   /* Badge */
   --color-badge-bg: rgba(16, 185, 129, 0.15);
   --color-badge-text: #34D399;
 
   /* Page header */
-  --color-header-gradient-start: #1E293B;
-  --color-header-gradient-end: #0F172A;
+  --color-header-gradient-start: #042f2e;
+  --color-header-gradient-end: #021a13;
 
   /* Skeleton */
-  --color-skeleton-from: #1E293B;
-  --color-skeleton-via: #334155;
+  --color-skeleton-from: #042f2e;
+  --color-skeleton-via: #064E3B;
 }
 
 /* ============================================================

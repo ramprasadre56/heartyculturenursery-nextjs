@@ -1,6 +1,6 @@
 .container {
     min-height: 100vh;
-    background: #FAFAF9;
+    background: var(--color-bg);
 }
 
 .mainContent {
@@ -25,7 +25,7 @@
 
 .skeleton {
     height: 320px;
-    background: linear-gradient(90deg, #f5f5f4 25%, #e7e5e4 50%, #f5f5f4 75%);
+    background: linear-gradient(90deg, var(--color-skeleton-from) 25%, var(--color-skeleton-via) 50%, var(--color-skeleton-from) 75%);
     background-size: 200% 100%;
     animation: skeleton-loading 1.8s ease-in-out infinite;
     border-radius: 14px;
@@ -49,7 +49,7 @@
     justify-content: center;
     padding: 4rem 2rem;
     text-align: center;
-    color: #78716C;
+    color: var(--color-text-muted);
 }
 
 .empty svg {

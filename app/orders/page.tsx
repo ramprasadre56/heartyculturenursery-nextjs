@@ -87,7 +87,7 @@ export default function MyOrdersPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen pt-24 bg-gradient-to-b from-[#070e09] via-[#064E3B] to-[#070e09] text-white flex justify-center items-center px-4">
+            <div className="min-h-screen pt-24 bg-gradient-to-b from-[#021a13] via-[#064E3B] to-[#021a13] text-white flex justify-center items-center px-4">
                 <div className="flex items-center gap-3">
                     <div className="w-5 h-5 border-2 border-[#ffd700]/30 border-t-[#ffd700] rounded-full animate-spin"></div>
                     <p className="text-white/50">Loading your orders...</p>
@@ -97,7 +97,7 @@ export default function MyOrdersPage() {
     }
 
     return (
-        <div className="w-full px-6 lg:px-12 py-8 min-h-screen pt-24 bg-gradient-to-b from-[#070e09] via-[#064E3B] to-[#070e09] text-white">
+        <div className="w-full px-6 lg:px-12 py-8 min-h-screen pt-24 bg-gradient-to-b from-[#021a13] via-[#064E3B] to-[#021a13] text-white">
             <h1 className="text-4xl font-bold mb-8 text-[#ffd700]" style={{ fontFamily: 'var(--font-display)' }}>My Orders</h1>
 
             {orders.length === 0 ? (

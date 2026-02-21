@@ -1,6 +1,6 @@
 .container {
     min-height: 100vh;
-    background: #fafafa;
+    background: var(--color-bg);
 }
 
 .mainContent {
@@ -25,15 +25,15 @@
     max-height: calc(100vh - 140px);
     overflow-y: auto;
     padding: 1rem;
-    background: white;
+    background: var(--color-card-bg);
     border-radius: 12px;
-    border: 1px solid #eee;
+    border: 1px solid var(--color-card-border);
 }
 
 .sidebarTitle {
     font-size: 1rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: var(--color-text);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 0.75rem;
@@ -57,12 +57,12 @@
 }
 
 .categoryItem:hover {
-    background: rgba(34, 197, 94, 0.06);
+    background: var(--color-badge-bg);
 }
 
 .categoryItem.active {
     background: rgba(34, 197, 94, 0.12);
-    border-left-color: #22c55e;
+    border-left-color: var(--color-primary);
 }
 
 .icon {
@@ -71,7 +71,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(34, 197, 94, 0.1);
+    background: var(--color-badge-bg);
     border-radius: 6px;
     font-size: 1rem;
 }
@@ -79,12 +79,12 @@
 .name {
     font-size: 1rem;
     font-weight: 500;
-    color: #444;
+    color: var(--color-text-light);
     white-space: nowrap;
 }
 
 .categoryItem.active .name {
-    color: #22c55e;
+    color: var(--color-primary);
     font-weight: 600;
 }
 
@@ -97,7 +97,7 @@
 
 .skeleton {
     height: 320px;
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background: linear-gradient(90deg, var(--color-skeleton-from) 25%, var(--color-skeleton-via) 50%, var(--color-skeleton-from) 75%);
     background-size: 200% 100%;
     animation: skeleton-loading 1.5s infinite;
     border-radius: 12px;
@@ -121,7 +121,7 @@
     justify-content: center;
     padding: 4rem 2rem;
     text-align: center;
-    color: #666;
+    color: var(--color-text-muted);
 }
 
 .empty span {
@@ -135,18 +135,18 @@
 
 /* Seed Card */
 .seedCard {
-    background: white;
+    background: var(--color-card-bg);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    border: 1px solid #eee;
+    box-shadow: 0 2px 8px var(--color-card-shadow);
+    border: 1px solid var(--color-card-border);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .seedCard:hover {
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 12px 28px var(--color-card-shadow);
     transform: translateY(-6px);
-    border-color: #22c55e;
+    border-color: var(--color-primary);
 }
 
 .seedImage {
@@ -154,7 +154,7 @@
     width: 100%;
     height: 200px;
     overflow: hidden;
-    background: #f8f8f8;
+    background: var(--color-bg-secondary);
 }
 
 .imagePlaceholder {
@@ -164,7 +164,7 @@
     align-items: center;
     justify-content: center;
     font-size: 4rem;
-    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    background: linear-gradient(135deg, var(--color-bg-secondary), var(--color-bg-tertiary));
 }
 
 .seedDetails {
@@ -174,7 +174,7 @@
 .seedName {
     font-size: 1.3rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: var(--color-text);
     line-height: 1.4;
     margin-bottom: 4px;
 }
@@ -182,7 +182,7 @@
 .seedScientific {
     font-size: 1.0625rem;
     font-style: italic;
-    color: #555;
+    color: var(--color-text-muted);
     line-height: 1.4;
     margin-bottom: 12px;
 }

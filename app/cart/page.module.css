@@ -1,6 +1,7 @@
 .container {
     min-height: 100vh;
-    background: #fafafa;
+    background: var(--color-bg);
+    color: var(--color-text);
 }
 
 .content {
@@ -26,19 +27,19 @@
 
 .emptyCart h2 {
     font-size: 1.75rem;
-    color: #1a1a1a;
+    color: var(--color-text);
     margin-bottom: 0.5rem;
 }
 
 .emptyCart p {
-    color: #666;
+    color: var(--color-text-muted);
     margin-bottom: 2rem;
 }
 
 .browseLink {
     display: inline-block;
     padding: 1rem 2rem;
-    background: #22c55e;
+    background: var(--color-primary);
     color: white;
     border-radius: 10px;
     font-weight: 600;
@@ -47,7 +48,7 @@
 }
 
 .browseLink:hover {
-    background: #16a34a;
+    background: var(--color-primary-dark);
 }
 
 /* Cart Layout */
@@ -69,9 +70,9 @@
     display: flex;
     gap: 1.5rem;
     padding: 1.5rem;
-    background: white;
+    background: var(--color-card-bg);
     border-radius: 12px;
-    border: 1px solid #eee;
+    border: 1px solid var(--color-card-border);
 }
 
 .itemImage {
@@ -79,7 +80,7 @@
     height: 120px;
     border-radius: 8px;
     overflow: hidden;
-    background: #f8f8f8;
+    background: var(--color-bg-secondary);
     flex-shrink: 0;
 }
 
@@ -96,22 +97,22 @@
 .itemName {
     font-size: 1.15rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--color-text);
     margin-bottom: 4px;
 }
 
 .itemScientific {
     font-size: 1rem;
     font-style: italic;
-    color: #666;
+    color: var(--color-text-muted);
     margin-bottom: 8px;
 }
 
 .itemCategory {
     display: inline-block;
     padding: 4px 10px;
-    background: rgba(34, 197, 94, 0.1);
-    color: #22c55e;
+    background: var(--color-badge-bg);
+    color: var(--color-badge-text);
     font-size: 0.9375rem;
     font-weight: 500;
     border-radius: 20px;
@@ -129,7 +130,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: #f5f5f5;
+    background: var(--color-bg-secondary);
     border-radius: 8px;
     padding: 4px;
 }
@@ -140,17 +141,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: white;
+    background: var(--color-card-bg);
     border: none;
     border-radius: 6px;
     font-size: 1.25rem;
     font-weight: 600;
+    color: var(--color-text);
     cursor: pointer;
     transition: background 0.2s;
 }
 
 .quantityBtn:hover {
-    background: #eee;
+    background: var(--color-surface-hover);
 }
 
 .quantity {
@@ -158,13 +160,14 @@
     text-align: center;
     font-weight: 600;
     font-size: 1.1rem;
+    color: var(--color-text);
 }
 
 .removeBtn {
     padding: 8px 16px;
     background: none;
-    border: 1px solid #dc2626;
-    color: #dc2626;
+    border: 1px solid #ef4444;
+    color: #ef4444;
     border-radius: 6px;
     font-size: 1rem;
     font-weight: 500;
@@ -173,7 +176,7 @@
 }
 
 .removeBtn:hover {
-    background: #dc2626;
+    background: #ef4444;
     color: white;
 }
 
@@ -182,18 +185,18 @@
     position: sticky;
     top: 120px;
     padding: 1.5rem;
-    background: white;
+    background: var(--color-card-bg);
     border-radius: 12px;
-    border: 1px solid #eee;
+    border: 1px solid var(--color-card-border);
 }
 
 .summary h2 {
     font-size: 1.25rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: var(--color-text);
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .summaryRow {
@@ -204,22 +207,23 @@
 }
 
 .summaryRow span:first-child {
-    color: #666;
+    color: var(--color-text-muted);
 }
 
 .summaryRow span:last-child {
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--color-text);
 }
 
 .note {
     margin: 1.5rem 0;
     padding: 1rem;
-    background: #fffbeb;
+    background: rgba(251, 146, 60, 0.08);
     border-radius: 8px;
     font-size: 1rem;
-    color: #92400e;
+    color: var(--color-orange);
     line-height: 1.5;
+    border: 1px solid rgba(251, 146, 60, 0.15);
 }
 
 .checkoutBtn {
@@ -229,7 +233,7 @@
     gap: 0.75rem;
     width: 100%;
     padding: 1rem;
-    background: #059669;
+    background: var(--color-primary);
     color: white;
     text-decoration: none;
     border-radius: 10px;
@@ -240,7 +244,7 @@
 }
 
 .checkoutBtn:hover {
-    background: #143821;
+    background: var(--color-primary-dark);
 }
 
 .whatsappBtn {
@@ -267,18 +271,18 @@
     width: 100%;
     padding: 0.75rem;
     margin-top: 0.75rem;
-    background: #f5f5f5;
-    border: 1px solid #ddd;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
     border-radius: 8px;
     font-weight: 500;
-    color: #666;
+    color: var(--color-text-muted);
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .clearBtn:hover {
-    background: #eee;
-    color: #333;
+    background: var(--color-bg-tertiary);
+    color: var(--color-text);
 }
 
 /* Responsive */
@@ -310,18 +314,18 @@
     }
 }
 
-/* New styles for pricing */
+/* Pricing */
 .itemPrice {
     font-size: 1rem;
     font-weight: 600;
-    color: #059669;
+    color: var(--color-primary);
     margin-top: 8px;
 }
 
 .itemTotal {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #059669;
+    color: var(--color-primary);
 }
 
 .summaryItems {
@@ -335,7 +339,7 @@
     display: flex;
     justify-content: space-between;
     font-size: 1rem;
-    color: #666;
+    color: var(--color-text-muted);
 }
 
 .summaryItemName {
@@ -348,7 +352,7 @@
 
 .divider {
     height: 1px;
-    background: #eee;
+    background: var(--color-border);
     margin: 1rem 0;
 }
 
@@ -358,26 +362,39 @@
     padding: 0.75rem 0;
     font-size: 1.2rem;
     font-weight: 700;
+    color: var(--color-text);
 }
 
 .totalAmount {
-    color: #059669;
+    color: var(--color-primary);
 }
 
 .freeShipping {
-    color: #22c55e;
+    color: var(--color-accent);
     font-weight: 600;
 }
 
 .paymentInfo {
     margin-top: 1rem;
     padding: 1rem;
-    background: #f0fdf4;
+    background: var(--color-badge-bg);
     border-radius: 8px;
 }
 
 .paymentInfo p {
     font-size: 1rem;
-    color: #166534;
+    color: var(--color-accent);
     margin: 0.25rem 0;
+}
+
+/* Item Size */
+.itemSize {
+    display: inline-block;
+    padding: 3px 8px;
+    background: var(--color-badge-bg);
+    color: var(--color-badge-text);
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 12px;
+    margin-top: 4px;
 }

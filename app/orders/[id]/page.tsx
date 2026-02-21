@@ -87,7 +87,7 @@ export default function OrderDetailsPage() {
 
     if (loading) {
         return (
-            <div className="container mx-auto px-4 py-8 min-h-screen pt-24 bg-[#059669] text-white flex justify-center items-center">
+            <div className="container mx-auto px-4 py-8 min-h-screen pt-24 bg-[#021a13] text-white flex justify-center items-center">
                 <p className="text-2xl">Loading order details...</p>
             </div>
         );
@@ -95,12 +95,12 @@ export default function OrderDetailsPage() {
 
     if (error || !order) {
         return (
-            <div className="container mx-auto px-4 py-8 min-h-screen pt-24 bg-[#059669] text-white text-center">
+            <div className="container mx-auto px-4 py-8 min-h-screen pt-24 bg-[#021a13] text-white text-center">
                 <h1 className="text-4xl font-bold mb-4 text-red-400">Error</h1>
                 <p className="mb-6">{error || "Order not found."}</p>
                 <button
                     onClick={() => router.push('/')}
-                    className="bg-[#ffd700] text-[#059669] px-6 py-2 rounded font-bold hover:bg-yellow-400"
+                    className="bg-[#ffd700] text-[#064E3B] px-6 py-2 rounded font-bold hover:bg-yellow-400"
                 >
                     Return Home
                 </button>
@@ -126,9 +126,9 @@ export default function OrderDetailsPage() {
     });
 
     return (
-        <div className="w-full px-6 lg:px-12 py-8 min-h-screen pt-24 bg-[#059669] text-white">
+        <div className="w-full px-6 lg:px-12 py-8 min-h-screen pt-24 bg-[#021a13] text-white">
             <div className="w-full">
-                <div className="bg-white/10 p-8 rounded-lg backdrop-blur-md border border-white/10 shadow-xl">
+                <div className="bg-[#053a33] p-8 rounded-lg border border-white/10 shadow-xl">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b border-white/20 pb-6">
                         <div>
                             <h1 className="text-4xl font-bold text-[#ffd700] mb-2">Order Confirmed!</h1>
@@ -148,9 +148,9 @@ export default function OrderDetailsPage() {
                         <div className="space-y-4">
                             {itemsToDisplay.map((item, idx) => {
                                 return (
-                                    <div key={item.id || idx} className="flex justify-between items-center bg-black/20 p-4 rounded">
+                                    <div key={item.id || idx} className="flex justify-between items-center bg-[#042f2e] p-4 rounded">
                                         <div className="flex items-center space-x-4">
-                                            <div className="bg-white/10 w-16 h-16 rounded flex items-center justify-center text-3xl overflow-hidden">
+                                            <div className="bg-[#064E3B] w-16 h-16 rounded flex items-center justify-center text-3xl overflow-hidden">
                                                 {item.displayImage ? (
                                                     <img src={item.displayImage} alt={item.displayTitle} className="w-full h-full object-cover" />
                                                 ) : (
@@ -176,7 +176,7 @@ export default function OrderDetailsPage() {
                     <div className="mt-8 flex justify-center">
                         <button
                             onClick={() => router.push('/')}
-                            className="bg-[#ffd700] text-[#059669] px-8 py-3 rounded-full font-bold text-xl hover:bg-yellow-400 transition-transform hover:scale-105 shadow-lg"
+                            className="bg-[#ffd700] text-[#064E3B] px-8 py-3 rounded-full font-bold text-xl hover:bg-yellow-400 transition-transform hover:scale-105 shadow-lg"
                         >
                             Continue Shopping
                         </button>
