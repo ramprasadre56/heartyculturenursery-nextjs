@@ -29,6 +29,7 @@ export default function CheckoutPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     // Address management
     const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([]);
@@ -206,16 +207,29 @@ export default function CheckoutPage() {
                 notes: formData.notes,
             });
 
+            setIsSubmitted(true);
             clearCart();
             router.push(`/orders/${quoteId}`);
         } catch (err: unknown) {
             console.error(err);
             setError(`Failed to submit quote request: ${err instanceof Error ? err.message : 'Unknown error'}`);
             setLoading(false);
+            setIsSubmitted(false);
         }
     };
 
-    if (cartItems.length === 0) {
+    if (isSubmitted) {
+        return (
+            <div className="w-full px-6 lg:px-12 py-8 text-center text-white min-h-screen pt-24 bg-gradient-to-b from-[#070e09] via-[#064E3B] to-[#070e09] flex flex-col justify-center items-center">
+                <div className="flex items-center gap-3">
+                    <div className="w-5 h-5 border-2 border-[#ffd700]/30 border-t-[#ffd700] rounded-full animate-spin"></div>
+                    <p className="text-white/50 text-xl">Redirecting to quote details...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (cartItems.length === 0 && !isSubmitted) {
         return (
             <div className="w-full px-6 lg:px-12 py-8 text-center text-white min-h-screen pt-24 bg-gradient-to-b from-[#070e09] via-[#064E3B] to-[#070e09] flex flex-col justify-center items-center">
                 <h1 className="text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-display)' }}>Your Cart is Empty</h1>
