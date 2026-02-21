@@ -70,11 +70,6 @@ export default function Home() {
             <span className={styles.statNumber}>25+</span>
             <span className={styles.statLabel}>Categories</span>
           </div>
-          <div className={styles.statDivider} />
-          <div className={styles.stat}>
-            <span className={styles.statNumber}>Est.</span>
-            <span className={styles.statLabel}>2005</span>
-          </div>
         </div>
 
         <div className={styles.scrollIndicator}>
