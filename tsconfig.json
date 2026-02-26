@@ -38,6 +38,7 @@
   ],
   "exclude": [
     "node_modules",
-    "samples"
+    "samples",
+    "verify_mail.ts"
   ]
 }
