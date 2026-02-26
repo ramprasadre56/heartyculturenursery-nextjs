@@ -25,7 +25,7 @@
   border-radius: 6px;
   transition: opacity 0.2s;
   flex-shrink: 0;
-  margin-right: 3rem;
+  margin-right: 1rem;
 }
 
 .logoLink:hover {
@@ -102,7 +102,7 @@
   top: -5px;
   left: 50%;
   transform: translateX(-50%);
-  color: #F97316;
+  color: #f97316;
   font-size: 1.0625rem;
   font-weight: 700;
 }
@@ -191,7 +191,9 @@
   text-decoration: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
   white-space: nowrap;
   letter-spacing: 0.01em;
 }
@@ -204,7 +206,7 @@
 .navIcon {
   display: flex;
   align-items: center;
-  color: #34D399;
+  color: #34d399;
 }
 
 /* Dropdown */
@@ -212,7 +214,7 @@
   position: relative;
 }
 
-.dropdown>.navLink {
+.dropdown > .navLink {
   background: transparent !important;
   background-color: transparent !important;
   border: none;
@@ -230,14 +232,16 @@
   overflow-y: auto;
   background: var(--color-card-bg);
   border-radius: 10px;
-  box-shadow: 0 16px 32px var(--color-card-shadow), 0 0 0 1px var(--color-border);
+  box-shadow:
+    0 16px 32px var(--color-card-shadow),
+    0 0 0 1px var(--color-border);
   padding: 6px;
   z-index: 1000;
   padding-top: 10px;
 }
 
 .dropdownMenu::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -10px;
   left: 0;
@@ -280,7 +284,7 @@
   padding: 0.5rem 0.75rem 0.25rem;
   font-size: 0.8125rem;
   font-weight: 700;
-  color: #78716C;
+  color: #78716c;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -297,14 +301,16 @@
   min-width: 200px;
   background: var(--color-card-bg);
   border-radius: 10px;
-  box-shadow: 0 16px 32px var(--color-card-shadow), 0 0 0 1px var(--color-border);
+  box-shadow:
+    0 16px 32px var(--color-card-shadow),
+    0 0 0 1px var(--color-border);
   padding: 6px;
   z-index: 1000;
   padding-top: 4px;
 }
 
 .accountDropdownMenu::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -10px;
   left: 0;

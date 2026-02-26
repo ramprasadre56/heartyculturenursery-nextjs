@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
+import ChatWidget from "@/components/ChatWidget";
 
 
 const raleway = Raleway({
@@ -44,6 +45,7 @@ export default function RootLayout({
               </main>
               <Footer />
               <CartDrawer />
+              <ChatWidget />
             </div>
           </CartProvider>
         </AuthProvider>

@@ -5,7 +5,9 @@
       "Bash(npx next build:*)",
       "Bash(for f in app/orders/page.tsx app/cart/page.tsx app/admin/page.tsx app/checkout/page.tsx app/account/page.tsx \"app/orders/[id]/page.tsx\")",
       "Bash(do sed:*)",
-      "Bash(done)"
+      "Bash(done)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ]
   }
 }

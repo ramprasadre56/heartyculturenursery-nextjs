@@ -188,24 +188,39 @@ export default function CheckoutPage() {
                 ...item,
                 price: 0
             }));
+            const orderCustomer = {
+                name: formData.fullName,
+                email: formData.email,
+                phone: formData.phone
+            };
+            const orderShipping = {
+                address: formData.address,
+                city: formData.city,
+                state: formData.state,
+                zip: formData.zip
+            };
             await saveOrder(quoteId, enrichedItems, {
                 paymentId: 'QUOTE',
                 status: 'pending',
                 paymentMethod: 'quote',
                 userEmail: user?.email || formData.email,
-                customer: {
-                    name: formData.fullName,
-                    email: formData.email,
-                    phone: formData.phone
-                },
-                shipping: {
-                    address: formData.address,
-                    city: formData.city,
-                    state: formData.state,
-                    zip: formData.zip
-                },
+                customer: orderCustomer,
+                shipping: orderShipping,
                 notes: formData.notes,
             });
+
+            // Send email notification (fire and forget)
+            fetch('/api/send-quote-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    orderId: quoteId,
+                    items: enrichedItems,
+                    customer: orderCustomer,
+                    shipping: orderShipping,
+                    notes: formData.notes,
+                }),
+            }).catch(err => console.error('Quote email failed:', err));
 
             setIsSubmitted(true);
             clearCart();

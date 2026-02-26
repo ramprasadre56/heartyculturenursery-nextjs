@@ -15,10 +15,6 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/agent',
-        destination: 'https://business-agent-430410298641.us-central1.run.app/',
-      },
-      {
         source: '/api/merchant/:path*',
         destination: 'https://ucp-merchant-server-430410298641.us-central1.run.app/:path*',
       },

@@ -8,7 +8,7 @@ import { collection, query, where, getDocs, doc, updateDoc } from 'firebase/fire
 import { formatSizeDisplay } from '@/lib/data';
 
 // Admin emails whitelist
-const ADMIN_EMAILS = ['ramprasadre56@gmail.com'];
+const ADMIN_EMAILS = ['ramprasadre56@gmail.com', 'govindashorticulture@ghnursery.in'];
 
 interface OrderItem {
     common_name?: string;
